@@ -1,0 +1,22 @@
+<view class="page">
+  <view class="page-header">
+    <text class="page-title">{{mode === 'create' ? '发布作品' : '编辑作品'}}</text>
+    <text class="page-subtitle">图片上传能力将在限制规则确认后接入。</text>
+  </view>
+
+  <view class="upload-placeholder">＋ 添加封面与详情图</view>
+  <view class="form-panel">
+    <text class="field-label">作品标题 *</text>
+    <input class="field-input" data-field="title" value="{{form.title}}" bindinput="updateField" />
+    <text class="field-label">Prompt *</text>
+    <textarea class="field-textarea" data-field="prompt" value="{{form.prompt}}" bindinput="updateField" />
+    <text class="field-label">AI 生成模型 / 工具 *</text>
+    <input class="field-input" data-field="sourceName" value="{{form.sourceName}}" bindinput="updateField" />
+    <text class="field-label">作品分类 *</text>
+    <input class="field-input" data-field="category" value="{{form.category}}" bindinput="updateField" />
+  </view>
+  <view class="editor-actions">
+    <button class="secondary-button" bindtap="saveDraft">保存草稿</button>
+    <button class="primary-button" bindtap="publishArtwork">发布作品</button>
+  </view>
+</view>

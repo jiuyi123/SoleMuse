@@ -1,0 +1,17 @@
+.profile-field {
+  display: grid;
+  grid-template-columns: 190rpx 1fr;
+  align-items: center;
+  min-height: 100rpx;
+  border-bottom: 1rpx solid #f0ede8;
+}
+
+.profile-field:last-child {
+  border-bottom: 0;
+}
+
+.profile-field input {
+  padding: 18rpx;
+  border-radius: 12rpx;
+  background: #f5f3f0;
+}

@@ -1,0 +1,63 @@
+{
+  "source": "docs/miniappDesign/DesignPic",
+  "purpose": "development-demo-only",
+  "notice": "Extracted from UI prototype screenshots. Confirm ownership or replace with licensed originals before release.",
+  "assets": [
+    {
+      "path": "/assets/images/demo/artworks/artwork-01-yixiu-shanhai.png",
+      "sourceFile": "搜索结果.png",
+      "width": 316,
+      "height": 216,
+      "contentId": "prototype-artwork-01"
+    },
+    {
+      "path": "/assets/images/demo/artworks/artwork-02-yixiu-huayu.png",
+      "sourceFile": "搜索结果.png",
+      "width": 316,
+      "height": 216,
+      "contentId": "prototype-artwork-02"
+    },
+    {
+      "path": "/assets/images/demo/artworks/artwork-03-yiyun-chaosheng.png",
+      "sourceFile": "搜索结果.png",
+      "width": 316,
+      "height": 205,
+      "contentId": "prototype-artwork-03"
+    },
+    {
+      "path": "/assets/images/demo/artworks/artwork-04-dongfang-xiujing.png",
+      "sourceFile": "搜索结果.png",
+      "width": 316,
+      "height": 205,
+      "contentId": "prototype-artwork-04"
+    },
+    {
+      "path": "/assets/images/demo/artworks/artwork-05-liuguang-yixiu.png",
+      "sourceFile": "搜索结果.png",
+      "width": 316,
+      "height": 196,
+      "contentId": "prototype-artwork-05"
+    },
+    {
+      "path": "/assets/images/demo/artworks/artwork-06-yixiu-future.png",
+      "sourceFile": "搜索结果.png",
+      "width": 316,
+      "height": 196,
+      "contentId": "prototype-artwork-06"
+    },
+    {
+      "path": "/assets/images/demo/profile/avatar-lintong-manbu.png",
+      "sourceFile": "个人资料页.png",
+      "width": 170,
+      "height": 170,
+      "contentId": "prototype-user-lintong"
+    },
+    {
+      "path": "/assets/images/demo/profile/profile-promo-banner.png",
+      "sourceFile": "个人资料页.png",
+      "width": 618,
+      "height": 143,
+      "contentId": "prototype-profile-banner"
+    }
+  ]
+}

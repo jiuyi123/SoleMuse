@@ -1,0 +1,39 @@
+.search-bar {
+  display: flex;
+  gap: 16rpx;
+}
+
+.search-input {
+  flex: 1;
+  height: 80rpx;
+  padding: 0 28rpx;
+  border-radius: 40rpx;
+  background: #ffffff;
+}
+
+.search-button {
+  flex: none;
+  margin: 0;
+  padding: 0 28rpx;
+  border-radius: 40rpx;
+  background: #171512;
+  color: #ffffff;
+  font-size: 26rpx;
+  line-height: 80rpx;
+}
+
+.active-filter {
+  margin-top: 20rpx;
+  color: #5c6b57;
+}
+
+.filter-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 30rpx 0;
+  padding: 22rpx 24rpx;
+  border-radius: 18rpx;
+  background: #ffffff;
+  color: #706b65;
+  font-size: 24rpx;
+}

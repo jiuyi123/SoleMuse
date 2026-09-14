@@ -1,0 +1,27 @@
+{
+  "items": [
+    {
+      "id": "artwork-demo-001",
+      "title": "未来感运动鞋概念",
+      "description": "用于接口联调和页面状态开发的非生产样本。",
+      "prompt": "concept footwear, sculptural sole, studio lighting",
+      "coverUrl": "https://example.invalid/solemuse/artwork-demo-001-cover.jpg",
+      "images": ["https://example.invalid/solemuse/artwork-demo-001-cover.jpg"],
+      "author": {
+        "id": "user-demo-001",
+        "nickname": "示例设计师",
+        "avatarUrl": ""
+      },
+      "aiSource": {
+        "type": "ai",
+        "name": "示例工具",
+        "version": ""
+      },
+      "status": "published",
+      "tags": ["运动鞋", "未来感"],
+      "metrics": { "likes": 12, "favorites": 5, "comments": 3 },
+      "publishedAt": "2026-09-14T08:00:00.000Z"
+    }
+  ],
+  "nextCursor": ""
+}

@@ -1,0 +1,17 @@
+{
+  "desc": "SoleMuse public page indexing rules",
+  "rules": [
+    {
+      "action": "allow",
+      "page": "pages/home/index"
+    },
+    {
+      "action": "allow",
+      "page": "subpackages/artwork/pages/detail/index"
+    },
+    {
+      "action": "disallow",
+      "page": "*"
+    }
+  ]
+}

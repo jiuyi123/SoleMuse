@@ -1,0 +1,18 @@
+<view class="page">
+  <view class="page-header">
+    <text class="page-title">消息</text>
+    <text class="page-subtitle">点赞、评论、作品状态与系统通知将在这里汇总。</text>
+  </view>
+  <page-state
+    wx:if="{{!isAuthenticated}}"
+    title="登录后查看消息"
+    description="登录成功后会回到消息页。"
+    action-text="去登录"
+    bind:action="openLogin"
+  />
+  <page-state
+    wx:elif="{{!messages.length}}"
+    title="暂时没有新消息"
+    description="与作品相关的互动和状态变化会显示在这里。"
+  />
+</view>

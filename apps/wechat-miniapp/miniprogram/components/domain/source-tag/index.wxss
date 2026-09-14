@@ -1,0 +1,19 @@
+.source-tag {
+  display: inline-flex;
+  padding: 8rpx 14rpx;
+  border-radius: 999rpx;
+  background: #eee9e2;
+  color: #5d5750;
+  font-size: 22rpx;
+  line-height: 1;
+}
+
+.source-tag--ai {
+  background: #e5efe8;
+  color: #315f42;
+}
+
+.source-tag--non_ai {
+  background: #e9ecf2;
+  color: #47536d;
+}

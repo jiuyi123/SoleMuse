@@ -1,0 +1,6 @@
+<view class="page">
+  <page-state
+    title="通知详情待接入"
+    description="通知 ID：{{noticeId || '未提供'}}"
+  />
+</view>

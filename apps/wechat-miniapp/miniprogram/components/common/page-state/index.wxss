@@ -1,0 +1,44 @@
+.page-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 360rpx;
+  padding: 48rpx 32rpx;
+  text-align: center;
+}
+
+.page-state__mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 88rpx;
+  height: 88rpx;
+  margin-bottom: 24rpx;
+  border-radius: 44rpx;
+  background: #eee9e2;
+  color: #706b65;
+  font-size: 38rpx;
+}
+
+.page-state__title {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.page-state__description {
+  max-width: 520rpx;
+  margin-top: 12rpx;
+  color: #8a857f;
+  font-size: 25rpx;
+  line-height: 1.6;
+}
+
+.page-state__action {
+  min-width: 200rpx;
+  margin-top: 28rpx;
+  border-radius: 40rpx;
+  background: #171512;
+  color: #ffffff;
+  font-size: 26rpx;
+}

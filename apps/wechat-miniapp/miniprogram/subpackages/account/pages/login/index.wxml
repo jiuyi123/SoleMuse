@@ -1,0 +1,14 @@
+<view class="page login-page">
+  <text class="page-title">登录 SoleMuse</text>
+  <text class="page-subtitle">登录后可以发布、点赞、收藏、评论并管理个人内容。</text>
+  <view class="panel login-note">
+    <text class="panel-title">骨架开发模式</text>
+    <text class="muted">后端认证方案尚未确定，当前按钮仅创建本地演示会话，不代表正式微信授权流程。</text>
+  </view>
+  <button
+    class="primary-button"
+    loading="{{submitting}}"
+    disabled="{{submitting}}"
+    bindtap="handleLogin"
+  >进入本地演示</button>
+</view>

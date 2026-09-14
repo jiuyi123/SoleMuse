@@ -1,0 +1,95 @@
+{
+  "profile": {
+    "id": "prototype-user-lintong",
+    "nickname": "林桐漫步",
+    "avatarUrl": "/assets/images/demo/profile/avatar-lintong-manbu.png",
+    "region": "浙江·温州",
+    "role": "独立鞋履设计师",
+    "bio": "用 AI 探索鞋履的更多可能",
+    "specialties": ["运动鞋", "国潮鞋", "可持续设计", "AI 设计"]
+  },
+  "artworks": [
+    {
+      "id": "prototype-artwork-01",
+      "title": "颐绣·山海行",
+      "coverUrl": "/assets/images/demo/artworks/artwork-01-yixiu-shanhai.png",
+      "images": ["/assets/images/demo/artworks/artwork-01-yixiu-shanhai.png"],
+      "author": { "id": "prototype-user-lynn", "nickname": "Lynn.", "avatarUrl": "" },
+      "aiSource": { "type": "ai", "name": "Midjourney", "version": "" },
+      "status": "published",
+      "tags": [],
+      "metrics": { "likes": 328, "favorites": 0, "comments": 0 }
+    },
+    {
+      "id": "prototype-artwork-02",
+      "title": "颐绣花语",
+      "coverUrl": "/assets/images/demo/artworks/artwork-02-yixiu-huayu.png",
+      "images": ["/assets/images/demo/artworks/artwork-02-yixiu-huayu.png"],
+      "author": { "id": "prototype-user-sugar", "nickname": "Sugar", "avatarUrl": "" },
+      "aiSource": { "type": "ai", "name": "DALL·E 3", "version": "" },
+      "status": "published",
+      "tags": [],
+      "metrics": { "likes": 512, "favorites": 0, "comments": 0 }
+    },
+    {
+      "id": "prototype-artwork-03",
+      "title": "颐韵·潮生",
+      "coverUrl": "/assets/images/demo/artworks/artwork-03-yiyun-chaosheng.png",
+      "images": ["/assets/images/demo/artworks/artwork-03-yiyun-chaosheng.png"],
+      "author": { "id": "prototype-user-kai", "nickname": "KAI", "avatarUrl": "" },
+      "aiSource": { "type": "ai", "name": "Stable Diffusion", "version": "" },
+      "status": "published",
+      "tags": [],
+      "metrics": { "likes": 243, "favorites": 0, "comments": 0 }
+    },
+    {
+      "id": "prototype-artwork-04",
+      "title": "东方绣境",
+      "coverUrl": "/assets/images/demo/artworks/artwork-04-dongfang-xiujing.png",
+      "images": ["/assets/images/demo/artworks/artwork-04-dongfang-xiujing.png"],
+      "author": { "id": "prototype-user-huisheji", "nickname": "绘设计", "avatarUrl": "" },
+      "aiSource": { "type": "ai", "name": "Midjourney", "version": "" },
+      "status": "published",
+      "tags": [],
+      "metrics": { "likes": 476, "favorites": 0, "comments": 0 }
+    },
+    {
+      "id": "prototype-artwork-05",
+      "title": "流光颐绣",
+      "coverUrl": "/assets/images/demo/artworks/artwork-05-liuguang-yixiu.png",
+      "images": ["/assets/images/demo/artworks/artwork-05-liuguang-yixiu.png"],
+      "author": { "id": "prototype-user-xiaolu", "nickname": "小鹿", "avatarUrl": "" },
+      "aiSource": { "type": "ai", "name": "Leonardo", "version": "" },
+      "status": "published",
+      "tags": [],
+      "metrics": { "likes": 398, "favorites": 0, "comments": 0 }
+    },
+    {
+      "id": "prototype-artwork-06",
+      "title": "颐绣 × 未来",
+      "coverUrl": "/assets/images/demo/artworks/artwork-06-yixiu-future.png",
+      "images": ["/assets/images/demo/artworks/artwork-06-yixiu-future.png"],
+      "author": { "id": "prototype-user-neodesign", "nickname": "NeoDesign", "avatarUrl": "" },
+      "aiSource": { "type": "ai", "name": "腾讯混元", "version": "" },
+      "status": "published",
+      "tags": [],
+      "metrics": { "likes": 291, "favorites": 0, "comments": 0 }
+    }
+  ],
+  "featuredArtwork": {
+    "id": "prototype-cloud-walker",
+    "title": "云境行者",
+    "tagline": "步履山水，心向远方",
+    "coverUrl": "/assets/images/demo/artworks/artwork-01-yixiu-shanhai.png",
+    "images": ["/assets/images/demo/artworks/artwork-01-yixiu-shanhai.png"],
+    "prompt": "一双融合东方美学与未来科技的运动鞋，灵感来自中国山水画，以温州颐绣的花鸟纹样为设计元素，流动的云雾，水面倒影，柔和的晨光，梦幻唯美，超精细材质，产品摄影，8k，cinematic lighting, water reflection, Chinese aesthetics, --ar 3:2 --v 6.1",
+    "description": "这双鞋的灵感来源于温州的山水与颐绣文化。将传统的花鸟纹样与现代运动鞋结构相融合，表达“行走在山水之间”的诗意体验。鞋面采用流动的云雾纹理与绣花细节，寓意每一步都是与自然和文化的对话。",
+    "author": { "id": "prototype-user-lynn", "nickname": "Lynn.", "avatarUrl": "" },
+    "aiSource": { "type": "ai", "name": "Midjourney", "version": "v6.1" },
+    "workType": "AI 生成",
+    "status": "published",
+    "tags": ["运动鞋", "东方美学", "颐绣元素", "山水意境", "梦幻风格", "产品设计"],
+    "metrics": { "likes": 328, "comments": 243 },
+    "publishedAtDisplay": "2024年5月20日 14:36"
+  }
+}

@@ -1,0 +1,45 @@
+.upload-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300rpx;
+  border: 2rpx dashed #cfc9c1;
+  border-radius: 24rpx;
+  color: #817b74;
+}
+
+.form-panel {
+  margin-top: 28rpx;
+  padding: 28rpx;
+  border-radius: 24rpx;
+  background: #ffffff;
+}
+
+.field-label {
+  display: block;
+  margin: 26rpx 0 12rpx;
+  font-weight: 600;
+}
+
+.field-label:first-child {
+  margin-top: 0;
+}
+
+.field-input,
+.field-textarea {
+  width: 100%;
+  padding: 20rpx;
+  border-radius: 14rpx;
+  background: #f5f3f0;
+}
+
+.field-textarea {
+  height: 220rpx;
+}
+
+.editor-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+  margin-top: 28rpx;
+}

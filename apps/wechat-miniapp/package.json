@@ -1,0 +1,13 @@
+{
+  "name": "@solemuse/wechat-miniapp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SoleMuse native JavaScript WeChat Mini Program",
+  "scripts": {
+    "check": "node scripts/verify-structure.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

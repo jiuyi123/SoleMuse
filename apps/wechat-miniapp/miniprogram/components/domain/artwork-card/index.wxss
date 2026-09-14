@@ -1,0 +1,45 @@
+.artwork-card {
+  overflow: hidden;
+  margin-bottom: 24rpx;
+  border-radius: 24rpx;
+  background: #ffffff;
+}
+
+.artwork-card__cover {
+  display: block;
+  width: 100%;
+  height: 420rpx;
+  background: #ebe7e1;
+}
+
+.artwork-card__body {
+  padding: 24rpx;
+}
+
+.artwork-card__title,
+.artwork-card__author {
+  display: block;
+}
+
+.artwork-card__title {
+  font-size: 31rpx;
+  font-weight: 600;
+}
+
+.artwork-card__author {
+  margin-top: 8rpx;
+  color: #817b74;
+  font-size: 24rpx;
+}
+
+.artwork-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20rpx;
+}
+
+.artwork-card__metrics {
+  color: #8a857f;
+  font-size: 22rpx;
+}

@@ -1,0 +1,10 @@
+<view class="page create-page">
+  <view class="create-mark">＋</view>
+  <text class="page-title">发布你的鞋履创意</text>
+  <text class="page-subtitle">上传展示图片，记录 Prompt、生成工具、分类与创作说明。</text>
+  <button class="primary-button create-button" bindtap="startCreating">开始创作</button>
+  <view class="panel create-note">
+    <text class="panel-title">一期必填内容</text>
+    <text class="muted">作品标题 · 展示图片 · Prompt · AI 生成模型/工具 · 作品分类</text>
+  </view>
+</view>

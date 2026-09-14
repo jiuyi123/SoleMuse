@@ -1,0 +1,10 @@
+<view class="page">
+  <view class="page-header">
+    <text class="page-title">{{title}}</text>
+  </view>
+  <page-state
+    wx:if="{{!items.length}}"
+    title="这里还没有内容"
+    description="相关接口接入后，你的内容记录会显示在这里。"
+  />
+</view>

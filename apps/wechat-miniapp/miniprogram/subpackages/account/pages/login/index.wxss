@@ -1,0 +1,8 @@
+.login-page {
+  padding-top: 120rpx;
+}
+
+.login-note {
+  margin-top: 48rpx;
+  line-height: 1.7;
+}

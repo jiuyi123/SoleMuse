@@ -1,0 +1,41 @@
+.profile-card {
+  display: flex;
+  align-items: center;
+  margin-top: 32rpx;
+}
+
+.profile-avatar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 104rpx;
+  height: 104rpx;
+  border-radius: 52rpx;
+  background: #171512;
+  color: #ffffff;
+  font-size: 38rpx;
+}
+
+.profile-summary {
+  flex: 1;
+  min-width: 0;
+  padding: 0 22rpx;
+}
+
+.profile-name {
+  display: block;
+  margin-bottom: 8rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.profile-action {
+  flex: none;
+  margin: 0;
+  padding: 0 22rpx;
+  border-radius: 28rpx;
+  background: #ece8e2;
+  font-size: 24rpx;
+  line-height: 56rpx;
+}

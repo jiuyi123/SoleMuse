@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "source-tag": "/components/domain/source-tag/index"
+  }
+}

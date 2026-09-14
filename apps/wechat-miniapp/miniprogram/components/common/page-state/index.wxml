@@ -1,0 +1,8 @@
+<view class="page-state page-state--{{state}}">
+  <view class="page-state__mark">{{state === 'loading' ? '···' : '○'}}</view>
+  <text class="page-state__title">{{title}}</text>
+  <text wx:if="{{description}}" class="page-state__description">{{description}}</text>
+  <button wx:if="{{actionText}}" class="page-state__action" bindtap="handleAction">
+    {{actionText}}
+  </button>
+</view>

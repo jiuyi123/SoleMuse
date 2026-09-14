@@ -1,0 +1,17 @@
+<view class="page">
+  <view class="page-header">
+    <text class="page-title">热门榜单</text>
+    <text class="page-subtitle">按平台公开热度规则排序，不使用个性化推荐。</text>
+  </view>
+  <artwork-card
+    wx:for="{{artworks}}"
+    wx:key="id"
+    artwork="{{item}}"
+    bind:select="openArtwork"
+  />
+  <page-state
+    wx:if="{{!artworks.length}}"
+    title="暂无榜单数据"
+    description="榜单接口接入后将在这里展示公开排名。"
+  />
+</view>

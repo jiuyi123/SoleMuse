@@ -1,0 +1,14 @@
+module.exports = Object.freeze({
+  HOME: '/pages/home/index',
+  RANKING: '/pages/ranking/index',
+  CREATE: '/pages/create/index',
+  MESSAGES: '/pages/messages/index',
+  PROFILE: '/pages/profile/index',
+  LOGIN: '/subpackages/account/pages/login/index',
+  ARTWORK_SEARCH: '/subpackages/artwork/pages/search/index',
+  ARTWORK_DETAIL: '/subpackages/artwork/pages/detail/index',
+  ARTWORK_EDITOR: '/subpackages/creator/pages/editor/index',
+  PROFILE_EDIT: '/subpackages/user/pages/profile-edit/index',
+  CONTENT_LIST: '/subpackages/user/pages/content-list/index',
+  NOTICE_DETAIL: '/subpackages/messages/pages/notice-detail/index',
+});

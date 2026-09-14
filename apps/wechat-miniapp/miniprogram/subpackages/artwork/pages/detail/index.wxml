@@ -1,0 +1,18 @@
+<view class="page">
+  <view class="page-header">
+    <text class="page-title">作品详情</text>
+    <text class="page-subtitle">作品 ID：{{artworkId || '未提供'}}</text>
+  </view>
+  <page-state
+    wx:if="{{!artwork}}"
+    title="作品数据尚未加载"
+    description="后端接入后，这里将展示图片、Prompt、AI 来源、作者信息与评论区。"
+    action-text="查看说明"
+    bind:action="showPendingMessage"
+  />
+  <view class="detail-actions">
+    <button class="secondary-button" bindtap="showPendingMessage">点赞</button>
+    <button class="secondary-button" bindtap="showPendingMessage">收藏</button>
+    <button class="primary-button" bindtap="showPendingMessage">评论</button>
+  </view>
+</view>

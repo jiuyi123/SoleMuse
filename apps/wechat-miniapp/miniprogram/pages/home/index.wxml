@@ -1,0 +1,38 @@
+<view class="page">
+  <view class="home-hero">
+    <text class="home-hero__eyebrow">SOLE · IDEAS · FUTURE</text>
+    <text class="home-hero__title">发现下一双鞋的灵感</text>
+    <text class="home-hero__copy">浏览鞋履创意作品、Prompt 与 AI 生成来源。</text>
+    <button class="search-entry" bindtap="openSearch">搜索作品、标签或设计师</button>
+  </view>
+
+  <view class="section">
+    <text class="section__title">热门标签</text>
+    <view class="tag-list">
+      <button
+        wx:for="{{hotTags}}"
+        wx:key="*this"
+        class="tag"
+        data-tag="{{item}}"
+        bindtap="searchByTag"
+      ># {{item}}</button>
+    </view>
+  </view>
+
+  <view class="section">
+    <text class="section__title">最新作品</text>
+    <artwork-card
+      wx:for="{{artworks}}"
+      wx:key="id"
+      artwork="{{item}}"
+      bind:select="openArtwork"
+    />
+    <page-state
+      wx:if="{{!artworks.length}}"
+      title="作品正在准备中"
+      description="后端接入前，这里会展示符合接口契约的开发数据。"
+      action-text="去搜索"
+      bind:action="openSearch"
+    />
+  </view>
+</view>

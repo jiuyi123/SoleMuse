@@ -1,0 +1,13 @@
+<view class="page">
+  <view class="page-header">
+    <text class="page-title">编辑资料</text>
+    <text class="page-subtitle">隐私告知和必填规则确认后再接入正式提交。</text>
+  </view>
+  <view class="panel">
+    <view class="profile-field"><text>昵称</text><input data-field="nickname" value="{{profile.nickname}}" bindinput="updateField" /></view>
+    <view class="profile-field"><text>所在地区</text><input data-field="region" value="{{profile.region}}" bindinput="updateField" /></view>
+    <view class="profile-field"><text>职业 / 角色</text><input data-field="role" value="{{profile.role}}" bindinput="updateField" /></view>
+    <view class="profile-field"><text>擅长品类</text><input data-field="specialties" value="{{profile.specialties}}" bindinput="updateField" /></view>
+  </view>
+  <button class="primary-button" bindtap="saveProfile">保存资料</button>
+</view>

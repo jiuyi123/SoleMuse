@@ -1,0 +1,54 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/ranking/index",
+    "pages/create/index",
+    "pages/messages/index",
+    "pages/profile/index"
+  ],
+  "subPackages": [
+    {
+      "root": "subpackages/account",
+      "pages": ["pages/login/index"]
+    },
+    {
+      "root": "subpackages/artwork",
+      "pages": ["pages/search/index", "pages/detail/index"]
+    },
+    {
+      "root": "subpackages/creator",
+      "pages": ["pages/editor/index"]
+    },
+    {
+      "root": "subpackages/user",
+      "pages": ["pages/profile-edit/index", "pages/content-list/index"]
+    },
+    {
+      "root": "subpackages/messages",
+      "pages": ["pages/notice-detail/index"]
+    }
+  ],
+  "window": {
+    "navigationBarTitleText": "SoleMuse",
+    "navigationBarBackgroundColor": "#f7f5f2",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f5f2",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#7d7973",
+    "selectedColor": "#171512",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/home/index", "text": "首页" },
+      { "pagePath": "pages/ranking/index", "text": "榜单" },
+      { "pagePath": "pages/create/index", "text": "创作" },
+      { "pagePath": "pages/messages/index", "text": "消息" },
+      { "pagePath": "pages/profile/index", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "sitemapLocation": "sitemap.json"
+}
