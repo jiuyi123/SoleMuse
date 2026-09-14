@@ -1,4 +1,5 @@
 {
+  "navigationBarTextStyle": "white",
   "navigationBarTitleText": "作品详情",
   "usingComponents": {
     "bottom-interaction-bar": "./components/bottom-interaction-bar/index",

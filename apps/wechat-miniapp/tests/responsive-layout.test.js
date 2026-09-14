@@ -155,6 +155,13 @@ test('artwork detail follows creator, gallery, content, comments and action-bar 
   assert.match(interactionStyles, /\.interaction-button__icon-image\s*\{[^}]*width:\s*clamp\(24px, 6\.4vw, 28px\)/);
   assert.match(interactionStyles, /\.interaction-button\s*\{[^}]*font-size:\s*clamp\(14px, 3\.8vw, 16px\)/);
   assert.match(styles, /\.detail-header\s*\{[^}]*position:\s*fixed/);
+  assert.doesNotMatch(markup, /class="detail-page" style="padding-top:/);
+  assert.match(markup, /class="gallery-shade"/);
+  assert.match(styles, /\.detail-header\s*\{[^}]*linear-gradient/);
+  assert.match(styles, /\.detail-header--solid\s*\{[^}]*background:\s*rgba\(255, 255, 255, 0\.94\)/);
+  assert.match(styles, /\.artwork-swiper,[\s\S]*\.artwork-image\s*\{[^}]*height:\s*min\(100vw, 760px\);[^}]*aspect-ratio:\s*1 \/ 1/);
+  assert.match(styles, /\.thumbnail-scroll\s*\{[^}]*margin-top:\s*-16px;[^}]*border-radius:\s*22px 22px 0 0/);
+  assert.match(read('subpackages/artwork/pages/detail/index.js'), /onPageScroll\(event\)[\s\S]*headerSolid/);
   assert.match(markup, /class="creator-name">\{\{artwork\.author\.nickname\}\}/);
   assert.match(markup, /wx:if="\{\{authorBadges\.length\}\}" class="creator-badges"/);
   assert.match(markup, /class="artwork-publish-time">\{\{artwork\.publishedAtDisplay\}\} 发布/);

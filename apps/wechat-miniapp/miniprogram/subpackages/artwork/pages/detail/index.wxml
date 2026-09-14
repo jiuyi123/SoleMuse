@@ -1,4 +1,4 @@
-<view class="detail-header" style="padding-top: {{headerTop}}px;">
+<view wx:if="{{artwork}}" class="detail-header {{headerSolid ? 'detail-header--solid' : ''}}" style="padding-top: {{headerTop}}px;">
   <view
     class="detail-header__inner"
     style="height: {{headerNavigationHeight}}px; padding-right: {{headerRightInset}}px;"
@@ -33,7 +33,7 @@
   </view>
 </view>
 
-<view wx:if="{{artwork}}" class="detail-page" style="padding-top: {{headerOffset}}px;">
+<view wx:if="{{artwork}}" class="detail-page">
   <view class="gallery-section">
     <swiper
       class="artwork-swiper"
@@ -51,6 +51,7 @@
         />
       </swiper-item>
     </swiper>
+    <view class="gallery-shade"></view>
     <text wx:if="{{artwork.images.length > 1}}" class="image-count">{{currentImage}} / {{artwork.images.length}}</text>
 
     <scroll-view

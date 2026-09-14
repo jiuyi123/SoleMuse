@@ -16,10 +16,10 @@ Page({
     currentImage: 1,
     currentImageIndex: 0,
     followed: false,
-    headerTop: 64,
-    headerNavigationHeight: 68,
-    headerOffset: 132,
-    headerRightInset: 12,
+    headerSolid: false,
+    headerTop: 20,
+    headerNavigationHeight: 44,
+    headerRightInset: 104,
     liked: false,
     favorited: false,
     shareCount: 0,
@@ -29,15 +29,30 @@ Page({
   },
 
   onLoad(options) {
-    const { menuBottom } = getNavigationLayout();
+    const { menuRightInset, navigationHeight, statusBarHeight } = getNavigationLayout();
     this.setData({
       artworkId: options.id || '',
-      headerTop: menuBottom,
-      headerNavigationHeight: 68,
-      headerOffset: menuBottom + 68,
-      headerRightInset: 12,
+      headerTop: statusBarHeight,
+      headerNavigationHeight: navigationHeight,
+      headerRightInset: menuRightInset + 8,
     });
+    this.syncNavigationBarTone(false);
     this.loadArtwork();
+  },
+
+  onPageScroll(event) {
+    const headerSolid = event.scrollTop > 72;
+    if (headerSolid === this.data.headerSolid) return;
+    this.setData({ headerSolid });
+    this.syncNavigationBarTone(headerSolid);
+  },
+
+  syncNavigationBarTone(solid) {
+    wx.setNavigationBarColor({
+      frontColor: solid ? '#000000' : '#ffffff',
+      backgroundColor: solid ? '#ffffff' : '#315d79',
+      animation: { duration: 180, timingFunc: 'easeOut' },
+    });
   },
 
   async loadArtwork() {
