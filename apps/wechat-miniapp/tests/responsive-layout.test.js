@@ -82,6 +82,25 @@ test('responsive breakpoints cover tablet and desktop grids', () => {
   assert.match(home, /repeat\(4, minmax\(0, 1fr\)\)/);
 });
 
+test('ranking page shows responsive periods, authors and complete interaction metrics', () => {
+  const markup = read('pages/ranking/index.wxml');
+  const styles = read('pages/ranking/index.wxss');
+  const data = read('data/prototype-content.js');
+
+  assert.doesNotMatch(markup, /<button[^>]*class="period/);
+  assert.match(markup, /24小时热榜|\{\{item\.label\}\}/);
+  assert.match(styles, /\.period-switch\s*\{[^}]*grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\)/);
+  assert.match(markup, /class="author-avatar"[^>]*src="\{\{item\.avatarUrl\}\}"/);
+  assert.match(markup, /author-avatar author-avatar--fallback/);
+  assert.match(markup, /heart-filled\.svg/);
+  assert.match(markup, /star-filled\.svg/);
+  assert.match(markup, /\{\{item\.metrics\.comments\}\}/);
+  assert.match(styles, /\.metric--like\s*\{[^}]*color:\s*#e55663/);
+  assert.match(styles, /@media \(min-width: 768px\)[\s\S]*repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.match(styles, /@media \(min-width: 1100px\)[\s\S]*grid-template-columns:\s*minmax\(0, 0\.9fr\) minmax\(0, 1\.1fr\)/);
+  assert.match(data, /metrics:\s*\{\s*likes:[^}]*favorites:[^}]*comments:/);
+});
+
 test('home chrome is fixed while tags and artwork remain in the scrolling page', () => {
   const markup = read('pages/home/index.wxml');
   const styles = read('pages/home/index.wxss');

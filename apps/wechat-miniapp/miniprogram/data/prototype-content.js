@@ -76,14 +76,14 @@ const messages = [
 ];
 
 const ranking = [
-  { rank: 1, title: '云境行者', author: 'NeoDesign', heat: '2.8k', subtitle: '步履山水，心向远方', image: artworkImages[0], artworkId: 'prototype-cloud-walker' },
-  { rank: 2, title: '未来之翼', author: 'Lynn.', heat: '2.4k', subtitle: '科技与东方的相遇', image: artworkImages[2], artworkId: 'prototype-artwork-03' },
-  { rank: 3, title: '流光花穿', author: 'Sin Studio', heat: '1.9k', subtitle: '花鸟入梦，流光成履', image: artworkImages[4], artworkId: 'prototype-artwork-05' },
-  { rank: 4, title: '机械花园', author: 'Wei Design', heat: '1.4k', subtitle: '未来与自然的碰撞', image: artworkImages[2], artworkId: 'prototype-artwork-03' },
-  { rank: 5, title: '颐绣新生', author: '青岚', heat: '1.3k', subtitle: '东方美学 · 数字演绎', image: artworkImages[3], artworkId: 'prototype-artwork-04' },
-  { rank: 6, title: '赛博逐潮', author: 'Luna', heat: '1.1k', subtitle: '潮起东方', image: artworkImages[1], artworkId: 'prototype-artwork-02' },
-  { rank: 7, title: '自然共生', author: '浮生映月', heat: '1.1k', subtitle: '步履山水之间', image: artworkImages[4], artworkId: 'prototype-artwork-05' },
-  { rank: 8, title: '无界 · NEXT', author: 'Cloudy', heat: '0.9k', subtitle: '探索下一种可能', image: artworkImages[5], artworkId: 'prototype-artwork-06' },
+  { rank: 1, title: '云境行者', author: 'NeoDesign', avatarUrl: '', heat: '2.8k', subtitle: '步履山水，心向远方', image: artworkImages[0], artworkId: 'prototype-cloud-walker', metrics: { likes: '2.8k', favorites: 936, comments: 428 } },
+  { rank: 2, title: '未来之翼', author: 'Lynn.', avatarUrl: '/assets/images/demo/profile/avatar-lintong-manbu.png', heat: '2.4k', subtitle: '科技与东方的相遇', image: artworkImages[2], artworkId: 'prototype-artwork-03', metrics: { likes: '2.4k', favorites: 810, comments: 365 } },
+  { rank: 3, title: '流光花穿', author: 'Sin Studio', avatarUrl: '', heat: '1.9k', subtitle: '花鸟入梦，流光成履', image: artworkImages[4], artworkId: 'prototype-artwork-05', metrics: { likes: '1.9k', favorites: 647, comments: 286 } },
+  { rank: 4, title: '机械花园', author: 'Wei Design', avatarUrl: '', heat: '1.4k', subtitle: '未来与自然的碰撞', image: artworkImages[2], artworkId: 'prototype-artwork-03', metrics: { likes: '1.4k', favorites: 476, comments: 214 } },
+  { rank: 5, title: '颐绣新生', author: '青岚', avatarUrl: '', heat: '1.3k', subtitle: '东方美学 · 数字演绎', image: artworkImages[3], artworkId: 'prototype-artwork-04', metrics: { likes: '1.3k', favorites: 442, comments: 198 } },
+  { rank: 6, title: '赛博逐潮', author: 'Luna', avatarUrl: '', heat: '1.1k', subtitle: '潮起东方', image: artworkImages[1], artworkId: 'prototype-artwork-02', metrics: { likes: '1.1k', favorites: 374, comments: 176 } },
+  { rank: 7, title: '自然共生', author: '浮生映月', avatarUrl: '', heat: '1.1k', subtitle: '步履山水之间', image: artworkImages[4], artworkId: 'prototype-artwork-05', metrics: { likes: '1.1k', favorites: 360, comments: 149 } },
+  { rank: 8, title: '无界 · NEXT', author: 'Cloudy', avatarUrl: '', heat: '0.9k', subtitle: '探索下一种可能', image: artworkImages[5], artworkId: 'prototype-artwork-06', metrics: { likes: 928, favorites: 315, comments: 126 } },
 ];
 
 const searchDiscovery = {

@@ -25,7 +25,11 @@ Page({
   },
 
   async loadRanking() {
-    const ranking = await demoContent.getRanking();
+    const source = await demoContent.getRanking();
+    const ranking = source.map((item) => Object.assign({}, item, {
+      authorInitial: String(item.author || '?').charAt(0).toUpperCase(),
+      metrics: Object.assign({ likes: item.heat || 0, favorites: 0, comments: 0 }, item.metrics),
+    }));
     this.setData({ podiums: [ranking[1], ranking[0], ranking[2]], ranking: ranking.slice(3) });
   },
 
