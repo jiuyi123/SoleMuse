@@ -118,6 +118,47 @@ test('shared back control avoids native button sizing and stays square', () => {
   assert.match(styles, /\.app-header__back-icon\s*\{[^}]*border-bottom:[^}]*border-left:/);
 });
 
+test('artwork detail follows creator, gallery, content, comments and action-bar order', () => {
+  const markup = read('subpackages/artwork/pages/detail/index.wxml');
+  const styles = read('subpackages/artwork/pages/detail/index.wxss');
+  const interactionMarkup = read('subpackages/artwork/pages/detail/components/bottom-interaction-bar/index.wxml');
+  const interactionStyles = read('subpackages/artwork/pages/detail/components/bottom-interaction-bar/index.wxss');
+  const creatorIndex = markup.indexOf('class="creator-summary"');
+  const galleryIndex = markup.indexOf('class="gallery-section"');
+  const titleIndex = markup.indexOf('class="artwork-title"');
+  const promptIndex = markup.indexOf('>Prompt<');
+  const descriptionIndex = markup.indexOf('>创作说明<');
+  const commentsIndex = markup.indexOf('id="comments"');
+  const bottomIndex = markup.indexOf('<bottom-interaction-bar');
+
+  assert.ok(creatorIndex >= 0 && creatorIndex < galleryIndex);
+  assert.ok(galleryIndex < titleIndex && titleIndex < promptIndex && promptIndex < descriptionIndex);
+  assert.ok(descriptionIndex < commentsIndex && commentsIndex < bottomIndex);
+  assert.match(markup, /wx:if="\{\{artwork\.images\.length > 1\}\}"[\s\S]*class="thumbnail-scroll"/);
+  assert.match(markup, /最新[\s\S]*最多点赞/);
+  assert.match(styles, /\.detail-header__inner\s*\{[^}]*grid-template-columns:\s*40px minmax\(0, 1fr\) auto/);
+  assert.match(interactionStyles, /\.bottom-interaction-bar\s*\{[^}]*position:\s*fixed/);
+  assert.match(interactionStyles, /\.bottom-interaction-bar\s*\{[^}]*border-radius:\s*0/);
+  assert.match(interactionStyles, /\.action-group\s*\{[^}]*grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\)/);
+  assert.match(interactionStyles, /\.interaction-button\s*\{[^}]*box-sizing:\s*border-box;[^}]*max-width:\s*100%/);
+  assert.match(interactionStyles, /\.interaction-button\s*\{[^}]*align-items:\s*center;[^}]*justify-content:\s*center/);
+  assert.match(interactionStyles, /\.interaction-button__icon-image\s*\{[^}]*width:\s*clamp\(24px, 6\.4vw, 28px\)/);
+  assert.match(interactionStyles, /\.interaction-button\s*\{[^}]*font-size:\s*clamp\(14px, 3\.8vw, 16px\)/);
+  assert.match(styles, /\.detail-header\s*\{[^}]*position:\s*fixed/);
+  assert.match(markup, /class="creator-name">\{\{artwork\.author\.nickname\}\}/);
+  assert.match(markup, /wx:if="\{\{authorBadges\.length\}\}" class="creator-badges"/);
+  assert.match(markup, /class="artwork-publish-time">\{\{artwork\.publishedAtDisplay\}\} 发布/);
+  assert.match(interactionMarkup, /class="interaction-button share-button" open-type="share"/);
+  assert.match(interactionMarkup, /src="\/assets\/icons\/share-outline\.svg"/);
+  assert.match(interactionMarkup, /heart-filled\.svg[^}]*heart-outline\.svg/);
+  assert.match(interactionMarkup, /star-filled\.svg[^}]*star-outline\.svg/);
+  assert.match(interactionStyles, /\.like-button\.interaction-button--active\s*\{[^}]*color:\s*#e66678/);
+  assert.match(interactionStyles, /\.favorite-button\.interaction-button--active\s*\{[^}]*color:\s*#d99a17/);
+  assert.match(interactionMarkup, /\{\{shareCount\}\}/);
+  assert.match(interactionStyles, /\.bottom-interaction-bar--input-active\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\) 0/);
+  assert.match(markup, /class="artwork-image"[\s\S]*mode="aspectFill"/);
+});
+
 test('artwork cards expose only title, author identity and likes', () => {
   const markup = read('components/domain/artwork-card/index.wxml');
   assert.match(markup, /artwork-card__title/);

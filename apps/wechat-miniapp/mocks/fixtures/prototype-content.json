@@ -89,7 +89,7 @@
     "workType": "AI 生成",
     "status": "published",
     "tags": ["运动鞋", "东方美学", "颐绣元素", "山水意境", "梦幻风格", "产品设计"],
-    "metrics": { "likes": 328, "comments": 243 },
+    "metrics": { "likes": 328, "favorites": 118, "comments": 243, "shares": 622 },
     "publishedAtDisplay": "2024年5月20日 14:36"
   }
 }

@@ -25,7 +25,6 @@
 
 ## 作品最小字段
 
-作品包含 `id`、`title`、`description`、`prompt`、`coverUrl`、有序 `images`、`author`、`aiSource`、`status`、`tags`、`metrics` 与 `publishedAt`。枚举值以客户端 `constants/enums.js` 为当前草案基线。
+作品包含 `id`、`title`、`description`、`prompt`、`coverUrl`、有序 `images`、`author`、`aiSource`、`status`、`tags`、`metrics` 与 `publishedAt`。`metrics` 包含独立的 `likes`、`favorites`、`comments` 和 `shares` 计数。枚举值以客户端 `constants/enums.js` 为当前草案基线。
 
 待确认：上传协议、登录换取会话协议、互动接口、评论结构、热度榜规则、消息已读协议及分页上限。
-

@@ -27,6 +27,7 @@ function mapArtwork(dto = {}) {
       likes: Number((dto.metrics && dto.metrics.likes) || 0),
       favorites: Number((dto.metrics && dto.metrics.favorites) || 0),
       comments: Number((dto.metrics && dto.metrics.comments) || 0),
+      shares: Number((dto.metrics && dto.metrics.shares) || 0),
     },
     publishedAt: dto.publishedAt || '',
   };

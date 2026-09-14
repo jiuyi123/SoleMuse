@@ -19,7 +19,7 @@
       },
       "status": "published",
       "tags": ["运动鞋", "未来感"],
-      "metrics": { "likes": 12, "favorites": 5, "comments": 3 },
+      "metrics": { "likes": 12, "favorites": 5, "comments": 3, "shares": 2 },
       "publishedAt": "2026-09-14T08:00:00.000Z"
     }
   ],

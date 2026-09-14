@@ -20,5 +20,5 @@ test('mapArtwork supplies stable defaults for optional transport fields', () => 
 
   assert.equal(artwork.title, '未命名作品');
   assert.equal(artwork.aiSource.name, '来源未标注');
-  assert.deepEqual(artwork.metrics, { likes: 0, favorites: 0, comments: 0 });
+  assert.deepEqual(artwork.metrics, { likes: 0, favorites: 0, comments: 0, shares: 0 });
 });

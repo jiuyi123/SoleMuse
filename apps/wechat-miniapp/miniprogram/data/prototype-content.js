@@ -41,7 +41,7 @@ const featuredArtwork = {
   prompt: '一双融合东方美学与未来科技的运动鞋，灵感来自中国山水画，以温州颐绣的花鸟纹样为设计元素，流动的云雾，水面倒影，柔和的晨光，梦幻唯美，超精细材质，产品摄影，8k，cinematic lighting, water reflection, Chinese aesthetics, --ar 3:2 --v 6.1',
   description: '这双鞋的灵感来源于温州的山水与颐绣文化。将传统的花鸟纹样与现代运动鞋结构相融合，表达“行走在山水之间”的诗意体验。鞋面采用流动的云雾纹理与绣花细节，寓意每一步都是与自然和文化的对话。',
   tags: ['运动鞋', '东方美学', '颐绣元素', '山水意境', '梦幻风格', '产品设计'],
-  metrics: { likes: 328, favorites: 118, comments: 243 },
+  metrics: { likes: 328, favorites: 118, comments: 243, shares: 622 },
   publishedAtDisplay: '2024年5月20日 14:36',
 };
 

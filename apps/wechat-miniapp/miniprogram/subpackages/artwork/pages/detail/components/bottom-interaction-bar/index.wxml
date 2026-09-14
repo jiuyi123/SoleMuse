@@ -1,0 +1,52 @@
+<view class="bottom-interaction-bar {{inputFocused ? 'bottom-interaction-bar--input-active' : ''}}">
+  <view class="comment-trigger">
+    <text class="comment-trigger__icon">✎</text>
+    <input
+      class="comment-trigger__input"
+      value="{{commentText}}"
+      maxlength="300"
+      placeholder="说点什么..."
+      confirm-type="send"
+      bindinput="handleInput"
+      bindfocus="handleFocus"
+      bindblur="handleBlur"
+      bindconfirm="handleSubmit"
+    />
+    <view wx:if="{{commentText}}" class="comment-trigger__send" bindtap="handleSubmit" aria-role="button">发送</view>
+  </view>
+
+  <view class="action-group">
+    <view
+      class="interaction-button like-button {{liked ? 'interaction-button--active' : ''}}"
+      bindtap="handleLike"
+      aria-role="button"
+      aria-label="点赞"
+    >
+      <image
+        class="interaction-button__icon-image"
+        src="{{liked ? '/assets/icons/heart-filled.svg' : '/assets/icons/heart-outline.svg'}}"
+        mode="aspectFit"
+      />
+      <text class="interaction-button__count">{{likeCount}}</text>
+    </view>
+
+    <view
+      class="interaction-button favorite-button {{favorited ? 'interaction-button--active' : ''}}"
+      bindtap="handleFavorite"
+      aria-role="button"
+      aria-label="收藏"
+    >
+      <image
+        class="interaction-button__icon-image"
+        src="{{favorited ? '/assets/icons/star-filled.svg' : '/assets/icons/star-outline.svg'}}"
+        mode="aspectFit"
+      />
+      <text class="interaction-button__count">{{favoriteCount}}</text>
+    </view>
+
+    <button class="interaction-button share-button" open-type="share" aria-label="转发作品">
+      <image class="interaction-button__icon-image" src="/assets/icons/share-outline.svg" mode="aspectFit" />
+      <text class="interaction-button__count">{{shareCount}}</text>
+    </button>
+  </view>
+</view>

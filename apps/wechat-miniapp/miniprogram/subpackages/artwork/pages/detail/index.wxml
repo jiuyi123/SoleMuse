@@ -1,64 +1,168 @@
-<app-header title="作品详情页" back transparent />
-<view wx:if="{{artwork}}" class="detail-page">
-  <view class="artwork-hero">
-    <swiper class="artwork-swiper" circular bindchange="changeImage">
-      <swiper-item wx:for="{{artwork.images}}" wx:key="*this">
-        <image class="artwork-hero__image" src="{{item}}" mode="aspectFill" data-url="{{item}}" bindtap="previewImage" />
-      </swiper-item>
-    </swiper>
-    <view class="artwork-hero__shade"></view>
-    <view class="artwork-hero__copy">
-      <text class="artwork-hero__title">{{artwork.title}}</text>
-      <text class="artwork-hero__tagline">{{artwork.tagline}}</text>
-      <view class="hero-rule"></view>
-      <text class="artwork-hero__motto">以东方山水为履</text>
-      <text class="artwork-hero__motto">让每一步</text>
-      <text class="artwork-hero__motto">都走向更美的世界</text>
+<view class="detail-header" style="padding-top: {{headerTop}}px;">
+  <view
+    class="detail-header__inner"
+    style="height: {{headerNavigationHeight}}px; padding-right: {{headerRightInset}}px;"
+  >
+    <view class="back-control" bindtap="goBack" aria-role="button" aria-label="返回">
+      <view class="back-control__icon"></view>
     </view>
-    <text class="swiper-count">{{currentImage}} / {{artwork.images.length}}</text>
-  </view>
-  <view class="detail-sheet">
-    <view class="author-row">
-      <view class="author-avatar">L</view>
-      <view class="author-copy">
-        <text class="detail-title">{{artwork.title}}</text>
-        <text class="author-name">{{artwork.author.nickname}}</text>
-        <text class="publish-time">{{artwork.publishedAtDisplay}} 发布</text>
-      </view>
-      <view class="metric-actions">
-        <button class="metric-action {{liked ? 'metric-action--active' : ''}}" bindtap="toggleLike"><text>♡</text><text>{{artwork.metrics.likes}}</text></button>
-        <button class="metric-action {{favorited ? 'metric-action--active' : ''}}" bindtap="toggleFavorite"><text>☆</text><text>收藏</text></button>
-        <view class="metric-action"><text>◌</text><text>{{artwork.metrics.comments}}</text></view>
-      </view>
-    </view>
-    <view class="source-panel glass-card">
-      <view><text class="source-label">使用工具</text><text class="source-value">{{artwork.aiSource.name}}　{{artwork.aiSource.version}}</text></view>
-      <view class="source-divider"></view>
-      <view><text class="source-label">作品类型</text><text class="source-value">{{artwork.workType}}</text></view>
-    </view>
-    <view class="content-panel glass-card">
-      <view class="content-panel__heading"><text>▣　Prompt 提示词</text><button bindtap="copyPrompt">▢ 复制</button></view>
-      <text class="content-paragraph">{{artwork.prompt}}</text>
-    </view>
-    <view class="content-panel glass-card">
-      <view class="content-panel__heading"><text>▤　创作说明</text></view>
-      <text class="content-paragraph">{{artwork.description}}</text>
-    </view>
-    <view class="detail-tags"><text wx:for="{{artwork.tags}}" wx:key="*this" class="chip"># {{item}}</text></view>
-    <view class="comment-heading"><text class="section-title">评论 {{artwork.metrics.comments}}</text><text class="comment-sort">最新 ↕</text></view>
-    <view class="comment-list">
-      <view wx:for="{{comments}}" wx:key="id" class="comment-item">
-        <view class="comment-avatar">{{item.initial}}</view>
-        <view class="comment-body">
-          <view class="comment-meta"><text>{{item.author}}</text><text>{{item.time}}</text><text>♡ {{item.likes}}</text></view>
-          <text class="comment-content">{{item.content}}</text>
+
+    <view wx:if="{{artwork}}" class="creator-summary">
+      <image
+        wx:if="{{artwork.author.avatarUrl}}"
+        class="creator-avatar"
+        src="{{artwork.author.avatarUrl}}"
+        mode="aspectFill"
+      />
+      <view wx:else class="creator-avatar creator-avatar--fallback">{{authorInitial}}</view>
+      <view class="creator-copy">
+        <text class="creator-name">{{artwork.author.nickname}}</text>
+        <view wx:if="{{authorBadges.length}}" class="creator-badges">
+          <text wx:for="{{authorBadges}}" wx:key="*this" class="creator-badge">{{item}}</text>
         </view>
       </view>
     </view>
-  </view>
-  <view class="comment-composer">
-    <input value="{{commentText}}" maxlength="300" placeholder="说点什么吧…" bindinput="updateComment" />
-    <button bindtap="publishComment">发布</button>
+
+    <view wx:if="{{artwork}}" class="creator-actions">
+      <view
+        class="follow-control {{followed ? 'follow-control--active' : ''}}"
+        bindtap="toggleFollow"
+        aria-role="button"
+      >{{followed ? '已关注' : '关注'}}</view>
+    </view>
   </view>
 </view>
-<view wx:else class="page"><page-state state="loading" title="正在打开作品" description="请稍候…" /></view>
+
+<view wx:if="{{artwork}}" class="detail-page" style="padding-top: {{headerOffset}}px;">
+  <view class="gallery-section">
+    <swiper
+      class="artwork-swiper"
+      current="{{currentImageIndex}}"
+      circular="{{artwork.images.length > 1}}"
+      bindchange="changeImage"
+    >
+      <swiper-item wx:for="{{artwork.images}}" wx:key="*this">
+        <image
+          class="artwork-image"
+          src="{{item}}"
+          mode="aspectFill"
+          data-url="{{item}}"
+          bindtap="previewImage"
+        />
+      </swiper-item>
+    </swiper>
+    <text wx:if="{{artwork.images.length > 1}}" class="image-count">{{currentImage}} / {{artwork.images.length}}</text>
+
+    <scroll-view
+      wx:if="{{artwork.images.length > 1}}"
+      class="thumbnail-scroll"
+      scroll-x
+      enhanced
+      show-scrollbar="{{false}}"
+    >
+      <view class="thumbnail-list">
+        <view
+          wx:for="{{artwork.images}}"
+          wx:key="*this"
+          class="thumbnail-item {{index === currentImageIndex ? 'thumbnail-item--active' : ''}}"
+          data-index="{{index}}"
+          bindtap="selectThumbnail"
+          aria-role="button"
+        >
+          <image src="{{item}}" mode="aspectFill" />
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="detail-content">
+    <view class="artwork-intro">
+      <view class="artwork-title-row">
+        <text class="artwork-title">{{artwork.title}}</text>
+        <text class="artwork-publish-time">{{artwork.publishedAtDisplay}} 发布</text>
+      </view>
+      <view class="artwork-meta">
+        <view class="meta-chip meta-chip--tool">
+          <text class="meta-chip__label">使用工具</text>
+          <text>{{toolDisplay}}</text>
+        </view>
+        <view class="meta-chip">
+          <text class="meta-chip__label">作品类型</text>
+          <text>{{artwork.workType || '未标注'}}</text>
+        </view>
+      </view>
+      <view class="tag-list">
+        <text wx:for="{{artwork.tags}}" wx:key="*this" class="artwork-tag"># {{item}}</text>
+      </view>
+    </view>
+
+    <view class="content-section">
+      <view class="content-heading">
+        <text class="content-title">Prompt</text>
+        <view class="copy-control" bindtap="copyPrompt" aria-role="button">复制</view>
+      </view>
+      <text class="content-text content-text--prompt">{{artwork.prompt}}</text>
+    </view>
+
+    <view class="content-section">
+      <view class="content-heading">
+        <text class="content-title">创作说明</text>
+      </view>
+      <text class="content-text">{{artwork.description}}</text>
+    </view>
+
+    <view id="comments" class="comments-section">
+      <view class="comments-heading">
+        <text class="comments-title">评论 {{artwork.metrics.comments}}</text>
+        <view class="comment-sort-tabs">
+          <view
+            class="comment-sort {{commentSort === 'latest' ? 'comment-sort--active' : ''}}"
+            data-sort="latest"
+            bindtap="changeCommentSort"
+            aria-role="button"
+          >最新</view>
+          <view
+            class="comment-sort {{commentSort === 'hottest' ? 'comment-sort--active' : ''}}"
+            data-sort="hottest"
+            bindtap="changeCommentSort"
+            aria-role="button"
+          >最多点赞</view>
+        </view>
+      </view>
+
+      <view wx:if="{{comments.length}}" class="comment-list">
+        <view wx:for="{{comments}}" wx:key="id" class="comment-item">
+          <view class="comment-avatar">{{item.initial}}</view>
+          <view class="comment-body">
+            <view class="comment-meta">
+              <view class="comment-author-copy">
+                <text class="comment-author">{{item.author}}</text>
+                <text class="comment-time">{{item.time}}</text>
+              </view>
+              <text class="comment-likes">♡ {{item.likes}}</text>
+            </view>
+            <text class="comment-content">{{item.content}}</text>
+          </view>
+        </view>
+      </view>
+      <text wx:else class="comment-empty">还没有评论，来说说你的想法吧。</text>
+    </view>
+  </view>
+
+  <bottom-interaction-bar
+    comment-text="{{commentText}}"
+    liked="{{liked}}"
+    like-count="{{artwork.metrics.likes}}"
+    favorited="{{favorited}}"
+    favorite-count="{{artwork.metrics.favorites}}"
+    share-count="{{shareCount}}"
+    bind:input="updateComment"
+    bind:submit="publishComment"
+    bind:like="toggleLike"
+    bind:favorite="toggleFavorite"
+  />
+</view>
+
+<view wx:else class="page loading-page">
+  <page-state state="loading" title="正在打开作品" description="请稍候…" />
+</view>

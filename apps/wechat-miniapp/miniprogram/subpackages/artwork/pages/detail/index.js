@@ -3,31 +3,68 @@ const session = require('../../../../core/auth/session');
 const imageMedia = require('../../../../core/media/image');
 const router = require('../../../../core/navigation/router');
 const demoContent = require('../../../../services/demo-content-service');
+const getNavigationLayout = require('../../../../utils/navigation-layout');
 
 Page({
   data: {
     artworkId: '',
     artwork: null,
+    authorInitial: '',
+    authorBadges: [],
     comments: [],
+    commentSort: 'latest',
     currentImage: 1,
+    currentImageIndex: 0,
+    followed: false,
+    headerTop: 64,
+    headerNavigationHeight: 68,
+    headerOffset: 132,
+    headerRightInset: 12,
     liked: false,
     favorited: false,
+    shareCount: 0,
     commentText: '',
     submitting: false,
+    toolDisplay: '',
   },
 
   onLoad(options) {
-    this.setData({ artworkId: options.id || '' });
+    const { menuBottom } = getNavigationLayout();
+    this.setData({
+      artworkId: options.id || '',
+      headerTop: menuBottom,
+      headerNavigationHeight: 68,
+      headerOffset: menuBottom + 68,
+      headerRightInset: 12,
+    });
     this.loadArtwork();
   },
 
   async loadArtwork() {
     const content = await demoContent.getArtwork();
-    this.setData({ artwork: content.artwork, comments: content.comments });
+    const artwork = content.artwork;
+    artwork.metrics.favorites = artwork.metrics.favorites || 0;
+    const authorBadges = [artwork.author.role].concat(artwork.author.labels || artwork.author.tags || []).filter(Boolean);
+    this.sourceComments = content.comments.slice();
+    const source = artwork.aiSource;
+    this.setData({
+      artwork,
+      authorInitial: artwork.author.nickname.charAt(0).toUpperCase(),
+      authorBadges,
+      comments: this.sourceComments,
+      shareCount: Number(artwork.metrics.shares || 0),
+      toolDisplay: [source.name, source.version].filter(Boolean).join(' · '),
+    });
   },
 
   changeImage(event) {
-    this.setData({ currentImage: event.detail.current + 1 });
+    const currentImageIndex = event.detail.current;
+    this.setData({ currentImage: currentImageIndex + 1, currentImageIndex });
+  },
+
+  selectThumbnail(event) {
+    const currentImageIndex = Number(event.currentTarget.dataset.index);
+    this.setData({ currentImage: currentImageIndex + 1, currentImageIndex });
   },
 
   previewImage(event) {
@@ -38,6 +75,15 @@ Page({
     if (session.isAuthenticated()) return true;
     router.navigateTo(ROUTES.LOGIN, { redirect: ROUTES.ARTWORK_DETAIL, redirectId: this.data.artworkId });
     return false;
+  },
+
+  goBack() {
+    router.navigateBack();
+  },
+
+  toggleFollow() {
+    if (!this.requireLogin()) return;
+    this.setData({ followed: !this.data.followed });
   },
 
   toggleLike() {
@@ -60,6 +106,13 @@ Page({
     this.setData({ commentText: event.detail.value });
   },
 
+  changeCommentSort(event) {
+    const commentSort = event.currentTarget.dataset.sort;
+    const comments = this.sourceComments.slice();
+    if (commentSort === 'hottest') comments.sort((left, right) => right.likes - left.likes);
+    this.setData({ comments, commentSort });
+  },
+
   publishComment() {
     if (!this.requireLogin() || this.data.submitting) return;
     const content = this.data.commentText.trim();
@@ -67,7 +120,16 @@ Page({
       wx.showToast({ title: '请输入评论内容', icon: 'none' });
       return;
     }
-    const comments = [{ id: `local-${Date.now()}`, author: '林桐漫步', initial: '林', time: '刚刚', content, likes: 0 }].concat(this.data.comments);
-    this.setData({ comments, commentText: '', 'artwork.metrics.comments': this.data.artwork.metrics.comments + 1 });
+    const comments = [{ id: `local-${Date.now()}`, author: '林桐漫步', initial: '林', time: '刚刚', content, likes: 0 }].concat(this.sourceComments);
+    this.sourceComments = comments.slice();
+    this.setData({ comments, commentSort: 'latest', commentText: '', 'artwork.metrics.comments': this.data.artwork.metrics.comments + 1 });
+  },
+
+  onShareAppMessage() {
+    const artwork = this.data.artwork;
+    return {
+      title: artwork ? artwork.title : 'SoleMuse 作品',
+      path: `${ROUTES.ARTWORK_DETAIL}?id=${this.data.artworkId}`,
+    };
   },
 });

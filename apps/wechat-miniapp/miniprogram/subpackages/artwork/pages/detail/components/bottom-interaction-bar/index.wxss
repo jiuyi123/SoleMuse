@@ -1,0 +1,139 @@
+.bottom-interaction-bar {
+  position: fixed;
+  z-index: 50;
+  right: 0;
+  bottom: env(safe-area-inset-bottom);
+  left: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  width: 100%;
+  align-items: center;
+  gap: clamp(6px, 1.4vw, 10px);
+  padding: 7px clamp(8px, 2vw, 14px);
+  border: 1px solid rgba(198, 209, 217, 0.78);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 2px 12px rgba(25, 57, 82, 0.16);
+  backdrop-filter: blur(12px);
+}
+
+.bottom-interaction-bar--input-active {
+  grid-template-columns: minmax(0, 1fr) 0;
+  gap: 0;
+}
+
+.comment-trigger {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  height: 50px;
+  align-items: center;
+  padding: 0 15px;
+  border-radius: 999px;
+  background: #eef2f5;
+}
+
+.comment-trigger__icon {
+  flex: none;
+  color: #8996a0;
+  font-size: 20px;
+}
+
+.comment-trigger__input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0 9px;
+  color: #17344e;
+  font-size: clamp(13px, 1.8vw, 15px);
+}
+
+.comment-trigger__send {
+  flex: none;
+  color: #4d8580;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.action-group {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-width: 0;
+  align-items: center;
+  transition: opacity 160ms ease;
+}
+
+.bottom-interaction-bar--input-active .action-group {
+  width: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.interaction-button {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(4px, 1vw, 6px);
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  color: #334c60;
+  font-size: clamp(14px, 3.8vw, 16px);
+  line-height: 1;
+}
+
+.interaction-button::after {
+  border: 0;
+}
+
+.interaction-button__icon-image {
+  width: clamp(24px, 6.4vw, 28px);
+  height: clamp(24px, 6.4vw, 28px);
+  flex: none;
+}
+
+.interaction-button__count {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.like-button.interaction-button--active {
+  color: #e66678;
+}
+
+.favorite-button.interaction-button--active {
+  color: #d99a17;
+}
+
+@media (max-width: 359px) {
+  .bottom-interaction-bar {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    padding-right: 6px;
+    padding-left: 6px;
+  }
+
+  .comment-trigger {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .interaction-button {
+    gap: 3px;
+    padding: 0;
+    font-size: 13px;
+  }
+
+  .interaction-button__icon-image {
+    width: 23px;
+    height: 23px;
+  }
+}
