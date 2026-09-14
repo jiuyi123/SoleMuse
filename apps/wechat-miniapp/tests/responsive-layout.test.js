@@ -24,6 +24,16 @@ function simulateHomeArtworkGrid(viewportWidth) {
   return { cardWidth, columns, contentWidth, gutter };
 }
 
+function simulateCreateUploadCard(viewportWidth) {
+  const pageWidth = Math.min(viewportWidth, 760);
+  const pageGutter = 16;
+  const cardPadding = 12;
+  const cardContentWidth = pageWidth - pageGutter * 2 - cardPadding * 2;
+  const uploadWidth = clamp(82, viewportWidth * 0.23, 90);
+  const gap = 12;
+  return { cardContentWidth, infoWidth: cardContentWidth - uploadWidth - gap, uploadWidth };
+}
+
 test('global layout uses a fluid gutter, bounded content and horizontal overflow protection', () => {
   const styles = read('app.wxss');
   assert.match(styles, /max-width:\s*1200px/);
@@ -166,4 +176,45 @@ test('artwork cards expose only title, author identity and likes', () => {
   assert.match(markup, /artwork-card__author/);
   assert.match(markup, /artwork-card__metrics/);
   assert.doesNotMatch(markup, /source-tag|artwork-card__stats|artwork-card__tags/);
+});
+
+test('create page keeps a fixed capsule-safe header and compact controls responsive', () => {
+  const markup = read('pages/create/index.wxml');
+  const styles = read('pages/create/index.wxss');
+
+  assert.doesNotMatch(markup, /editor-intro|SOLE MUSE STUDIO/);
+  assert.match(markup, /class="publish-header" style="padding-top: \{\{statusBarHeight\}\}px;"/);
+  assert.match(markup, /class="publish-header__bar" style="min-height: \{\{headerBarHeight\}\}px; padding-right: \{\{headerRightInset\}\}px;"/);
+  assert.match(markup, /发布作品[\s\S]*分享你的 AI 鞋履设计创意/);
+  assert.match(markup, /class="upload-card"[\s\S]*class="upload-placeholder/);
+  assert.match(styles, /\.publish-header\s*\{[^}]*position:\s*fixed/);
+  assert.match(markup, /class="page publish-content create-page" style="padding-top: \{\{statusBarHeight \+ headerBarHeight \+ 10\}\}px;"/);
+  assert.match(styles, /\.publish-content\s*\{[^}]*display:\s*flex;[^}]*min-height:\s*100vh;[^}]*flex-direction:\s*column/);
+  assert.match(styles, /\.form-card\s*\{[^}]*display:\s*flex;[^}]*flex:\s*1;[^}]*flex-direction:\s*column;[^}]*justify-content:\s*space-between;[^}]*gap:\s*clamp\(10px, 1\.6vh, 16px\)/);
+  assert.match(styles, /\.upload-placeholder\s*\{[^}]*width:\s*clamp\(82px, 23vw, 90px\);[^}]*height:\s*clamp\(82px, 23vw, 90px\)/);
+  assert.match(markup, /class="choice-scroll" scroll-x/);
+  assert.doesNotMatch(markup, /<button[^>]*choice-chip/);
+  assert.match(markup, /<view wx:for="\{\{categories\}\}"[^>]*aria-role="button"/);
+  assert.match(markup, /<view wx:for="\{\{tagOptions\}\}"[^>]*aria-role="button"/);
+  assert.equal((markup.match(/class="choice-chip choice-chip--custom"/g) || []).length, 2);
+  assert.match(markup, /bindtap="addCustomCategory"/);
+  assert.match(markup, /bindtap="addCustomTag"/);
+  assert.match(markup, /class="paste-control" catchtap="pastePrompt"/);
+  assert.match(styles, /\.form-field__prompt-heading\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\) auto/);
+  assert.match(styles, /\.choice-list\s*\{[^}]*width:\s*max-content;[^}]*min-width:\s*100%;[^}]*flex-wrap:\s*nowrap;[^}]*justify-content:\s*flex-start;[^}]*gap:\s*5px/);
+  assert.match(styles, /\.choice-chip\s*\{[^}]*min-height:\s*26px;[^}]*background:\s*#ffffff/);
+  assert.match(markup, /class="description-toggle" bindtap="toggleDescription"/);
+  assert.match(markup, /wx:if="\{\{descriptionExpanded\}\}" class="description-content"/);
+  assert.match(styles, /\.bottom-action-bar\s*\{[^}]*position:\s*fixed;[^}]*env\(safe-area-inset-bottom\)/);
+  assert.match(styles, /\.bottom-action-bar__inner\s*\{[^}]*grid-template-columns:\s*minmax\(0, 0\.9fr\) minmax\(0, 1\.1fr\);[^}]*gap:\s*12px/);
+  assert.match(styles, /\.publish-content\s*\{[^}]*padding-bottom:\s*calc\(82px \+ env\(safe-area-inset-bottom\)\)/);
+  assert.match(markup, /class="bottom-action-bar"/);
+  assert.match(read('custom-tab-bar/index.wxml'), /wx:if="\{\{!hidden\}\}" class="tab-shell"/);
+  assert.match(read('pages/create/index.js'), /syncTabBar\(this, 2, \{ hidden: true \}\)/);
+
+  [320, 375, 390, 430].forEach((viewportWidth) => {
+    const layout = simulateCreateUploadCard(viewportWidth);
+    assert.ok(layout.uploadWidth >= 82 && layout.uploadWidth <= 90);
+    assert.ok(layout.infoWidth >= 120, `${viewportWidth}px upload info is too narrow: ${layout.infoWidth}`);
+  });
 });

@@ -3,6 +3,7 @@ const { getEnvironment } = require('./config/environment');
 
 App({
   globalData: {
+    creationTransitionPending: false,
     session: null,
   },
 

@@ -1,72 +1,106 @@
-<app-header title="发布作品" transparent />
-
-<view class="page tab-page editor-page">
-  <view class="editor-intro">
-    <text class="editor-intro__eyebrow">SOLE MUSE STUDIO</text>
-    <text class="editor-intro__title">把灵感，变成被看见的鞋履创意</text>
-    <text class="editor-intro__desc">记录创作来源与提示词，让每一份灵感都清晰可追溯。</text>
-  </view>
-
-  <view class="editor-card glass-card">
-    <view class="section-heading">
-      <text class="section-heading__title">作品图片</text>
-      <text class="section-heading__meta">{{images.length}} / 9</text>
-    </view>
-    <view class="image-editor">
-      <view class="image-editor__item" wx:for="{{images}}" wx:key="*this" bindtap="previewImage" data-url="{{item}}">
-        <image class="image-editor__image" src="{{item}}" mode="aspectFill" />
-        <text wx:if="{{index === 0}}" class="image-editor__cover">封面</text>
+<view class="publish-page {{transitionArrival ? 'publish-page--transition-arrival' : ''}} {{entranceReady ? 'publish-page--ready' : ''}}">
+  <view class="publish-header" style="padding-top: {{statusBarHeight}}px;">
+    <view class="publish-header__bar" style="min-height: {{headerBarHeight}}px; padding-right: {{headerRightInset}}px;">
+      <view class="publish-header__back" bindtap="goBack" aria-role="button" aria-label="返回">
+        <view class="publish-header__back-icon"></view>
       </view>
-      <view wx:if="{{images.length < 9}}" class="image-editor__upload" bindtap="chooseImages">
-        <text class="image-editor__plus">＋</text>
-        <text>添加图片</text>
+      <view class="publish-header__titles">
+        <text class="publish-header__title">发布作品</text>
+        <text class="publish-header__subtitle">分享你的 AI 鞋履设计创意</text>
       </view>
     </view>
   </view>
 
-  <view class="editor-card glass-card">
-    <label class="form-field">
-      <view class="form-field__label"><text>作品标题</text><text class="required">必填</text></view>
-      <input class="form-control" maxlength="30" placeholder="给你的作品起个名字" value="{{form.title}}" data-field="title" bindinput="updateField" />
-      <text class="form-field__count">{{form.title.length}} / 30</text>
-    </label>
+  <view class="page publish-content create-page" style="padding-top: {{statusBarHeight + headerBarHeight + 10}}px;">
+    <view class="upload-card">
+      <view class="upload-card__main">
+        <view class="upload-placeholder {{images.length >= 9 ? 'upload-placeholder--disabled' : ''}}" bindtap="chooseImages" aria-role="button" aria-label="添加作品图片">
+          <text class="upload-placeholder__plus">＋</text>
+          <text class="upload-placeholder__label">添加图片</text>
+        </view>
+        <view class="upload-info">
+          <view class="upload-info__heading">
+            <text class="upload-info__title">上传作品图片</text>
+            <text class="upload-info__count">{{images.length}} / 9</text>
+          </view>
+          <text class="upload-info__description">支持多张图片，展示你的 AI 鞋履设计作品</text>
+          <text class="upload-info__hint">JPG、PNG 格式，单张不超过 10MB</text>
+        </view>
+      </view>
 
-    <label class="form-field">
-      <view class="form-field__label"><text>创作提示词</text><text class="required">必填</text></view>
-      <textarea class="form-control form-control--textarea" maxlength="500" placeholder="记录生成作品时使用的提示词" value="{{form.prompt}}" data-field="prompt" bindinput="updateField" />
-      <text class="form-field__count">{{form.prompt.length}} / 500</text>
-    </label>
-
-    <view class="form-field">
-      <view class="form-field__label"><text>创作工具 / 来源</text><text class="required">必填</text></view>
-      <picker range="{{tools}}" value="{{toolIndex}}" bindchange="chooseTool">
-        <view class="form-control picker-control">{{form.sourceName || '请选择创作工具'}}<text>⌄</text></view>
-      </picker>
+      <scroll-view wx:if="{{images.length}}" class="uploaded-images" scroll-x enhanced show-scrollbar="{{false}}">
+        <view class="uploaded-images__list">
+          <view class="uploaded-image" wx:for="{{images}}" wx:key="*this" bindtap="previewImage" data-url="{{item}}">
+            <image class="uploaded-image__image" src="{{item}}" mode="aspectFill" />
+            <text wx:if="{{index === 0}}" class="uploaded-image__cover">封面</text>
+          </view>
+        </view>
+      </scroll-view>
     </view>
 
-    <view class="form-field">
-      <view class="form-field__label"><text>作品分类</text><text class="required">必填</text></view>
-      <view class="choice-list">
-        <button wx:for="{{categories}}" wx:key="*this" class="choice-chip {{form.category === item ? 'choice-chip--active' : ''}}" data-value="{{item}}" bindtap="chooseCategory">{{item}}</button>
+    <view class="form-card">
+      <label class="form-field">
+        <view class="form-field__label"><text>作品标题</text><text class="required-mark">*</text></view>
+        <input class="form-control" maxlength="30" placeholder="给你的作品起一个名字" value="{{form.title}}" data-field="title" bindinput="updateField" />
+        <text class="form-field__count">{{form.title.length}} / 30</text>
+      </label>
+
+      <view class="form-field">
+        <view class="form-field__prompt-heading">
+          <view class="form-field__label form-field__label--inline"><text>Prompt 描述</text><text class="required-mark">*</text></view>
+          <view class="paste-control" catchtap="pastePrompt" aria-role="button" aria-label="粘贴剪贴板内容">粘贴</view>
+        </view>
+        <textarea class="form-control form-control--textarea" maxlength="500" placeholder="请描述你的创意想法、风格、材质、场景等…" value="{{form.prompt}}" data-field="prompt" bindinput="updateField" />
+        <text class="form-field__count">{{form.prompt.length}} / 500</text>
+      </view>
+
+      <view class="form-field">
+        <view class="form-field__label"><text>使用的 AI 工具 / 模型</text><text class="required-mark">*</text></view>
+        <picker range="{{tools}}" value="{{toolIndex}}" bindchange="chooseTool">
+          <view class="form-control picker-control">{{form.sourceName || '请选择创作工具'}}<text class="picker-control__arrow">›</text></view>
+        </picker>
+      </view>
+
+      <view class="form-field form-field--choices">
+        <view class="form-field__label"><text>作品分类</text><text class="required-mark">*</text></view>
+        <scroll-view class="choice-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+          <view class="choice-list">
+            <view wx:for="{{categories}}" wx:key="*this" class="choice-chip {{form.category === item ? 'choice-chip--active' : ''}}" data-value="{{item}}" bindtap="chooseCategory" aria-role="button" aria-label="选择作品分类 {{item}}">{{item}}</view>
+            <view class="choice-chip choice-chip--custom" bindtap="addCustomCategory" aria-role="button" aria-label="添加自定义作品分类">＋ 自定义</view>
+          </view>
+        </scroll-view>
+      </view>
+
+      <view class="form-field form-field--choices">
+        <view class="form-field__label"><text>风格标签</text><text class="required-mark">*</text></view>
+        <scroll-view class="choice-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+          <view class="choice-list">
+            <view wx:for="{{tagOptions}}" wx:key="label" class="choice-chip {{item.selected ? 'choice-chip--active' : ''}}" data-value="{{item.label}}" bindtap="toggleTag" aria-role="button" aria-label="切换风格标签 {{item.label}}">{{item.label}}</view>
+            <view class="choice-chip choice-chip--custom" bindtap="addCustomTag" aria-role="button" aria-label="添加自定义风格标签">＋ 自定义</view>
+          </view>
+        </scroll-view>
+      </view>
+
+      <view class="description-field">
+        <view class="description-toggle" bindtap="toggleDescription" aria-role="button" aria-expanded="{{descriptionExpanded}}">
+          <view class="description-toggle__label">
+            <text class="description-toggle__plus">{{descriptionExpanded ? '−' : '＋'}}</text>
+            <text>{{descriptionExpanded ? '收起创作说明' : '添加创作说明'}}</text>
+          </view>
+          <text class="description-toggle__arrow {{descriptionExpanded ? 'description-toggle__arrow--expanded' : ''}}">⌄</text>
+        </view>
+        <view wx:if="{{descriptionExpanded}}" class="description-content">
+          <textarea class="form-control form-control--textarea form-control--short" maxlength="300" placeholder="说说作品背后的灵感与故事" value="{{form.description}}" data-field="description" bindinput="updateField" />
+          <text class="form-field__count">{{form.description.length}} / 300</text>
+        </view>
       </view>
     </view>
-
-    <view class="form-field">
-      <view class="form-field__label"><text>灵感标签</text><text class="optional">选填</text></view>
-      <view class="choice-list">
-        <button wx:for="{{tagOptions}}" wx:key="label" class="choice-chip {{item.selected ? 'choice-chip--active' : ''}}" data-value="{{item.label}}" bindtap="toggleTag">{{item.label}}</button>
-      </view>
-    </view>
-
-    <label class="form-field form-field--last">
-      <view class="form-field__label"><text>创作说明</text><text class="optional">选填</text></view>
-      <textarea class="form-control form-control--textarea form-control--short" maxlength="300" placeholder="说说作品背后的灵感与故事" value="{{form.description}}" data-field="description" bindinput="updateField" />
-      <text class="form-field__count">{{form.description.length}} / 300</text>
-    </label>
   </view>
 
-  <view class="editor-actions">
-    <button class="editor-actions__secondary" bindtap="saveDraft">保存草稿</button>
-    <button class="editor-actions__primary" loading="{{submitting}}" bindtap="publishArtwork">发布作品</button>
+  <view class="bottom-action-bar">
+    <view class="bottom-action-bar__inner">
+      <button class="bottom-action-bar__draft" bindtap="saveDraft">存草稿</button>
+      <button class="bottom-action-bar__publish" loading="{{submitting}}" bindtap="publishArtwork">发布作品</button>
+    </view>
   </view>
 </view>

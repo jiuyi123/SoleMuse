@@ -10,6 +10,37 @@
 .tab-item--raised .tab-label { margin-top: 4px; }
 .tab-badge { position: absolute; top: -3px; right: -7px; min-width: 18px; height: 18px; padding: 0 4px; border: 2px solid #ffffff; border-radius: 999px; background: #f05c6b; color: #ffffff; font-size: 10px; line-height: 14px; text-align: center; }
 
+.creation-transition-lock {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.creation-transition-circle {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 36%, #7db4ae 0%, #75aaa4 34%, #66a8d4 100%);
+  box-shadow: 0 0 36px 12px rgba(102, 168, 212, 0.3);
+  opacity: 0.92;
+  transform-origin: center;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+  transition:
+    transform 560ms cubic-bezier(0.18, 0.82, 0.22, 1),
+    opacity 180ms ease-out;
+}
+
+.creation-transition-circle--expanded {
+  opacity: 1;
+}
+
 @media (min-width: 1024px) {
   .tab-shell { right: 50%; bottom: 18px; left: auto; width: min(720px, calc(100vw - 64px)); padding-bottom: 0; border: 1px solid rgba(190, 209, 224, 0.65); border-radius: 28px; transform: translateX(50%); box-shadow: 0 10px 34px rgba(33, 69, 100, 0.16); }
   .tab-bar { height: 68px; }
