@@ -1,1 +1,26 @@
-/* Message list styles are added with the message feature. */
+.message-page { padding-top: 6px; }
+.message-hero { margin: 4px 2px clamp(16px, 3vw, 24px); }
+.message-hero__title { display: block; color: #193a57; font-family: "STKaiti", "Songti SC", serif; font-size: clamp(20px, 3.4vw, 30px); font-weight: 600; letter-spacing: 1px; overflow-wrap: anywhere; }
+.message-hero__desc { display: block; margin-top: 6px; color: #7a8ca0; font-size: clamp(13px, 1.8vw, 16px); line-height: 1.55; overflow-wrap: anywhere; }
+.message-filters { width: 100%; margin-bottom: 16px; white-space: nowrap; }
+.message-filters__inner { display: inline-flex; min-width: 100%; gap: 8px; }
+.message-filter { flex: 1 0 auto; min-width: 68px; min-height: 36px; margin: 0; padding: 0 clamp(12px, 2vw, 20px); border: 1px solid #c7d7e2; border-radius: 999px; background: rgba(255,255,255,.72); color: #526a81; font-size: clamp(12px, 1.6vw, 14px); line-height: 34px; }
+.message-filter::after { border: 0; }
+.message-filter--active { border-color: transparent; background: linear-gradient(120deg,#6ca49b,#76acd2); color: #fff; }
+.message-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(10px, 2vw, 16px); }
+.message-card { display: flex; align-items: center; width: 100%; min-width: 0; padding: clamp(12px, 2.5vw, 20px); }
+.message-card__icon { display: flex; flex: 0 0 clamp(40px, 10vw, 54px); align-items: center; justify-content: center; aspect-ratio: 1; border-radius: clamp(13px, 2.8vw, 20px); color: #fff; font-size: clamp(16px, 2.8vw, 21px); font-weight: 700; }
+.message-card__icon--rose { background: linear-gradient(145deg,#eaa1a8,#df7080); }
+.message-card__icon--cyan { background: linear-gradient(145deg,#85c5c2,#5c9dac); }
+.message-card__icon--amber { background: linear-gradient(145deg,#e8c57b,#d49b55); }
+.message-card__icon--blue { background: linear-gradient(145deg,#8eb9d6,#668fb8); }
+.message-card__body { flex: 1; min-width: 0; margin-left: clamp(10px, 2vw, 16px); }
+.message-card__heading { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 8px; }
+.message-card__title { min-width: 0; overflow: hidden; color: #183652; font-size: clamp(13px, 1.8vw, 16px); font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.message-card__time { flex-shrink: 0; color: #9aa6b5; font-size: clamp(10px, 1.3vw, 12px); }
+.message-card__summary { display: -webkit-box; margin-top: 6px; overflow: hidden; color: #6d7f92; font-size: clamp(12px, 1.6vw, 14px); line-height: 1.5; overflow-wrap: anywhere; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.message-card__image { flex: 0 0 clamp(44px, 11vw, 62px); width: clamp(44px, 11vw, 62px); height: auto; margin-left: clamp(8px, 1.8vw, 14px); aspect-ratio: 1; border-radius: clamp(9px, 1.8vw, 14px); object-fit: cover; }
+
+@media (min-width: 768px) {
+  .message-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

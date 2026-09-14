@@ -1,13 +1,17 @@
-<view class="page">
-  <view class="page-header">
-    <text class="page-title">编辑资料</text>
-    <text class="page-subtitle">隐私告知和必填规则确认后再接入正式提交。</text>
+<app-header title="编辑资料" back transparent />
+
+<view class="page profile-edit-page">
+  <view class="avatar-editor">
+    <image src="{{profile.avatarUrl}}" mode="aspectFill" />
+    <text>更换头像</text>
   </view>
-  <view class="panel">
-    <view class="profile-field"><text>昵称</text><input data-field="nickname" value="{{profile.nickname}}" bindinput="updateField" /></view>
-    <view class="profile-field"><text>所在地区</text><input data-field="region" value="{{profile.region}}" bindinput="updateField" /></view>
-    <view class="profile-field"><text>职业 / 角色</text><input data-field="role" value="{{profile.role}}" bindinput="updateField" /></view>
-    <view class="profile-field"><text>擅长品类</text><input data-field="specialties" value="{{profile.specialties}}" bindinput="updateField" /></view>
+  <view class="profile-form glass-card">
+    <label class="profile-field"><text>昵称</text><input maxlength="20" data-field="nickname" value="{{profile.nickname}}" bindinput="updateField" /></label>
+    <label class="profile-field"><text>所在地区</text><input data-field="region" value="{{profile.region}}" bindinput="updateField" /></label>
+    <label class="profile-field"><text>职业 / 角色</text><input data-field="role" value="{{profile.role}}" bindinput="updateField" /></label>
+    <label class="profile-field"><text>个人介绍</text><input data-field="bio" value="{{profile.bio}}" bindinput="updateField" /></label>
+    <label class="profile-field"><text>擅长品类</text><input data-field="specialties" value="{{profile.specialties}}" bindinput="updateField" /></label>
   </view>
+  <text class="privacy-note">资料将展示在个人主页，请勿填写敏感联系方式。</text>
   <button class="primary-button" bindtap="saveProfile">保存资料</button>
 </view>

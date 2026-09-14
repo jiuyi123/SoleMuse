@@ -1,17 +1,27 @@
-<view class="page">
-  <view class="page-header">
-    <text class="page-title">热门榜单</text>
-    <text class="page-subtitle">按平台公开热度规则排序，不使用个性化推荐。</text>
+<app-header title="榜单" transparent />
+<view class="page tab-page ranking-page">
+  <view class="period-switch glass-card">
+    <button wx:for="{{periods}}" wx:key="value" class="period {{period === item.value ? 'period--active' : ''}}" data-period="{{item.value}}" bindtap="changePeriod">{{item.label}}</button>
   </view>
-  <artwork-card
-    wx:for="{{artworks}}"
-    wx:key="id"
-    artwork="{{item}}"
-    bind:select="openArtwork"
-  />
-  <page-state
-    wx:if="{{!artworks.length}}"
-    title="暂无榜单数据"
-    description="榜单接口接入后将在这里展示公开排名。"
-  />
+  <button class="rules-link" bindtap="toggleRules">排行规则　ⓘ</button>
+  <view class="podium-stage">
+    <view wx:for="{{podiums}}" wx:key="rank" class="podium podium--{{item.rank}}" data-id="{{item.artworkId}}" bindtap="openArtwork">
+      <text class="crown">♕<text>{{item.rank}}</text></text>
+      <view class="podium-image-wrap"><image src="{{item.image}}" mode="aspectFill" /></view>
+      <text class="podium-title">{{item.title}}</text>
+      <text class="podium-heat">♥ {{item.heat}}</text>
+      <text class="podium-author">{{item.author}}</text>
+    </view>
+  </view>
+  <view class="ranking-list glass-card">
+    <view wx:for="{{ranking}}" wx:key="rank" class="ranking-row" data-id="{{item.artworkId}}" bindtap="openArtwork">
+      <text class="rank-number">{{item.rank}}</text>
+      <image class="rank-image" src="{{item.image}}" mode="aspectFill" />
+      <view class="rank-copy"><text class="rank-title">{{item.title}}</text><text class="rank-subtitle">{{item.subtitle}}</text><text class="rank-author">{{item.author}}</text></view>
+      <text class="rank-heat">♡ {{item.heat}}</text>
+    </view>
+  </view>
+</view>
+<view wx:if="{{showRules}}" class="rule-mask" bindtap="toggleRules">
+  <view class="rule-dialog" catchtap="noop"><text class="rule-title">榜单规则</text><text>榜单按公开热度规则生成，不因个人用户而变化。当前页面为开发示例，正式计算口径和更新时间以后端规则为准。</text><button bindtap="toggleRules">知道了</button></view>
 </view>

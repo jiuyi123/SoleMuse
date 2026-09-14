@@ -1,10 +1,18 @@
-<view class="page">
-  <view class="page-header">
-    <text class="page-title">{{title}}</text>
+<app-header title="我的内容" back transparent />
+
+<view class="page content-page">
+  <view wx:if="{{profile}}" class="content-owner">
+    <image src="{{profile.avatarUrl}}" mode="aspectFill" />
+    <view><text class="content-owner__name">{{profile.nickname}}</text><text class="content-owner__meta">{{profile.role}} · {{profile.region}}</text></view>
   </view>
-  <page-state
-    wx:if="{{!items.length}}"
-    title="这里还没有内容"
-    description="相关接口接入后，你的内容记录会显示在这里。"
-  />
+
+  <view class="content-tabs glass-card">
+    <button wx:for="{{tabs}}" wx:key="key" class="content-tab {{activeType === item.key ? 'content-tab--active' : ''}}" data-type="{{item.key}}" bindtap="changeTab">{{item.label}}</button>
+  </view>
+
+  <view class="content-heading"><text class="section-title">{{activeType === 'artworks' ? '我的创作' : '灵感足迹'}}</text><text>{{items.length}} 项</text></view>
+  <view wx:if="{{items.length}}" class="content-grid">
+    <artwork-card wx:for="{{items}}" wx:key="id" artwork="{{item}}" manageable="{{activeType === 'artworks'}}" bind:select="openArtwork" bind:menu="openMenu" />
+  </view>
+  <page-state wx:elif="{{!loading}}" title="这里还没有内容" description="去发现页看看新的鞋履灵感吧。" />
 </view>

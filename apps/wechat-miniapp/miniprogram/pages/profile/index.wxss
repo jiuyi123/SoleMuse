@@ -1,41 +1,37 @@
-.profile-card {
-  display: flex;
-  align-items: center;
-  margin-top: 32rpx;
-}
+.profile-page { padding-top: 8px; }
+.profile-hero { position: relative; display: flex; flex-direction: column; align-items: center; padding: clamp(26px, 5vw, 46px) clamp(18px, 4vw, 34px) clamp(22px, 4vw, 34px); overflow: hidden; }
+.profile-hero__wash { position: absolute; top: -64px; right: -52px; width: clamp(210px, 46vw, 360px); aspect-ratio: 1.25; border-radius: 50%; background: radial-gradient(circle,rgba(232,176,157,.38),transparent 68%); }
+.profile-avatar { width: clamp(88px, 18vw, 128px); height: auto; aspect-ratio: 1; border: 4px solid rgba(255,255,255,.88); border-radius: 50%; object-fit: cover; box-shadow: 0 7px 18px rgba(42,77,101,.18); }
+.profile-edit { position: absolute; top: clamp(12px, 2vw, 20px); right: clamp(12px, 2vw, 20px); min-height: 34px; margin: 0; padding: 0 14px; border: 1px solid #c4d5df; border-radius: 999px; background: rgba(255,255,255,.76); color: #496279; font-size: clamp(11px, 1.5vw, 13px); line-height: 32px; }
+.profile-edit::after { border: 0; }
+.profile-name { margin-top: 12px; color: #173854; font-family: "STKaiti", "Songti SC", serif; font-size: clamp(22px, 3.8vw, 32px); font-weight: 700; overflow-wrap: anywhere; }
+.profile-role, .profile-bio { max-width: 100%; text-align: center; overflow-wrap: anywhere; }
+.profile-role { margin-top: 5px; color: #6d8094; font-size: clamp(12px, 1.7vw, 14px); }
+.profile-bio { margin-top: 11px; color: #46647c; font-size: clamp(13px, 1.8vw, 16px); }
+.specialty-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px; margin-top: 14px; }
+.specialty { max-width: 100%; padding: 5px 11px; border-radius: 999px; background: rgba(228,240,241,.9); color: #4a7776; font-size: clamp(11px, 1.5vw, 13px); overflow-wrap: anywhere; }
+.profile-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 14px; padding: 16px 4px; }
+.profile-stat { display: flex; min-width: 0; flex-direction: column; align-items: center; border-right: 1px solid #e3ebef; }
+.profile-stat:last-child { border-right: 0; }
+.profile-stat__value, .profile-stat__label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.profile-stat__value { color: #173854; font-size: clamp(17px, 3vw, 23px); font-weight: 700; }
+.profile-stat__label { margin-top: 4px; color: #8594a5; font-size: clamp(10px, 1.4vw, 12px); }
+.profile-menu { margin-top: 14px; padding: 3px clamp(14px, 2.5vw, 24px); }
+.profile-menu__row { display: flex; align-items: center; min-height: clamp(48px, 9vw, 62px); border-bottom: 1px solid #e9eff2; color: #294762; font-size: clamp(13px, 1.8vw, 16px); }
+.profile-menu__row:last-child { border-bottom: 0; }
+.profile-menu__icon { display: flex; flex: 0 0 32px; align-items: center; justify-content: center; aspect-ratio: 1; margin-right: 10px; border-radius: 11px; background: #dfeaf4; color: #517694; font-size: 12px; }
+.profile-menu__icon--mint { background: #dfeee8; color: #527f72; }
+.profile-menu__icon--rose { background: #f7e3e4; color: #b66d75; }
+.profile-menu__icon--amber { background: #f5ead7; color: #aa8051; }
+.profile-menu__arrow { margin-left: auto; color: #9ba9b6; font-size: clamp(24px, 4vw, 32px); }
+.profile-banner { position: relative; width: 100%; height: auto; margin-top: 14px; aspect-ratio: 3.2 / 1; overflow: hidden; border-radius: clamp(18px, 3vw, 27px); }
+.profile-banner image { width: 100%; height: 100%; object-fit: cover; }
+.profile-banner::after { position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: linear-gradient(90deg,rgba(16,46,69,.68),rgba(16,46,69,.08)); content: ""; }
+.profile-banner__copy { position: absolute; z-index: 1; top: 50%; left: clamp(18px, 4vw, 32px); display: flex; max-width: 65%; flex-direction: column; transform: translateY(-50%); color: rgba(255,255,255,.9); font-size: clamp(11px, 1.6vw, 14px); overflow-wrap: anywhere; }
+.profile-banner__title { margin-bottom: 6px; color: #fff; font-family: "STKaiti", serif; font-size: clamp(18px, 2.8vw, 25px); font-weight: 700; }
 
-.profile-avatar {
-  display: flex;
-  flex: none;
-  align-items: center;
-  justify-content: center;
-  width: 104rpx;
-  height: 104rpx;
-  border-radius: 52rpx;
-  background: #171512;
-  color: #ffffff;
-  font-size: 38rpx;
-}
-
-.profile-summary {
-  flex: 1;
-  min-width: 0;
-  padding: 0 22rpx;
-}
-
-.profile-name {
-  display: block;
-  margin-bottom: 8rpx;
-  font-size: 30rpx;
-  font-weight: 600;
-}
-
-.profile-action {
-  flex: none;
-  margin: 0;
-  padding: 0 22rpx;
-  border-radius: 28rpx;
-  background: #ece8e2;
-  font-size: 24rpx;
-  line-height: 56rpx;
+@media (min-width: 900px) {
+  .profile-page { display: grid; grid-template-columns: minmax(300px, .85fr) minmax(0, 1.15fr); gap: 20px; align-items: start; }
+  .profile-hero { grid-row: span 3; height: 100%; min-height: 560px; justify-content: center; }
+  .profile-stats, .profile-menu, .profile-banner { margin-top: 0; }
 }

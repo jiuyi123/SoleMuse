@@ -1,18 +1,30 @@
-<view class="page">
-  <view class="page-header">
-    <text class="page-title">消息</text>
-    <text class="page-subtitle">点赞、评论、作品状态与系统通知将在这里汇总。</text>
+<app-header title="消息" transparent />
+
+<view class="page tab-page message-page">
+  <view class="message-hero">
+    <text class="message-hero__title">灵感正在回应你</text>
+    <text class="message-hero__desc">作品互动、状态更新与平台通知，都汇集在这里。</text>
   </view>
-  <page-state
-    wx:if="{{!isAuthenticated}}"
-    title="登录后查看消息"
-    description="登录成功后会回到消息页。"
-    action-text="去登录"
-    bind:action="openLogin"
-  />
-  <page-state
-    wx:elif="{{!messages.length}}"
-    title="暂时没有新消息"
-    description="与作品相关的互动和状态变化会显示在这里。"
-  />
+
+  <page-state wx:if="{{!isAuthenticated}}" title="登录后查看消息" description="登录成功后会回到消息页。" action-text="去登录" bind:action="openLogin" />
+
+  <block wx:else>
+    <scroll-view class="message-filters" scroll-x enhanced show-scrollbar="false">
+      <view class="message-filters__inner">
+        <button wx:for="{{filters}}" wx:key="key" class="message-filter {{activeFilter === item.key ? 'message-filter--active' : ''}}" data-key="{{item.key}}" bindtap="changeFilter">{{item.label}}</button>
+      </view>
+    </scroll-view>
+
+    <view wx:if="{{visibleMessages.length}}" class="message-list">
+      <view wx:for="{{visibleMessages}}" wx:key="id" class="message-card glass-card" data-id="{{item.id}}" bindtap="openMessage">
+        <view class="message-card__icon message-card__icon--{{item.tone}}">{{item.icon}}</view>
+        <view class="message-card__body">
+          <view class="message-card__heading"><text class="message-card__title">{{item.title}}</text><text class="message-card__time">{{item.time}}</text></view>
+          <text class="message-card__summary">{{item.summary}}</text>
+        </view>
+        <image wx:if="{{item.image}}" class="message-card__image" src="{{item.image}}" mode="aspectFill" />
+      </view>
+    </view>
+    <page-state wx:else title="这一栏很安静" description="新的互动与通知会第一时间出现在这里。" />
+  </block>
 </view>

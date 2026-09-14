@@ -1,22 +1,56 @@
-<view class="page">
-  <view class="page-header">
-    <text class="page-title">{{mode === 'create' ? '发布作品' : '编辑作品'}}</text>
-    <text class="page-subtitle">图片上传能力将在限制规则确认后接入。</text>
+<app-header title="编辑作品" back transparent />
+
+<view class="page editor-page">
+  <view class="status-strip glass-card">
+    <text class="status-pill">已发布</text>
+    <text class="status-time">更新于 2024.05.20</text>
+    <text class="view-work" bindtap="viewArtwork">查看作品 ›</text>
   </view>
 
-  <view class="upload-placeholder">＋ 添加封面与详情图</view>
-  <view class="form-panel">
-    <text class="field-label">作品标题 *</text>
-    <input class="field-input" data-field="title" value="{{form.title}}" bindinput="updateField" />
-    <text class="field-label">Prompt *</text>
-    <textarea class="field-textarea" data-field="prompt" value="{{form.prompt}}" bindinput="updateField" />
-    <text class="field-label">AI 生成模型 / 工具 *</text>
-    <input class="field-input" data-field="sourceName" value="{{form.sourceName}}" bindinput="updateField" />
-    <text class="field-label">作品分类 *</text>
-    <input class="field-input" data-field="category" value="{{form.category}}" bindinput="updateField" />
+  <view class="editor-card glass-card">
+    <view class="section-heading"><text class="section-heading__title">作品图片</text><text class="section-heading__meta">{{images.length}} / 9</text></view>
+    <view class="image-editor">
+      <view class="image-editor__item" wx:for="{{images}}" wx:key="*this" bindtap="previewImage" data-url="{{item}}">
+        <image class="image-editor__image" src="{{item}}" mode="aspectFill" />
+        <text wx:if="{{index === 0}}" class="image-editor__cover">封面</text>
+      </view>
+      <view wx:if="{{images.length < 9}}" class="image-editor__upload" bindtap="chooseImages"><text class="image-editor__plus">＋</text><text>添加图片</text></view>
+    </view>
   </view>
-  <view class="editor-actions">
-    <button class="secondary-button" bindtap="saveDraft">保存草稿</button>
-    <button class="primary-button" bindtap="publishArtwork">发布作品</button>
+
+  <view class="editor-card glass-card">
+    <label class="form-field">
+      <view class="form-field__label"><text>作品标题</text><text class="required">必填</text></view>
+      <input class="form-control" maxlength="30" value="{{form.title}}" data-field="title" bindinput="updateField" />
+      <text class="form-field__count">{{form.title.length}} / 30</text>
+    </label>
+    <label class="form-field">
+      <view class="form-field__label"><text>创作提示词</text><text class="required">必填</text></view>
+      <textarea class="form-control form-control--textarea" maxlength="500" value="{{form.prompt}}" data-field="prompt" bindinput="updateField" />
+      <text class="form-field__count">{{form.prompt.length}} / 500</text>
+    </label>
+    <view class="form-field">
+      <view class="form-field__label"><text>创作工具 / 来源</text><text class="required">必填</text></view>
+      <picker range="{{tools}}" value="{{toolIndex}}" bindchange="chooseTool"><view class="form-control picker-control">{{form.sourceName}}<text>⌄</text></view></picker>
+    </view>
+    <view class="form-field">
+      <view class="form-field__label"><text>作品分类</text><text class="required">必填</text></view>
+      <view class="choice-list"><button wx:for="{{categories}}" wx:key="*this" class="choice-chip {{form.category === item ? 'choice-chip--active' : ''}}" data-value="{{item}}" bindtap="chooseCategory">{{item}}</button></view>
+    </view>
+    <view class="form-field">
+      <view class="form-field__label"><text>灵感标签</text><text class="optional">选填</text></view>
+      <view class="choice-list"><button wx:for="{{tagOptions}}" wx:key="label" class="choice-chip {{item.selected ? 'choice-chip--active' : ''}}" data-value="{{item.label}}" bindtap="toggleTag">{{item.label}}</button></view>
+    </view>
+    <label class="form-field form-field--last">
+      <view class="form-field__label"><text>创作说明</text><text class="optional">选填</text></view>
+      <textarea class="form-control form-control--textarea form-control--short" maxlength="300" value="{{form.description}}" data-field="description" bindinput="updateField" />
+      <text class="form-field__count">{{form.description.length}} / 300</text>
+    </label>
+  </view>
+
+  <view class="editor-actions editor-actions--three">
+    <button class="editor-actions__danger" bindtap="takeDown">下架</button>
+    <button class="editor-actions__secondary" bindtap="saveChanges">保存修改</button>
+    <button class="editor-actions__primary" bindtap="publishArtwork">更新发布</button>
   </view>
 </view>

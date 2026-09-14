@@ -14,8 +14,21 @@ function redirectTo(path, query) {
   return wx.redirectTo({ url: buildUrl(path, query) });
 }
 
+function navigateBack(delta = 1) {
+  if (getCurrentPages().length > 1) {
+    return wx.navigateBack({ delta });
+  }
+  return wx.switchTab({ url: '/pages/home/index' });
+}
+
+function switchTab(path) {
+  return wx.switchTab({ url: path });
+}
+
 module.exports = {
   buildUrl,
+  navigateBack,
   navigateTo,
   redirectTo,
+  switchTab,
 };

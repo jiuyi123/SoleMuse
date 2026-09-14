@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "我的内容",
   "usingComponents": {
-    "page-state": "/components/common/page-state/index"
+    "page-state": "/components/common/page-state/index",
+    "artwork-card": "/components/domain/artwork-card/index"
   }
 }

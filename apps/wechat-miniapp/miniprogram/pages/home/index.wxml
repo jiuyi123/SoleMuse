@@ -1,38 +1,44 @@
-<view class="page">
-  <view class="home-hero">
-    <text class="home-hero__eyebrow">SOLE · IDEAS · FUTURE</text>
-    <text class="home-hero__title">发现下一双鞋的灵感</text>
-    <text class="home-hero__copy">浏览鞋履创意作品、Prompt 与 AI 生成来源。</text>
-    <button class="search-entry" bindtap="openSearch">搜索作品、标签或设计师</button>
-  </view>
-
-  <view class="section">
-    <text class="section__title">热门标签</text>
-    <view class="tag-list">
-      <button
-        wx:for="{{hotTags}}"
-        wx:key="*this"
-        class="tag"
-        data-tag="{{item}}"
-        bindtap="searchByTag"
-      ># {{item}}</button>
+<view class="home-fixed-header">
+  <view class="home-topbar" style="height: {{topbarHeight}}px;">
+    <image class="home-topbar__image" src="/assets/images/demo/artworks/artwork-01-yixiu-shanhai.png" mode="aspectFill" />
+    <view class="home-topbar__veil"></view>
+    <app-header transparent />
+    <view class="home-topbar__inner">
+      <view class="home-topbar__brand">
+        <text class="home-topbar__logo">SoleMuse</text>
+        <text class="home-topbar__name">AI 创意多模态全球时尚鞋履提示词平台</text>
+      </view>
     </view>
   </view>
+  <view class="home-nav-shell">
+    <view class="home-nav">
+      <view class="home-nav__tabs">
+        <button class="home-nav__tab {{activeFeed === 'following' ? 'home-nav__tab--active' : ''}}" data-feed="following" bindtap="changeFeed">关注</button>
+        <button class="home-nav__tab {{activeFeed === 'discover' ? 'home-nav__tab--active' : ''}}" data-feed="discover" bindtap="changeFeed">发现</button>
+        <button class="home-nav__tab {{activeFeed === 'latest' ? 'home-nav__tab--active' : ''}}" data-feed="latest" bindtap="changeFeed">最新</button>
+      </view>
+      <button class="home-nav__search" aria-label="搜索" bindtap="openSearch"><text>⌕</text></button>
+    </view>
+  </view>
+</view>
 
-  <view class="section">
-    <text class="section__title">最新作品</text>
-    <artwork-card
-      wx:for="{{artworks}}"
-      wx:key="id"
-      artwork="{{item}}"
-      bind:select="openArtwork"
-    />
+<view class="page tab-page home-page" style="padding-top: {{fixedHeaderHeight}}px;">
+  <scroll-view wx:if="{{activeFeed === 'discover'}}" class="tag-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="tag-list">
+      <view wx:for="{{hotTags}}" wx:key="*this" class="hot-tag" data-tag="{{item}}" bindtap="searchByTag"># {{item}}</view>
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{artworks.length}}" class="artwork-grid">
+    <view wx:for="{{artworks}}" wx:key="id" class="artwork-grid__item">
+      <artwork-card artwork="{{item}}" bind:select="openArtwork" />
+    </view>
+  </view>
+  <view wx:else class="section">
     <page-state
-      wx:if="{{!artworks.length}}"
-      title="作品正在准备中"
-      description="后端接入前，这里会展示符合接口契约的开发数据。"
-      action-text="去搜索"
-      bind:action="openSearch"
+      state="{{loading ? 'loading' : 'empty'}}"
+      title="{{loading ? '正在加载灵感' : '暂无公开作品'}}"
+      description="{{loading ? '山水与创意正在相遇…' : '这一栏目还没有作品。'}}"
     />
   </view>
 </view>

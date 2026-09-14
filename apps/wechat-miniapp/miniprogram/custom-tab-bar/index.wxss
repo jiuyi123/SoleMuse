@@ -1,0 +1,16 @@
+.tab-shell { position: fixed; z-index: 100; right: 0; bottom: 0; left: 0; padding-bottom: env(safe-area-inset-bottom); background: rgba(255, 255, 255, 0.96); box-shadow: 0 -6px 20px rgba(33, 69, 100, 0.1); backdrop-filter: blur(14px); }
+.tab-bar { display: flex; width: min(100%, 760px); height: clamp(64px, 15vw, 82px); margin: 0 auto; padding: 0 clamp(6px, 2vw, 18px); }
+.tab-item { position: relative; display: flex; flex: 1; min-width: 0; flex-direction: column; align-items: center; justify-content: center; color: #68798e; }
+.tab-icon-wrap { position: relative; display: flex; align-items: center; justify-content: center; width: clamp(30px, 7vw, 42px); aspect-ratio: 1; }
+.tab-icon { color: inherit; font-family: Georgia, serif; font-size: clamp(23px, 5.8vw, 34px); line-height: 1; }
+.tab-label { max-width: 100%; margin-top: 2px; overflow: hidden; font-size: clamp(10px, 2.7vw, 13px); text-overflow: ellipsis; white-space: nowrap; }
+.tab-item--active { color: #0d2b4e; font-weight: 700; }
+.tab-item--raised .tab-icon-wrap { width: clamp(52px, 13vw, 68px); margin-top: clamp(-38px, -7vw, -28px); border: clamp(4px, 1vw, 6px) solid rgba(240, 248, 251, 0.95); border-radius: 50%; background: linear-gradient(145deg, #75aaa4, #66a8d4); box-shadow: 0 5px 16px rgba(59, 126, 164, 0.32); color: #ffffff; }
+.tab-item--raised .tab-icon { font-family: Arial, sans-serif; font-size: clamp(32px, 8vw, 42px); font-weight: 200; }
+.tab-item--raised .tab-label { margin-top: 4px; }
+.tab-badge { position: absolute; top: -3px; right: -7px; min-width: 18px; height: 18px; padding: 0 4px; border: 2px solid #ffffff; border-radius: 999px; background: #f05c6b; color: #ffffff; font-size: 10px; line-height: 14px; text-align: center; }
+
+@media (min-width: 1024px) {
+  .tab-shell { right: 50%; bottom: 18px; left: auto; width: min(720px, calc(100vw - 64px)); padding-bottom: 0; border: 1px solid rgba(190, 209, 224, 0.65); border-radius: 28px; transform: translateX(50%); box-shadow: 0 10px 34px rgba(33, 69, 100, 0.16); }
+  .tab-bar { height: 68px; }
+}

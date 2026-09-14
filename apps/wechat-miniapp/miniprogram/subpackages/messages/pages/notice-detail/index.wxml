@@ -1,6 +1,15 @@
-<view class="page">
-  <page-state
-    title="通知详情待接入"
-    description="通知 ID：{{noticeId || '未提供'}}"
-  />
+<app-header title="系统通知" back transparent />
+
+<view class="page notice-page">
+  <view class="notice-cover glass-card">
+    <image src="/assets/images/demo/profile/profile-promo-banner.png" mode="aspectFill" />
+  </view>
+  <view class="notice-article glass-card">
+    <text class="notice-label">SOLE MUSE 灵感企划</text>
+    <text class="notice-title">春日灵感计划现已开启</text>
+    <text class="notice-time">2024年5月20日</text>
+    <text class="notice-paragraph">从自然、东方纹样与城市步履中寻找灵感，记录你的鞋履创意，并与更多设计同好分享。</text>
+    <text class="notice-paragraph">当前页面为前端开发演示。活动规则、报名周期与奖励信息将在后端内容系统接入后展示。</text>
+    <view class="notice-id">通知编号：{{noticeId}}</view>
+  </view>
 </view>

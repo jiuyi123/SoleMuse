@@ -1,1 +1,44 @@
-/* Ranking-specific styles are added with ranking features. */
+.ranking-page { padding-top: 12px; }
+.period-switch { display: flex; width: 100%; padding: 4px; }
+.period { flex: 1; min-width: 0; margin: 0; padding: 0 4px; overflow: hidden; border-radius: 999px; background: transparent; color: #536b85; font-size: clamp(12px, 1.8vw, 16px); line-height: 40px; text-overflow: ellipsis; white-space: nowrap; }
+.period::after, .rules-link::after { border: 0; }
+.period--active { background: #fff; box-shadow: 0 4px 12px rgba(39, 76, 105, 0.1); color: #102d4d; font-weight: 700; }
+.rules-link { margin: 8px 0 0 auto; padding: 0; background: transparent; color: #61758d; font-size: clamp(12px, 1.6vw, 14px); line-height: 36px; }
+.podium-stage { display: flex; align-items: flex-end; justify-content: center; width: 100%; min-height: clamp(300px, 72vw, 440px); margin-top: -10px; padding: clamp(38px, 8vw, 62px) 2px 0; }
+.podium { position: relative; display: flex; flex: 1 1 0; min-width: 0; flex-direction: column; align-items: center; padding: 9px 5px 14px; overflow: hidden; border-radius: clamp(14px, 2.5vw, 24px) clamp(14px, 2.5vw, 24px) 0 0; background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(235,245,249,.94)); box-shadow: 0 7px 18px rgba(39,77,107,.08); }
+.podium--1 { z-index: 3; min-height: clamp(250px, 56vw, 360px); background: linear-gradient(180deg, #fff7e7, rgba(255,255,255,.97)); }
+.podium--2, .podium--3 { min-height: clamp(215px, 48vw, 310px); }
+.podium--2 { margin-right: -4px; }
+.podium--3 { margin-left: -4px; }
+.crown { position: absolute; top: clamp(-34px, -5vw, -24px); color: #d7aa58; font-family: Georgia, serif; font-size: clamp(36px, 7vw, 52px); }
+.crown text { position: absolute; top: 12px; left: 0; width: 100%; color: #fff; font-family: sans-serif; font-size: clamp(10px, 1.6vw, 13px); text-align: center; }
+.podium-image-wrap { width: 100%; margin-top: 12px; overflow: hidden; border-radius: clamp(10px, 2vw, 18px); }
+.podium-image-wrap image { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.podium--1 .podium-image-wrap image { aspect-ratio: 1.25 / 1; }
+.podium-title, .podium-heat, .podium-author { display: block; width: 100%; margin-top: 6px; overflow: hidden; text-align: center; text-overflow: ellipsis; white-space: nowrap; }
+.podium-title { font-size: clamp(12px, 2vw, 17px); font-weight: 700; }
+.podium-heat { color: #ef6178; font-size: clamp(11px, 1.8vw, 15px); }
+.podium-author { color: #708299; font-size: clamp(10px, 1.5vw, 13px); }
+.ranking-list { width: 100%; margin-top: 0; padding: 0 clamp(12px, 2.5vw, 24px); overflow: hidden; }
+.ranking-row { display: flex; align-items: center; gap: clamp(10px, 2vw, 18px); min-height: clamp(88px, 18vw, 118px); border-bottom: 1px solid #e4ebf0; }
+.ranking-row:last-child { border-bottom: 0; }
+.rank-number { flex: 0 0 clamp(24px, 5vw, 40px); font-size: clamp(16px, 2.6vw, 22px); font-weight: 700; }
+.rank-image { flex: 0 0 clamp(76px, 19vw, 132px); width: clamp(76px, 19vw, 132px); height: auto; aspect-ratio: 3 / 2; border-radius: clamp(10px, 1.8vw, 16px); object-fit: cover; }
+.rank-copy { flex: 1; min-width: 0; }
+.rank-title, .rank-subtitle, .rank-author { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rank-title { font-size: clamp(14px, 2vw, 18px); font-weight: 700; }
+.rank-subtitle, .rank-author { margin-top: 4px; font-size: clamp(11px, 1.5vw, 13px); }
+.rank-subtitle { color: #74859a; }
+.rank-author { color: #506987; }
+.rank-heat { flex-shrink: 0; color: #62758d; font-size: clamp(12px, 1.7vw, 15px); }
+.rule-mask { position: fixed; z-index: 200; top: 0; right: 0; bottom: 0; left: 0; display: flex; align-items: center; justify-content: center; padding: clamp(16px, 5vw, 48px); overflow-y: auto; background: rgba(12,34,54,.46); }
+.rule-dialog { width: min(100%, 480px); max-height: min(80vh, 620px); padding: clamp(22px, 4vw, 38px); overflow-y: auto; border-radius: clamp(18px, 3vw, 28px); background: #fff; color: #536a83; font-size: clamp(14px, 1.8vw, 16px); line-height: 1.7; }
+.rule-title { display: block; margin-bottom: 12px; color: #102d4d; font-size: clamp(20px, 3vw, 26px); font-weight: 700; }
+.rule-dialog button { width: 100%; min-height: 44px; margin-top: 20px; border-radius: 999px; background: linear-gradient(120deg,#72a79e,#69a7d4); color: #fff; font-size: clamp(14px, 1.8vw, 16px); }
+
+@media (min-width: 900px) {
+  .ranking-page { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 0 28px; align-items: start; }
+  .period-switch, .rules-link { grid-column: 1 / -1; }
+  .podium-stage { grid-column: 1; min-height: 410px; }
+  .ranking-list { grid-column: 2; margin-top: 28px; }
+}

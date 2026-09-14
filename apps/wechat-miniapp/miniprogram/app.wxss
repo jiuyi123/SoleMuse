@@ -1,97 +1,68 @@
 page {
-  box-sizing: border-box;
   min-height: 100%;
-  background: #f7f5f2;
-  color: #171512;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 82% 8%, rgba(238, 190, 167, 0.38), transparent 18%),
+    linear-gradient(160deg, #e9f3f7 0%, #f8fbfc 42%, #eef5f6 100%);
+  color: #102846;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 28rpx;
+  font-size: clamp(14px, 1.8vw, 16px);
 }
 
+page,
 view,
 text,
 button,
 input,
-textarea {
+textarea,
+image,
+scroll-view,
+swiper {
   box-sizing: border-box;
+  min-width: 0;
 }
 
-button::after {
-  border: 0;
-}
+image { max-width: 100%; }
+button::after { border: 0; }
 
 .page {
+  width: 100%;
+  max-width: 1200px;
   min-height: 100vh;
-  padding: 32rpx;
+  margin-right: auto;
+  margin-left: auto;
+  padding: clamp(12px, 2.5vw, 24px) clamp(16px, 4vw, 32px) clamp(28px, 5vw, 48px);
+  overflow-x: hidden;
 }
 
-.page-header {
-  margin-bottom: 32rpx;
-}
-
-.page-title {
-  display: block;
-  font-size: 48rpx;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.page-subtitle {
-  display: block;
-  margin-top: 12rpx;
-  color: #706b65;
-  font-size: 26rpx;
-  line-height: 1.6;
-}
+.tab-page { padding-bottom: calc(clamp(88px, 16vw, 112px) + env(safe-area-inset-bottom)); }
+.page-header { margin-bottom: clamp(20px, 4vw, 32px); }
+.page-title { display: block; overflow-wrap: anywhere; font-size: clamp(24px, 4vw, 36px); font-weight: 700; line-height: 1.2; }
+.page-subtitle { display: block; margin-top: clamp(6px, 1.5vw, 12px); color: #70829b; font-size: clamp(14px, 2vw, 17px); line-height: 1.6; }
 
 .panel {
-  margin-bottom: 24rpx;
-  padding: 28rpx;
-  border: 1rpx solid #ece8e2;
-  border-radius: 24rpx;
-  background: #ffffff;
+  margin-bottom: clamp(14px, 2.5vw, 24px);
+  padding: clamp(18px, 3vw, 28px);
+  border: 1px solid rgba(190, 209, 224, 0.58);
+  border-radius: clamp(18px, 3vw, 26px);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 8px 22px rgba(37, 76, 106, 0.08);
+  backdrop-filter: blur(12px);
 }
 
-.panel-title {
-  display: block;
-  margin-bottom: 20rpx;
-  font-size: 30rpx;
-  font-weight: 600;
-}
+.panel-title { display: block; margin-bottom: clamp(12px, 2vw, 20px); font-size: clamp(17px, 2.4vw, 21px); font-weight: 600; }
+.primary-button, .secondary-button { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 44px; border-radius: 999px; font-size: clamp(14px, 1.8vw, 16px); font-weight: 600; }
+.primary-button { background: linear-gradient(125deg, #69a699, #62a5d7); color: #ffffff; }
+.secondary-button { border: 1px solid #b9cddd; background: rgba(255, 255, 255, 0.86); color: #183556; }
+.list-row { display: flex; align-items: center; justify-content: space-between; min-height: 48px; border-bottom: 1px solid #f0ede8; }
+.list-row:last-child { border-bottom: 0; }
+.muted { color: #8291a5; }
+.section-title { font-size: clamp(18px, 2.8vw, 24px); font-weight: 700; letter-spacing: 0.5px; }
 
-.primary-button,
-.secondary-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 88rpx;
-  border-radius: 44rpx;
-  font-size: 28rpx;
-  font-weight: 600;
-}
+.glass-card { border: 1px solid rgba(190, 209, 224, 0.58); border-radius: clamp(18px, 3vw, 26px); background: rgba(255, 255, 255, 0.88); box-shadow: 0 7px 20px rgba(37, 76, 106, 0.08); }
+.chip { display: inline-flex; align-items: center; justify-content: center; min-height: 32px; padding: 0 clamp(12px, 2vw, 18px); border: 1px solid rgba(184, 203, 220, 0.65); border-radius: 999px; background: rgba(242, 247, 251, 0.9); color: #35506e; font-size: clamp(12px, 1.6vw, 14px); overflow-wrap: anywhere; }
+.chip--active { border-color: transparent; background: linear-gradient(125deg, #6ba6a0, #78add5); color: #ffffff; }
 
-.primary-button {
-  background: #171512;
-  color: #ffffff;
-}
-
-.secondary-button {
-  border: 1rpx solid #d8d3cc;
-  background: #ffffff;
-  color: #171512;
-}
-
-.list-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 96rpx;
-  border-bottom: 1rpx solid #f0ede8;
-}
-
-.list-row:last-child {
-  border-bottom: 0;
-}
-
-.muted {
-  color: #8a857f;
+@media (min-width: 768px) {
+  .page { padding-top: 24px; }
 }

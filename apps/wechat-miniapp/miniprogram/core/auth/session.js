@@ -1,4 +1,5 @@
 const STORAGE_KEYS = require('../../constants/storage-keys');
+const { getEnvironment } = require('../../config/environment');
 
 function getSession() {
   return wx.getStorageSync(STORAGE_KEYS.SESSION) || null;
@@ -21,7 +22,10 @@ function getAccessToken() {
 function isAuthenticated() {
   const currentSession = getSession();
   return Boolean(
-    currentSession && (currentSession.accessToken || currentSession.mode === 'local'),
+    currentSession && (
+      currentSession.accessToken
+      || (currentSession.mode === 'local' && getEnvironment().enableDemoSession)
+    ),
   );
 }
 

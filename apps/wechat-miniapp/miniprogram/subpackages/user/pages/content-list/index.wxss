@@ -1,1 +1,25 @@
-/* Content list styles are added with the corresponding feature. */
+.content-page { padding-top: 8px; }
+.content-owner { display: flex; min-width: 0; align-items: center; margin: 4px 2px 16px; }
+.content-owner image { flex: 0 0 clamp(48px, 10vw, 66px); width: clamp(48px, 10vw, 66px); height: auto; margin-right: clamp(10px, 2vw, 16px); aspect-ratio: 1; border: 3px solid rgba(255,255,255,.9); border-radius: 50%; object-fit: cover; box-shadow: 0 5px 15px rgba(40,75,99,.14); }
+.content-owner__name, .content-owner__meta { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.content-owner__name { color: #173954; font-size: clamp(17px, 2.5vw, 21px); font-weight: 700; }
+.content-owner__meta { margin-top: 4px; color: #8291a2; font-size: clamp(11px, 1.5vw, 13px); }
+.content-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); width: 100%; padding: 4px; }
+.content-tab { position: relative; min-width: 0; margin: 0; padding: 0 2px; overflow: hidden; background: transparent; color: #77899c; font-size: clamp(11px, 1.6vw, 14px); line-height: 40px; text-overflow: ellipsis; white-space: nowrap; }
+.content-tab::after { border: 0; }
+.content-tab--active { color: #285673; font-weight: 700; }
+.content-tab--active::before { position: absolute; right: 27%; bottom: 2px; left: 27%; height: 3px; border-radius: 999px; background: linear-gradient(90deg,#73a99d,#70a7ce); content: ""; }
+.content-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: clamp(18px, 3vw, 28px) 2px 14px; color: #8a98a7; font-size: clamp(11px, 1.5vw, 13px); }
+.content-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(14px, 2.2vw, 22px); align-items: stretch; }
+
+@media (min-width: 600px) {
+  .content-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 900px) {
+  .content-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1200px) {
+  .content-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}

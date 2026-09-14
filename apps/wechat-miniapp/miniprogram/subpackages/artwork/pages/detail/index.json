@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "作品详情",
   "usingComponents": {
-    "page-state": "/components/common/page-state/index"
+    "page-state": "/components/common/page-state/index",
+    "source-tag": "/components/domain/source-tag/index"
   }
 }

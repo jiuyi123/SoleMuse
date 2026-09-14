@@ -1,5 +1,7 @@
-<view class="page">
+<app-header title="搜索结果" back />
+<view class="page search-page">
   <view class="search-bar">
+    <text class="search-bar__icon">⌕</text>
     <input
       class="search-input"
       value="{{keyword}}"
@@ -8,23 +10,32 @@
       bindinput="handleKeywordInput"
       bindconfirm="submitSearch"
     />
+    <button wx:if="{{keyword}}" class="clear-button" bindtap="clearSearch">×</button>
     <button class="search-button" bindtap="submitSearch">搜索</button>
   </view>
-  <view wx:if="{{selectedTag}}" class="active-filter">当前标签：# {{selectedTag}}</view>
   <view class="filter-row">
-    <text>分类</text><text>风格</text><text>AI 来源</text><text>最新发布</text>
+    <button wx:for="{{filters}}" wx:key="*this" class="filter-chip" data-filter="{{item}}" bindtap="showFilter">{{item}}⌄</button>
   </view>
-  <artwork-card
-    wx:for="{{artworks}}"
-    wx:key="id"
-    artwork="{{item}}"
-    bind:select="openArtwork"
-  />
+  <view wx:if="{{selectedTag}}" class="active-filter"># {{selectedTag}}</view>
+  <view class="result-heading">
+    <view class="sort-tabs">
+      <button class="sort-tab {{sort === 'latest' ? 'sort-tab--active' : ''}}" data-sort="latest" bindtap="changeSort">最新发布</button>
+      <button class="sort-tab {{sort === 'hottest' ? 'sort-tab--active' : ''}}" data-sort="hottest" bindtap="changeSort">热度排序</button>
+    </view>
+    <text>共 {{artworks.length}} 个结果</text>
+  </view>
+  <view wx:if="{{artworks.length}}" class="artwork-grid">
+    <view wx:for="{{artworks}}" wx:key="id" class="artwork-grid__item">
+      <artwork-card artwork="{{item}}" bind:select="openArtwork" />
+    </view>
+  </view>
   <page-state
-    wx:if="{{!artworks.length}}"
-    title="暂无搜索结果"
-    description="输入关键词或调整筛选条件后重试。"
+    wx:else
+    state="{{loading ? 'loading' : 'empty'}}"
+    title="{{loading ? '正在寻找灵感' : '暂无搜索结果'}}"
+    description="{{loading ? '请稍候…' : '换个关键词或调整筛选条件后重试。'}}"
     action-text="清除筛选"
     bind:action="clearSearch"
   />
+  <view wx:if="{{artworks.length}}" class="result-end">— 没有更多结果了 —<text>换个关键词，发现更多灵感吧</text></view>
 </view>

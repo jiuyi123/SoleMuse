@@ -6,7 +6,7 @@ SoleMuse 是面向鞋履及相关品类设计师的 AI 创意作品展示与交�
 
 ## 项目入口
 
-- 产品需求：[docs/AI 鞋履创意 Prompt 平台_PRD_V1.0.md](docs/AI%20鞋履创意%20Prompt%20平台_PRD_V1.0.md)
+- 产品需求：[AI 创意多模态全球时尚鞋履提示词平台 PRD V1.0](docs/AI%20鞋履创意%20Prompt%20平台_PRD_V1.0.md)
 - 目录与架构规划：[docs/architecture/project-structure.md](docs/architecture/project-structure.md)
 - 页面级功能界面设计：[docs/miniappDesign/page-level-functional-design.md](docs/miniappDesign/page-level-functional-design.md)
 - 原型素材提取说明：[docs/miniappDesign/extracted-materials.md](docs/miniappDesign/extracted-materials.md)

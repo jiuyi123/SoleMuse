@@ -1,10 +1,72 @@
-<view class="page create-page">
-  <view class="create-mark">＋</view>
-  <text class="page-title">发布你的鞋履创意</text>
-  <text class="page-subtitle">上传展示图片，记录 Prompt、生成工具、分类与创作说明。</text>
-  <button class="primary-button create-button" bindtap="startCreating">开始创作</button>
-  <view class="panel create-note">
-    <text class="panel-title">一期必填内容</text>
-    <text class="muted">作品标题 · 展示图片 · Prompt · AI 生成模型/工具 · 作品分类</text>
+<app-header title="发布作品" transparent />
+
+<view class="page tab-page editor-page">
+  <view class="editor-intro">
+    <text class="editor-intro__eyebrow">SOLE MUSE STUDIO</text>
+    <text class="editor-intro__title">把灵感，变成被看见的鞋履创意</text>
+    <text class="editor-intro__desc">记录创作来源与提示词，让每一份灵感都清晰可追溯。</text>
+  </view>
+
+  <view class="editor-card glass-card">
+    <view class="section-heading">
+      <text class="section-heading__title">作品图片</text>
+      <text class="section-heading__meta">{{images.length}} / 9</text>
+    </view>
+    <view class="image-editor">
+      <view class="image-editor__item" wx:for="{{images}}" wx:key="*this" bindtap="previewImage" data-url="{{item}}">
+        <image class="image-editor__image" src="{{item}}" mode="aspectFill" />
+        <text wx:if="{{index === 0}}" class="image-editor__cover">封面</text>
+      </view>
+      <view wx:if="{{images.length < 9}}" class="image-editor__upload" bindtap="chooseImages">
+        <text class="image-editor__plus">＋</text>
+        <text>添加图片</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="editor-card glass-card">
+    <label class="form-field">
+      <view class="form-field__label"><text>作品标题</text><text class="required">必填</text></view>
+      <input class="form-control" maxlength="30" placeholder="给你的作品起个名字" value="{{form.title}}" data-field="title" bindinput="updateField" />
+      <text class="form-field__count">{{form.title.length}} / 30</text>
+    </label>
+
+    <label class="form-field">
+      <view class="form-field__label"><text>创作提示词</text><text class="required">必填</text></view>
+      <textarea class="form-control form-control--textarea" maxlength="500" placeholder="记录生成作品时使用的提示词" value="{{form.prompt}}" data-field="prompt" bindinput="updateField" />
+      <text class="form-field__count">{{form.prompt.length}} / 500</text>
+    </label>
+
+    <view class="form-field">
+      <view class="form-field__label"><text>创作工具 / 来源</text><text class="required">必填</text></view>
+      <picker range="{{tools}}" value="{{toolIndex}}" bindchange="chooseTool">
+        <view class="form-control picker-control">{{form.sourceName || '请选择创作工具'}}<text>⌄</text></view>
+      </picker>
+    </view>
+
+    <view class="form-field">
+      <view class="form-field__label"><text>作品分类</text><text class="required">必填</text></view>
+      <view class="choice-list">
+        <button wx:for="{{categories}}" wx:key="*this" class="choice-chip {{form.category === item ? 'choice-chip--active' : ''}}" data-value="{{item}}" bindtap="chooseCategory">{{item}}</button>
+      </view>
+    </view>
+
+    <view class="form-field">
+      <view class="form-field__label"><text>灵感标签</text><text class="optional">选填</text></view>
+      <view class="choice-list">
+        <button wx:for="{{tagOptions}}" wx:key="label" class="choice-chip {{item.selected ? 'choice-chip--active' : ''}}" data-value="{{item.label}}" bindtap="toggleTag">{{item.label}}</button>
+      </view>
+    </view>
+
+    <label class="form-field form-field--last">
+      <view class="form-field__label"><text>创作说明</text><text class="optional">选填</text></view>
+      <textarea class="form-control form-control--textarea form-control--short" maxlength="300" placeholder="说说作品背后的灵感与故事" value="{{form.description}}" data-field="description" bindinput="updateField" />
+      <text class="form-field__count">{{form.description.length}} / 300</text>
+    </label>
+  </view>
+
+  <view class="editor-actions">
+    <button class="editor-actions__secondary" bindtap="saveDraft">保存草稿</button>
+    <button class="editor-actions__primary" loading="{{submitting}}" bindtap="publishArtwork">发布作品</button>
   </view>
 </view>

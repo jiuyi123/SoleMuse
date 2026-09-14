@@ -1,44 +1,5 @@
-.page-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 360rpx;
-  padding: 48rpx 32rpx;
-  text-align: center;
-}
-
-.page-state__mark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 88rpx;
-  height: 88rpx;
-  margin-bottom: 24rpx;
-  border-radius: 44rpx;
-  background: #eee9e2;
-  color: #706b65;
-  font-size: 38rpx;
-}
-
-.page-state__title {
-  font-size: 30rpx;
-  font-weight: 600;
-}
-
-.page-state__description {
-  max-width: 520rpx;
-  margin-top: 12rpx;
-  color: #8a857f;
-  font-size: 25rpx;
-  line-height: 1.6;
-}
-
-.page-state__action {
-  min-width: 200rpx;
-  margin-top: 28rpx;
-  border-radius: 40rpx;
-  background: #171512;
-  color: #ffffff;
-  font-size: 26rpx;
-}
+.page-state { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; min-height: clamp(220px, 46vh, 420px); padding: clamp(28px, 6vw, 56px) clamp(16px, 4vw, 32px); text-align: center; }
+.page-state__mark { display: flex; align-items: center; justify-content: center; width: clamp(44px, 8vw, 64px); aspect-ratio: 1; margin-bottom: clamp(12px, 2vw, 20px); border-radius: 50%; background: #eee9e2; color: #706b65; font-size: clamp(20px, 4vw, 30px); }
+.page-state__title { max-width: 100%; overflow-wrap: anywhere; font-size: clamp(17px, 2.6vw, 22px); font-weight: 600; }
+.page-state__description { max-width: 520px; margin-top: 8px; color: #8a857f; font-size: clamp(13px, 1.8vw, 16px); line-height: 1.6; overflow-wrap: anywhere; }
+.page-state__action { width: min(100%, 220px); min-height: 44px; margin-top: clamp(16px, 3vw, 28px); border-radius: 999px; background: #171512; color: #ffffff; font-size: clamp(14px, 1.8vw, 16px); }

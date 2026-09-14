@@ -33,9 +33,11 @@
     "navigationBarBackgroundColor": "#f7f5f2",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#f7f5f2",
-    "backgroundTextStyle": "dark"
+    "backgroundTextStyle": "dark",
+    "navigationStyle": "custom"
   },
   "tabBar": {
+    "custom": true,
     "color": "#7d7973",
     "selectedColor": "#171512",
     "backgroundColor": "#ffffff",
@@ -47,6 +49,9 @@
       { "pagePath": "pages/messages/index", "text": "消息" },
       { "pagePath": "pages/profile/index", "text": "我的" }
     ]
+  },
+  "usingComponents": {
+    "app-header": "/components/common/app-header/index"
   },
   "style": "v2",
   "lazyCodeLoading": "requiredComponents",

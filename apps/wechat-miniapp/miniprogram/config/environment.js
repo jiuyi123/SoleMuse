@@ -1,7 +1,7 @@
 const ENVIRONMENTS = Object.freeze({
-  develop: Object.freeze({ apiBaseUrl: '', enableDebugLog: true }),
-  trial: Object.freeze({ apiBaseUrl: '', enableDebugLog: false }),
-  release: Object.freeze({ apiBaseUrl: '', enableDebugLog: false }),
+  develop: Object.freeze({ apiBaseUrl: '', enableDebugLog: true, enableDemoSession: true }),
+  trial: Object.freeze({ apiBaseUrl: '', enableDebugLog: false, enableDemoSession: false }),
+  release: Object.freeze({ apiBaseUrl: '', enableDebugLog: false, enableDemoSession: false }),
 });
 
 function getEnvironmentVersion() {

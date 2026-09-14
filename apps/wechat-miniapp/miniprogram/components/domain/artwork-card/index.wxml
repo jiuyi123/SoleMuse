@@ -1,4 +1,5 @@
 <view class="artwork-card" bindtap="handleSelect">
+  <button wx:if="{{manageable}}" class="artwork-card__menu" catchtap="handleMenu">•••</button>
   <image
     class="artwork-card__cover"
     src="{{artwork.coverUrl}}"
@@ -7,10 +8,11 @@
   />
   <view class="artwork-card__body">
     <text class="artwork-card__title">{{artwork.title}}</text>
-    <text class="artwork-card__author">{{artwork.author.nickname}}</text>
-    <view class="artwork-card__meta">
-      <source-tag label="{{artwork.aiSource.name}}" type="{{artwork.aiSource.type}}" />
-      <text class="artwork-card__metrics">赞 {{artwork.metrics.likes}} · 评 {{artwork.metrics.comments}}</text>
+    <view class="artwork-card__footer">
+      <image wx:if="{{artwork.author.avatarUrl}}" class="artwork-card__avatar" src="{{artwork.author.avatarUrl}}" mode="aspectFill" />
+      <view wx:else class="artwork-card__avatar artwork-card__avatar--fallback">{{authorInitial}}</view>
+      <text class="artwork-card__author">{{artwork.author.nickname}}</text>
+      <text class="artwork-card__metrics">♡ {{artwork.metrics.likes}}</text>
     </view>
   </view>
 </view>

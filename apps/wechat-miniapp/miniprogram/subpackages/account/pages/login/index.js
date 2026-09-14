@@ -6,6 +6,7 @@ Page({
   data: {
     redirect: '',
     redirectType: '',
+    redirectId: '',
     submitting: false,
   },
 
@@ -13,6 +14,7 @@ Page({
     this.setData({
       redirect: options.redirect || '',
       redirectType: options.redirectType || '',
+      redirectId: options.redirectId || '',
     });
   },
 
@@ -28,16 +30,16 @@ Page({
     if (redirect && Object.values(ROUTES).indexOf(redirect) >= 0) {
       const tabRoutes = [ROUTES.HOME, ROUTES.RANKING, ROUTES.CREATE, ROUTES.MESSAGES, ROUTES.PROFILE];
       if (tabRoutes.indexOf(redirect) >= 0) {
-        wx.switchTab({ url: redirect });
+        router.switchTab(redirect);
       } else {
-        router.redirectTo(redirect, { type: this.data.redirectType });
+        router.redirectTo(redirect, { type: this.data.redirectType, id: this.data.redirectId });
       }
       return;
     }
     if (getCurrentPages().length > 1) {
-      wx.navigateBack();
+      router.navigateBack();
     } else {
-      wx.switchTab({ url: ROUTES.HOME });
+      router.switchTab(ROUTES.HOME);
     }
   },
 });

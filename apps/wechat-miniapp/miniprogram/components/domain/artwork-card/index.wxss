@@ -1,45 +1,20 @@
-.artwork-card {
-  overflow: hidden;
-  margin-bottom: 24rpx;
-  border-radius: 24rpx;
-  background: #ffffff;
-}
+.artwork-card { position: relative; width: 100%; height: 100%; overflow: hidden; border: 1px solid rgba(190, 209, 224, 0.58); border-radius: clamp(16px, 2.5vw, 24px); background: rgba(255, 255, 255, 0.94); box-shadow: 0 7px 18px rgba(34, 73, 105, 0.09); }
+.artwork-card__cover { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; background: #ebe7e1; }
+.artwork-card__body { padding: clamp(12px, 2vw, 18px); }
+.artwork-card__title { display: block; max-width: 100%; overflow: hidden; color: #173552; font-size: clamp(15px, 2.1vw, 19px); font-weight: 600; line-height: 1.35; text-overflow: ellipsis; white-space: nowrap; }
+.artwork-card__footer { display: flex; min-width: 0; align-items: center; gap: 7px; margin-top: 10px; }
+.artwork-card__avatar { flex: 0 0 clamp(24px, 4vw, 30px); width: clamp(24px, 4vw, 30px); height: auto; aspect-ratio: 1; border-radius: 50%; object-fit: cover; }
+.artwork-card__avatar--fallback { display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, #9bbfca, #527895); color: #fff; font-size: clamp(10px, 1.4vw, 12px); font-weight: 700; }
+.artwork-card__author { flex: 1; min-width: 0; overflow: hidden; color: #768390; font-size: clamp(12px, 1.6vw, 14px); text-overflow: ellipsis; white-space: nowrap; }
+.artwork-card__metrics { flex-shrink: 0; color: #ef5e77; font-size: clamp(11px, 1.5vw, 13px); white-space: nowrap; }
+.artwork-card__menu { position: absolute; z-index: 2; top: 10px; right: 10px; display: flex; align-items: center; justify-content: center; width: 38px; min-width: 38px; height: 32px; margin: 0; padding: 0; border-radius: 999px; background: rgba(255, 255, 255, 0.92); color: #173552; font-size: 16px; line-height: 1; }
+.artwork-card__menu::after { border: 0; }
 
-.artwork-card__cover {
-  display: block;
-  width: 100%;
-  height: 420rpx;
-  background: #ebe7e1;
-}
-
-.artwork-card__body {
-  padding: 24rpx;
-}
-
-.artwork-card__title,
-.artwork-card__author {
-  display: block;
-}
-
-.artwork-card__title {
-  font-size: 31rpx;
-  font-weight: 600;
-}
-
-.artwork-card__author {
-  margin-top: 8rpx;
-  color: #817b74;
-  font-size: 24rpx;
-}
-
-.artwork-card__meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 20rpx;
-}
-
-.artwork-card__metrics {
-  color: #8a857f;
-  font-size: 22rpx;
+@media (max-width: 599px) {
+  .artwork-card__body { padding: 9px; }
+  .artwork-card__title { font-size: 14px; }
+  .artwork-card__footer { gap: 5px; margin-top: 7px; }
+  .artwork-card__avatar { flex-basis: 22px; width: 22px; }
+  .artwork-card__author { font-size: 11px; }
+  .artwork-card__metrics { font-size: 10px; }
 }

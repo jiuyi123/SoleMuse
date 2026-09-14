@@ -1,18 +1,64 @@
-<view class="page">
-  <view class="page-header">
-    <text class="page-title">作品详情</text>
-    <text class="page-subtitle">作品 ID：{{artworkId || '未提供'}}</text>
+<app-header title="作品详情页" back transparent />
+<view wx:if="{{artwork}}" class="detail-page">
+  <view class="artwork-hero">
+    <swiper class="artwork-swiper" circular bindchange="changeImage">
+      <swiper-item wx:for="{{artwork.images}}" wx:key="*this">
+        <image class="artwork-hero__image" src="{{item}}" mode="aspectFill" data-url="{{item}}" bindtap="previewImage" />
+      </swiper-item>
+    </swiper>
+    <view class="artwork-hero__shade"></view>
+    <view class="artwork-hero__copy">
+      <text class="artwork-hero__title">{{artwork.title}}</text>
+      <text class="artwork-hero__tagline">{{artwork.tagline}}</text>
+      <view class="hero-rule"></view>
+      <text class="artwork-hero__motto">以东方山水为履</text>
+      <text class="artwork-hero__motto">让每一步</text>
+      <text class="artwork-hero__motto">都走向更美的世界</text>
+    </view>
+    <text class="swiper-count">{{currentImage}} / {{artwork.images.length}}</text>
   </view>
-  <page-state
-    wx:if="{{!artwork}}"
-    title="作品数据尚未加载"
-    description="后端接入后，这里将展示图片、Prompt、AI 来源、作者信息与评论区。"
-    action-text="查看说明"
-    bind:action="showPendingMessage"
-  />
-  <view class="detail-actions">
-    <button class="secondary-button" bindtap="showPendingMessage">点赞</button>
-    <button class="secondary-button" bindtap="showPendingMessage">收藏</button>
-    <button class="primary-button" bindtap="showPendingMessage">评论</button>
+  <view class="detail-sheet">
+    <view class="author-row">
+      <view class="author-avatar">L</view>
+      <view class="author-copy">
+        <text class="detail-title">{{artwork.title}}</text>
+        <text class="author-name">{{artwork.author.nickname}}</text>
+        <text class="publish-time">{{artwork.publishedAtDisplay}} 发布</text>
+      </view>
+      <view class="metric-actions">
+        <button class="metric-action {{liked ? 'metric-action--active' : ''}}" bindtap="toggleLike"><text>♡</text><text>{{artwork.metrics.likes}}</text></button>
+        <button class="metric-action {{favorited ? 'metric-action--active' : ''}}" bindtap="toggleFavorite"><text>☆</text><text>收藏</text></button>
+        <view class="metric-action"><text>◌</text><text>{{artwork.metrics.comments}}</text></view>
+      </view>
+    </view>
+    <view class="source-panel glass-card">
+      <view><text class="source-label">使用工具</text><text class="source-value">{{artwork.aiSource.name}}　{{artwork.aiSource.version}}</text></view>
+      <view class="source-divider"></view>
+      <view><text class="source-label">作品类型</text><text class="source-value">{{artwork.workType}}</text></view>
+    </view>
+    <view class="content-panel glass-card">
+      <view class="content-panel__heading"><text>▣　Prompt 提示词</text><button bindtap="copyPrompt">▢ 复制</button></view>
+      <text class="content-paragraph">{{artwork.prompt}}</text>
+    </view>
+    <view class="content-panel glass-card">
+      <view class="content-panel__heading"><text>▤　创作说明</text></view>
+      <text class="content-paragraph">{{artwork.description}}</text>
+    </view>
+    <view class="detail-tags"><text wx:for="{{artwork.tags}}" wx:key="*this" class="chip"># {{item}}</text></view>
+    <view class="comment-heading"><text class="section-title">评论 {{artwork.metrics.comments}}</text><text class="comment-sort">最新 ↕</text></view>
+    <view class="comment-list">
+      <view wx:for="{{comments}}" wx:key="id" class="comment-item">
+        <view class="comment-avatar">{{item.initial}}</view>
+        <view class="comment-body">
+          <view class="comment-meta"><text>{{item.author}}</text><text>{{item.time}}</text><text>♡ {{item.likes}}</text></view>
+          <text class="comment-content">{{item.content}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="comment-composer">
+    <input value="{{commentText}}" maxlength="300" placeholder="说点什么吧…" bindinput="updateComment" />
+    <button bindtap="publishComment">发布</button>
   </view>
 </view>
+<view wx:else class="page"><page-state state="loading" title="正在打开作品" description="请稍候…" /></view>

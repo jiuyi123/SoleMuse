@@ -1,18 +1,35 @@
-<view class="page">
-  <view class="profile-card panel">
-    <view class="profile-avatar">S</view>
-    <view class="profile-summary">
-      <text class="profile-name">{{isAuthenticated ? 'SoleMuse 用户' : '欢迎来到 SoleMuse'}}</text>
-      <text class="muted">{{isAuthenticated ? '完善资料，让同行更了解你' : '登录后管理作品与互动记录'}}</text>
-    </view>
-    <button wx:if="{{isAuthenticated}}" class="profile-action" bindtap="editProfile">编辑</button>
-    <button wx:else class="profile-action" bindtap="openLogin">登录</button>
-  </view>
+<app-header title="我的" transparent />
 
-  <view class="panel">
-    <view class="list-row" data-type="artworks" bindtap="openContent"><text>我的作品</text><text>›</text></view>
-    <view class="list-row" data-type="favorites" bindtap="openContent"><text>我的收藏</text><text>›</text></view>
-    <view class="list-row" data-type="likes" bindtap="openContent"><text>我的点赞</text><text>›</text></view>
-    <view class="list-row" data-type="comments" bindtap="openContent"><text>我的评论</text><text>›</text></view>
-  </view>
+<view class="page tab-page profile-page">
+  <page-state wx:if="{{!isAuthenticated}}" title="欢迎来到 SoleMuse" description="登录后管理作品、收藏与互动记录。" action-text="微信登录" bind:action="openLogin" />
+
+  <block wx:elif="{{profile}}">
+    <view class="profile-hero glass-card">
+      <view class="profile-hero__wash"></view>
+      <image class="profile-avatar" src="{{profile.avatarUrl}}" mode="aspectFill" />
+      <button class="profile-edit" bindtap="editProfile">编辑资料</button>
+      <text class="profile-name">{{profile.nickname}}</text>
+      <text class="profile-role">{{profile.region}} · {{profile.role}}</text>
+      <text class="profile-bio">“{{profile.bio}}”</text>
+      <view class="specialty-list"><text wx:for="{{profile.specialties}}" wx:key="*this" class="specialty">{{item}}</text></view>
+    </view>
+
+    <view class="profile-stats glass-card">
+      <view wx:for="{{profile.stats}}" wx:key="label" class="profile-stat" data-type="{{contentTypes[index]}}" bindtap="openContent">
+        <text class="profile-stat__value">{{item.value}}</text><text class="profile-stat__label">{{item.label}}</text>
+      </view>
+    </view>
+
+    <view class="profile-menu glass-card">
+      <view class="profile-menu__row" data-type="artworks" bindtap="openContent"><view class="profile-menu__icon">作</view><text>我的作品</text><text class="profile-menu__arrow">›</text></view>
+      <view class="profile-menu__row" data-type="favorites" bindtap="openContent"><view class="profile-menu__icon profile-menu__icon--mint">藏</view><text>我的收藏</text><text class="profile-menu__arrow">›</text></view>
+      <view class="profile-menu__row" data-type="likes" bindtap="openContent"><view class="profile-menu__icon profile-menu__icon--rose">赞</view><text>我的点赞</text><text class="profile-menu__arrow">›</text></view>
+      <view class="profile-menu__row" data-type="comments" bindtap="openContent"><view class="profile-menu__icon profile-menu__icon--amber">评</view><text>我的评论</text><text class="profile-menu__arrow">›</text></view>
+    </view>
+
+    <view class="profile-banner">
+      <image src="/assets/images/demo/profile/profile-promo-banner.png" mode="aspectFill" />
+      <view class="profile-banner__copy"><text class="profile-banner__title">春日灵感计划</text><text>让东方纹样在鞋履上新生</text></view>
+    </view>
+  </block>
 </view>
