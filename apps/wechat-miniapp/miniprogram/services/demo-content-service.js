@@ -15,6 +15,10 @@ function searchArtworks() {
   return Promise.resolve(clone(content.artworks));
 }
 
+function getSearchDiscovery() {
+  return Promise.resolve(clone(content.searchDiscovery));
+}
+
 function getArtwork() {
   return Promise.resolve({
     artwork: clone(content.featuredArtwork),
@@ -45,5 +49,6 @@ module.exports = {
   getMyContent,
   getProfile,
   getRanking,
+  getSearchDiscovery,
   searchArtworks,
 };

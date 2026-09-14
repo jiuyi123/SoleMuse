@@ -1,45 +1,87 @@
 const ROUTES = require('../../../../constants/routes');
 const router = require('../../../../core/navigation/router');
+const searchHistoryStorage = require('../../../../core/storage/search-history');
 const demoContent = require('../../../../services/demo-content-service');
 
 Page({
   data: {
-    keyword: '',
-    selectedTag: '',
     artworks: [],
-    sort: 'latest',
-    loading: true,
     filters: ['分类', '风格标签', 'AI生成源', '发布时间'],
+    hasSearched: false,
+    hotKeywords: [],
+    keyword: '',
+    loading: false,
+    searchHistory: [],
+    sort: 'latest',
   },
 
-  onLoad(options) {
-    this.setData({ selectedTag: options.tag || '' });
-    this.runSearch();
-  },
+  async onLoad(options) {
+    const discovery = await demoContent.getSearchDiscovery();
+    const keyword = (options.tag || '').trim();
 
-  handleKeywordInput(event) {
-    this.setData({ keyword: event.detail.value });
-  },
-
-  async runSearch() {
-    this.setData({ loading: true });
-    const artworks = await demoContent.searchArtworks();
-    const keyword = this.data.keyword.trim();
-    const selectedTag = this.data.selectedTag;
-    const filtered = artworks.filter((artwork) => {
-      const keywordMatch = !keyword || `${artwork.title}${artwork.author.nickname}${artwork.tags.join('')}`.includes(keyword);
-      const tagMatch = !selectedTag || artwork.tags.join('').includes(selectedTag) || artwork.title.includes(selectedTag.replace('颐绣灵感', '颐绣'));
-      return keywordMatch && tagMatch;
+    this.setData({
+      hotKeywords: discovery.hotKeywords,
+      keyword,
+      searchHistory: searchHistoryStorage.getSearchHistory(discovery.defaultHistory),
     });
-    this.setData({ artworks: filtered, loading: false });
+
+    if (keyword) this.runSearch(false);
+  },
+
+  handleInput(event) {
+    const keyword = event.detail.value;
+    this.setData({ keyword });
+
+    if (!keyword.trim() && this.data.hasSearched) {
+      this.setData({ artworks: [], hasSearched: false, loading: false });
+    }
   },
 
   submitSearch() {
-    this.runSearch();
+    this.runSearch(true);
   },
 
-  clearSearch() {
-    this.setData({ keyword: '', selectedTag: '' }, () => this.runSearch());
+  selectKeyword(event) {
+    const keyword = event.currentTarget.dataset.keyword;
+    this.setData({ keyword }, () => this.runSearch(true));
+  },
+
+  clearKeyword() {
+    this.setData({ artworks: [], hasSearched: false, keyword: '', loading: false });
+  },
+
+  clearHistory() {
+    searchHistoryStorage.clearSearchHistory();
+    this.setData({ searchHistory: [] });
+  },
+
+  async runSearch(recordHistory) {
+    const keyword = this.data.keyword.trim();
+    if (!keyword) {
+      wx.showToast({ title: '请输入搜索内容', icon: 'none' });
+      return;
+    }
+
+    if (recordHistory) {
+      this.setData({
+        searchHistory: searchHistoryStorage.addSearchHistory(keyword, this.data.searchHistory),
+      });
+    }
+
+    this.setData({ artworks: [], hasSearched: true, loading: true, sort: 'latest' });
+
+    try {
+      const artworks = await demoContent.searchArtworks();
+      const matches = artworks
+        .filter((artwork) => (
+          `${artwork.title}${artwork.author.nickname}${artwork.tags.join('')}`.includes(keyword)
+        ))
+        .sort((left, right) => right.publishedAtDisplay.localeCompare(left.publishedAtDisplay));
+      this.setData({ artworks: matches, loading: false });
+    } catch (error) {
+      this.setData({ loading: false });
+      wx.showToast({ title: '搜索失败，请稍后重试', icon: 'none' });
+    }
   },
 
   openArtwork(event) {
@@ -49,11 +91,17 @@ Page({
   changeSort(event) {
     const sort = event.currentTarget.dataset.sort;
     const artworks = this.data.artworks.slice();
-    if (sort === 'hottest') artworks.sort((a, b) => b.metrics.likes - a.metrics.likes);
-    this.setData({ sort, artworks });
+
+    if (sort === 'hottest') {
+      artworks.sort((left, right) => right.metrics.likes - left.metrics.likes);
+    } else {
+      artworks.sort((left, right) => right.publishedAtDisplay.localeCompare(left.publishedAtDisplay));
+    }
+
+    this.setData({ artworks, sort });
   },
 
   showFilter(event) {
-    wx.showToast({ title: `${event.currentTarget.dataset.filter}筛选待接口字典接入`, icon: 'none' });
+    wx.showToast({ title: `${event.currentTarget.dataset.filter}筛选待接入`, icon: 'none' });
   },
 });

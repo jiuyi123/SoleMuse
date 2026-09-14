@@ -80,6 +80,44 @@ test('home chrome is fixed while tags and artwork remain in the scrolling page',
   assert.match(markup, /class="page tab-page home-page" style="padding-top: \{\{fixedHeaderHeight\}\}px;"/);
 });
 
+test('search page keeps the requested navigation and discovery order responsive', () => {
+  const markup = read('subpackages/artwork/pages/search/index.wxml');
+  const styles = read('subpackages/artwork/pages/search/index.wxss');
+  const backIndex = markup.indexOf('<app-header back transparent />');
+  const searchIndex = markup.indexOf('class="search-row"');
+  const historyIndex = markup.indexOf('历史搜索');
+  const hotIndex = markup.indexOf('热搜内容');
+
+  assert.ok(backIndex >= 0 && backIndex < searchIndex && searchIndex < historyIndex && historyIndex < hotIndex);
+  assert.match(markup, /class="search-box__input"/);
+  assert.match(markup, /class="search-confirm"[\s\S]*aria-role="button"[\s\S]*>搜索<\/view>/);
+  assert.match(styles, /\.search-row\s*\{[^}]*display:\s*grid;[^}]*grid-template-columns:\s*minmax\(0, 1fr\) 56px/);
+  assert.match(styles, /\.search-box\s*\{[^}]*width:\s*100%/);
+  assert.match(styles, /\.search-confirm\s*\{[^}]*width:\s*56px;[^}]*justify-content:\s*flex-end/);
+  assert.match(styles, /\.search-box__clear\s*\{[^}]*top:\s*50%;[^}]*right:\s*12px;[^}]*translateY\(-50%\)/);
+  assert.match(styles, /\.keyword-list\s*\{[^}]*flex-wrap:\s*wrap;[^}]*justify-content:\s*flex-start/);
+  assert.match(styles, /\.keyword-chip\s*\{[^}]*display:\s*inline-flex;[^}]*flex:\s*none;[^}]*width:\s*auto/);
+  assert.match(styles, /@media \(min-width: 600px\)[\s\S]*\.hot-search-grid\s*\{\s*grid-template-columns:\s*repeat\(3/);
+  assert.match(styles, /@media \(min-width: 900px\)[\s\S]*\.hot-search-grid\s*\{\s*grid-template-columns:\s*repeat\(4/);
+  assert.match(markup, /<block wx:if="\{\{!hasSearched\}\}">[\s\S]*历史搜索[\s\S]*热搜内容[\s\S]*<\/block>/);
+  assert.match(markup, /<view wx:else class="result-section">/);
+  assert.match(markup, /class="filter-scroll"[\s\S]*最新发布[\s\S]*热度排序[\s\S]*共 \{\{artworks\.length\}\} 个结果/);
+  assert.match(styles, /\.filter-list\s*\{[^}]*width:\s*max-content/);
+  assert.match(styles, /\.result-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.match(styles, /@media \(min-width: 768px\)[\s\S]*\.result-grid\s*\{\s*grid-template-columns:\s*repeat\(3/);
+  assert.match(styles, /@media \(min-width: 1200px\)[\s\S]*\.result-grid\s*\{\s*grid-template-columns:\s*repeat\(4/);
+});
+
+test('shared back control avoids native button sizing and stays square', () => {
+  const markup = read('components/common/app-header/index.wxml');
+  const styles = read('components/common/app-header/index.wxss');
+
+  assert.doesNotMatch(markup, /<button[^>]*app-header__back/);
+  assert.match(markup, /class="app-header__back"[\s\S]*aria-role="button"/);
+  assert.match(styles, /\.app-header__back\s*\{[^}]*width:\s*40px;[^}]*height:\s*40px;/);
+  assert.match(styles, /\.app-header__back-icon\s*\{[^}]*border-bottom:[^}]*border-left:/);
+});
+
 test('artwork cards expose only title, author identity and likes', () => {
   const markup = read('components/domain/artwork-card/index.wxml');
   assert.match(markup, /artwork-card__title/);

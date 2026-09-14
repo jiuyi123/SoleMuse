@@ -86,6 +86,11 @@ const ranking = [
   { rank: 8, title: '无界 · NEXT', author: 'Cloudy', heat: '0.9k', subtitle: '探索下一种可能', image: artworkImages[5], artworkId: 'prototype-artwork-06' },
 ];
 
+const searchDiscovery = {
+  defaultHistory: ['未来科技运动鞋', '东方美学', '可持续鞋履'],
+  hotKeywords: ['未来科技', '东方美学', '国风鞋履', '运动潮流', '可持续设计', 'AI 鞋履'],
+};
+
 module.exports = {
   artworkImages,
   artworks,
@@ -94,4 +99,5 @@ module.exports = {
   messages,
   profile,
   ranking,
+  searchDiscovery,
 };

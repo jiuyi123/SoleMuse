@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "搜索作品",
+  "navigationBarTitleText": "搜索",
   "usingComponents": {
     "artwork-card": "/components/domain/artwork-card/index",
     "page-state": "/components/common/page-state/index"

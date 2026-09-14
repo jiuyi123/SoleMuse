@@ -1,6 +1,14 @@
 <view class="app-header {{transparent ? 'app-header--transparent' : ''}}" style="padding-top: {{statusBarHeight}}px;">
   <view class="app-header__bar" style="height: {{navigationHeight}}px;">
-    <button wx:if="{{back}}" class="app-header__back" bindtap="goBack" aria-label="返回">‹</button>
+    <view
+      wx:if="{{back}}"
+      class="app-header__back"
+      bindtap="goBack"
+      aria-role="button"
+      aria-label="返回"
+    >
+      <view class="app-header__back-icon"></view>
+    </view>
     <text class="app-header__title">{{title}}</text>
   </view>
 </view>
