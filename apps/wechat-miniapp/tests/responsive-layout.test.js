@@ -109,6 +109,25 @@ test('home chrome is fixed while tags and artwork remain in the scrolling page',
   assert.match(markup, /class="page tab-page home-page" style="padding-top: \{\{fixedHeaderHeight\}\}px;"/);
 });
 
+test('custom tab bar uses branded vector icons and a raised creation action', () => {
+  const markup = read('custom-tab-bar/index.wxml');
+  const styles = read('custom-tab-bar/index.wxss');
+  const logic = read('custom-tab-bar/index.js');
+
+  assert.match(markup, /tab-icon tab-icon--default[\s\S]*src="\{\{item\.icon\}\}"[\s\S]*tab-icon tab-icon--active[\s\S]*src="\{\{item\.activeIcon\}\}"/);
+  assert.match(markup, /aria-role="button"[\s\S]*aria-label="\{\{item\.text\}\}"/);
+  assert.doesNotMatch(markup, /<text class="tab-icon">/);
+  assert.match(logic, /tab-home\.svg[\s\S]*tab-ranking\.svg[\s\S]*tab-create\.svg[\s\S]*tab-messages\.svg[\s\S]*tab-profile\.svg/);
+  assert.match(markup, /ready && selected === index/);
+  assert.doesNotMatch(markup, /tab-selection|pageTransitionVisible/);
+  assert.match(styles, /\.tab-icon--default\s*\{[^}]*opacity:\s*1/);
+  assert.match(styles, /\.tab-icon--active\s*\{[^}]*opacity:\s*0/);
+  assert.match(styles, /\.tab-item--active \.tab-icon--active\s*\{[^}]*opacity:\s*1/);
+  assert.doesNotMatch(styles, /\.tab-shell\s*\{[^}]*backdrop-filter/);
+  assert.match(styles, /\.tab-item--raised \.tab-icon-wrap[^}]*width:\s*56px;[^}]*height:\s*56px;[^}]*margin-top:\s*-30px/);
+  assert.match(styles, /env\(safe-area-inset-bottom\)/);
+});
+
 test('search page keeps the requested navigation and discovery order responsive', () => {
   const markup = read('subpackages/artwork/pages/search/index.wxml');
   const styles = read('subpackages/artwork/pages/search/index.wxss');

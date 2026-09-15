@@ -3,12 +3,15 @@
     <view
       wx:for="{{items}}"
       wx:key="path"
-      class="tab-item {{selected === index ? 'tab-item--active' : ''}} {{item.raised ? 'tab-item--raised' : ''}}"
+      class="tab-item {{ready && selected === index ? 'tab-item--active' : ''}} {{item.raised ? 'tab-item--raised' : ''}}"
       data-index="{{index}}"
       bindtap="switchTab"
+      aria-role="button"
+      aria-label="{{item.text}}"
     >
       <view class="tab-icon-wrap">
-        <text class="tab-icon">{{item.icon}}</text>
+        <image class="tab-icon tab-icon--default" src="{{item.icon}}" mode="aspectFit" />
+        <image class="tab-icon tab-icon--active" src="{{item.activeIcon}}" mode="aspectFit" />
         <text wx:if="{{index === 3 && unread}}" class="tab-badge">{{unread}}</text>
       </view>
       <text class="tab-label">{{item.text}}</text>

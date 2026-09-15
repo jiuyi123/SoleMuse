@@ -66,3 +66,14 @@ test('creation page uses the matching transition color and a short entrance fade
   assert.match(styles, /background:\s*#66a8d4/);
   assert.match(styles, /opacity 260ms ease-out/);
 });
+
+test('standard tabs avoid cross-page overlays and switch without artificial delay', () => {
+  const behavior = read('custom-tab-bar/index.js');
+  const markup = read('custom-tab-bar/index.wxml');
+  const syncBehavior = read('utils/sync-tab-bar.js');
+
+  assert.match(behavior, /if \(index === CREATION_TAB_INDEX\)[\s\S]*router\.switchTab\(item\.path\)/);
+  assert.doesNotMatch(behavior, /startTabTransition|TAB_SWITCH_DELAY|tabTransitionPending/);
+  assert.doesNotMatch(markup, /tab-page-transition|pageTransitionVisible/);
+  assert.match(syncBehavior, /setData\(\{ hidden: Boolean\(options\.hidden\), selected, ready: true \}\)/);
+});
