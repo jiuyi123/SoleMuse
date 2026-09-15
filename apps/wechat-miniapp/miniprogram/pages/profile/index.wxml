@@ -1,35 +1,89 @@
-<app-header title="我的" transparent />
-
 <view class="page tab-page profile-page">
   <page-state wx:if="{{!isAuthenticated}}" title="欢迎来到 SoleMuse" description="登录后管理作品、收藏与互动记录。" action-text="微信登录" bind:action="openLogin" />
 
   <block wx:elif="{{profile}}">
-    <view class="profile-hero glass-card">
-      <view class="profile-hero__wash"></view>
-      <image class="profile-avatar" src="{{profile.avatarUrl}}" mode="aspectFill" />
-      <button class="profile-edit" bindtap="editProfile">编辑资料</button>
-      <text class="profile-name">{{profile.nickname}}</text>
-      <text class="profile-role">{{profile.region}} · {{profile.role}}</text>
-      <text class="profile-bio">“{{profile.bio}}”</text>
-      <view class="specialty-list"><text wx:for="{{profile.specialties}}" wx:key="*this" class="specialty">{{item}}</text></view>
-    </view>
-
-    <view class="profile-stats glass-card">
-      <view wx:for="{{profile.stats}}" wx:key="label" class="profile-stat" data-type="{{contentTypes[index]}}" bindtap="openContent">
-        <text class="profile-stat__value">{{item.value}}</text><text class="profile-stat__label">{{item.label}}</text>
+    <view class="profile-cover">
+      <view class="profile-topbar" style="padding-top: {{statusBarHeight}}px;">
+        <view class="profile-identity" style="height: {{navigationHeight}}px; padding-right: {{headerRightInset}}px;">
+          <image class="profile-avatar" src="{{profile.avatarUrl}}" mode="aspectFill" />
+          <view class="profile-copy">
+            <text class="profile-name">{{profile.nickname}}</text>
+            <text class="profile-region">IP：{{profile.region}}</text>
+          </view>
+        </view>
       </view>
     </view>
 
-    <view class="profile-menu glass-card">
-      <view class="profile-menu__row" data-type="artworks" bindtap="openContent"><view class="profile-menu__icon">作</view><text>我的作品</text><text class="profile-menu__arrow">›</text></view>
-      <view class="profile-menu__row" data-type="favorites" bindtap="openContent"><view class="profile-menu__icon profile-menu__icon--mint">藏</view><text>我的收藏</text><text class="profile-menu__arrow">›</text></view>
-      <view class="profile-menu__row" data-type="likes" bindtap="openContent"><view class="profile-menu__icon profile-menu__icon--rose">赞</view><text>我的点赞</text><text class="profile-menu__arrow">›</text></view>
-      <view class="profile-menu__row" data-type="comments" bindtap="openContent"><view class="profile-menu__icon profile-menu__icon--amber">评</view><text>我的评论</text><text class="profile-menu__arrow">›</text></view>
-    </view>
+    <scroll-view class="profile-page-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+      <view class="profile-overview">
+        <view class="profile-social-row">
+        <view class="profile-stats">
+          <view wx:for="{{profile.stats}}" wx:key="label" class="profile-stat">
+            <text class="profile-stat__value">{{item.value}}</text>
+            <text class="profile-stat__label">{{item.label}}</text>
+          </view>
+        </view>
+          <view wx:if="{{isOwnProfile}}" class="profile-actions">
+            <view class="profile-edit" bindtap="editProfile" aria-role="button" aria-label="编辑资料">编辑资料</view>
+            <view class="profile-settings" bindtap="openSettings" aria-role="button" aria-label="设置">
+              <image src="/assets/icons/settings-outline.svg" mode="aspectFit" />
+            </view>
+          </view>
+        </view>
 
-    <view class="profile-banner">
-      <image src="/assets/images/demo/profile/profile-promo-banner.png" mode="aspectFill" />
-      <view class="profile-banner__copy"><text class="profile-banner__title">春日灵感计划</text><text>让东方纹样在鞋履上新生</text></view>
-    </view>
+        <text class="profile-bio">{{profile.bio}}</text>
+        <view class="specialty-list"><text wx:for="{{profile.specialties}}" wx:key="*this" class="specialty">{{item}}</text></view>
+      </view>
+
+      <view class="content-panel">
+        <view class="content-navigation">
+          <scroll-view class="content-tabs" scroll-x enhanced show-scrollbar="{{false}}">
+            <view class="content-tabs__inner">
+              <view wx:for="{{contentTabs}}" wx:key="key" class="content-tab {{activeContent === item.key ? 'content-tab--active' : ''}}" data-type="{{item.key}}" bindtap="changeContent" aria-role="button">{{item.label}}</view>
+            </view>
+          </scroll-view>
+
+          <view wx:if="{{activeContent === 'artworks'}}" class="status-tabs">
+            <view class="status-tab {{activeStatus === 'published' ? 'status-tab--active' : ''}}" data-status="published" bindtap="changeStatus" aria-role="button">已发布</view>
+            <view class="status-tab {{activeStatus === 'draft' ? 'status-tab--active' : ''}}" data-status="draft" bindtap="changeStatus" aria-role="button">草稿</view>
+          </view>
+
+          <view wx:if="{{activeContent === 'comments'}}" class="comment-filter-tabs">
+            <view class="comment-filter {{commentFilter === 'all' ? 'comment-filter--active' : ''}}" data-filter="all" bindtap="changeCommentFilter" aria-role="button">全部 {{myComments.length}}</view>
+            <view class="comment-filter {{commentFilter === 'public' ? 'comment-filter--active' : ''}}" data-filter="public" bindtap="changeCommentFilter" aria-role="button">公开 {{publicCommentCount}}</view>
+          </view>
+        </view>
+
+      <view class="profile-content-body">
+        <view wx:if="{{activeContent === 'comments' && visibleComments.length}}" class="comment-records">
+          <view wx:for="{{visibleComments}}" wx:key="id" class="comment-record" data-artwork-id="{{item.artworkId}}" bindtap="openCommentSource" aria-role="button">
+            <image class="comment-record__avatar" src="{{profile.avatarUrl}}" mode="aspectFill" />
+            <view class="comment-record__body">
+              <text class="comment-record__author">{{profile.nickname}}</text>
+              <text class="comment-record__content">{{item.content}}</text>
+              <text class="comment-record__source">来自作品 · {{item.sourceTitle}}</text>
+              <text class="comment-record__source-meta">{{item.sourceMeta}}</text>
+              <view class="comment-record__footer">
+                <text>{{item.publishedAtDisplay}}</text>
+                <text>设为公开</text>
+              </view>
+            </view>
+            <text class="comment-record__heart">♡</text>
+          </view>
+        </view>
+
+        <view wx:if="{{activeContent !== 'comments' && visibleItems.length}}" class="artwork-grid">
+          <view wx:for="{{visibleItems}}" wx:key="id" class="artwork-grid__item">
+            <artwork-card artwork="{{item}}" bind:select="openArtwork" />
+          </view>
+        </view>
+
+        <page-state wx:if="{{!loading && ((activeContent === 'comments' && !visibleComments.length) || (activeContent !== 'comments' && !visibleItems.length))}}" state="{{loadFailed ? 'error' : 'empty'}}" title="{{loadFailed ? '内容加载失败' : (activeContent === 'comments' ? '还没有发表过评论' : (activeStatus === 'draft' ? '还没有草稿' : '这里还没有内容'))}}" description="{{loadFailed ? '请检查网络后重试。' : '新的鞋履灵感会在这里留下印迹。'}}" action-text="{{loadFailed ? '重新加载' : ''}}" bind:action="loadProfile" />
+      </view>
+      </view>
+    </scroll-view>
   </block>
+
+  <page-state wx:elif="{{loading}}" state="loading" title="正在加载个人内容" description="作品与评论记录正在整理中…" />
+  <page-state wx:elif="{{loadFailed}}" state="error" title="内容加载失败" description="请检查网络后重试。" action-text="重新加载" bind:action="loadProfile" />
 </view>

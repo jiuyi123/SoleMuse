@@ -51,13 +51,12 @@ const profile = {
   avatarUrl: '/assets/images/demo/profile/avatar-lintong-manbu.png',
   region: '浙江 · 温州',
   role: '独立鞋履设计师',
-  bio: '用 AI 探索鞋履的更多可能',
+  bio: '让每一步，都走向更美的世界。',
   specialties: ['运动鞋', '国潮鞋', '可持续设计', 'AI 设计'],
   stats: [
-    { label: '作品', value: '28' },
-    { label: '收藏', value: '1.2k' },
-    { label: '点赞', value: '356' },
-    { label: '评论', value: '128' },
+    { label: '关注', value: '356' },
+    { label: '粉丝', value: '128' },
+    { label: '获赞与收藏', value: '1.2k' },
   ],
 };
 
@@ -65,6 +64,54 @@ const comments = [
   { id: 'comment-1', author: 'Sugar', initial: 'S', time: '5月20日 16:22', content: '太美了！传统文化和现代设计结合得好棒，想收藏一双实体版！', likes: 56 },
   { id: 'comment-2', author: '山与海', initial: '山', time: '5月21日 09:15', content: '光影和配色太有氛围感了，提示词也很详细，学习了！', likes: 28 },
   { id: 'comment-3', author: 'AI喵酱', initial: 'A', time: '5月21日 11:40', content: '这配色像把江南的春天穿在了脚上。', likes: 16 },
+];
+
+const myComments = [
+  {
+    id: 'my-comment-1',
+    artworkId: 'prototype-artwork-01',
+    content: '山水层次和鞋面的结构融合得很自然，尤其喜欢云雾纹理的处理。',
+    sourceTitle: '颐绣·山海行',
+    sourceMeta: '东方美学 · 运动鞋',
+    publishedAtDisplay: '今天 10:24',
+    visibility: 'public',
+  },
+  {
+    id: 'my-comment-2',
+    artworkId: 'prototype-artwork-05',
+    content: '花鸟纹样的尺度控制得刚刚好，保留了传统气质，也很适合日常穿搭。',
+    sourceTitle: '流光颐绣',
+    sourceMeta: '春日灵感 · AI 创作',
+    publishedAtDisplay: '昨天 18:06',
+    visibility: 'public',
+  },
+  {
+    id: 'my-comment-3',
+    artworkId: 'prototype-artwork-03',
+    content: '未来感不只来自材质，鞋底轮廓的节奏也很有力量。',
+    sourceTitle: '颐韵·潮生',
+    sourceMeta: '科技未来 · 鞋履设计',
+    publishedAtDisplay: '09-12 14:31',
+    visibility: 'public',
+  },
+  {
+    id: 'my-comment-4',
+    artworkId: 'prototype-artwork-04',
+    content: '配色像雨后的江南，安静但很有记忆点。',
+    sourceTitle: '东方绣境',
+    sourceMeta: '东方美学 · 自然灵感',
+    publishedAtDisplay: '09-08 21:17',
+    visibility: 'public',
+  },
+  {
+    id: 'my-comment-5',
+    artworkId: 'prototype-artwork-06',
+    content: '很喜欢这次传统纹样和未来结构之间的平衡。',
+    sourceTitle: '颐绣 × 未来',
+    sourceMeta: '未来科技 · 国风新生',
+    publishedAtDisplay: '09-02 09:42',
+    visibility: 'public',
+  },
 ];
 
 const messages = [
@@ -97,6 +144,7 @@ module.exports = {
   comments,
   featuredArtwork,
   messages,
+  myComments,
   profile,
   ranking,
   searchDiscovery,

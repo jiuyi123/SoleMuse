@@ -42,10 +42,15 @@ function getMyContent() {
   return Promise.resolve(clone(content.artworks));
 }
 
+function getMyComments() {
+  return Promise.resolve(clone(content.myComments));
+}
+
 module.exports = {
   getArtwork,
   getHomeContent,
   getMessages,
+  getMyComments,
   getMyContent,
   getProfile,
   getRanking,

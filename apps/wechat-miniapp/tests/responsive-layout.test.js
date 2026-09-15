@@ -204,6 +204,40 @@ test('artwork cards expose only title, author identity and likes', () => {
   assert.doesNotMatch(markup, /source-tag|artwork-card__stats|artwork-card__tags/);
 });
 
+test('profile page uses the redesigned identity, social stats and scrollable content hierarchy', () => {
+  const markup = read('pages/profile/index.wxml');
+  const styles = read('pages/profile/index.wxss');
+  const data = read('data/prototype-content.js');
+  const logic = read('pages/profile/index.js');
+
+  assert.match(markup, /profile-topbar[\s\S]*profile-identity[\s\S]*profile-stats/);
+  assert.doesNotMatch(markup, /profile-signature/);
+  assert.match(data, /关注[\s\S]*粉丝[\s\S]*获赞与收藏/);
+  assert.doesNotMatch(markup, /profile-cover__image/);
+  assert.match(markup, /IP：\{\{profile\.region\}\}/);
+  assert.match(markup, /padding-top: \{\{statusBarHeight\}\}px/);
+  assert.match(markup, /height: \{\{navigationHeight\}\}px; padding-right: \{\{headerRightInset\}\}px/);
+  assert.match(markup, /profile-social-row[\s\S]*profile-stats[\s\S]*profile-edit/);
+  assert.match(markup, /wx:if="\{\{isOwnProfile\}\}" class="profile-actions"[\s\S]*profile-edit[\s\S]*profile-settings/);
+  assert.match(styles, /\.profile-settings\s*\{[^}]*width:\s*34px;[^}]*height:\s*34px/);
+  assert.match(logic, /openSettings\(\) \{ router\.navigateTo\(ROUTES\.SETTINGS\); \}/);
+  assert.match(markup, /class="profile-bio">\{\{profile\.bio\}\}<\/text>[\s\S]*specialty-list/);
+  assert.match(styles, /\.profile-cover\s*\{[^}]*border-bottom:/);
+  assert.doesNotMatch(styles, /\.profile-social-row\s*\{[^}]*border-(top|bottom):/);
+  assert.doesNotMatch(styles, /\.(content-tabs|status-tabs|comment-filter-tabs)\s*\{[^}]*border-bottom:/);
+  assert.match(logic, /作品[\s\S]*评论[\s\S]*点赞[\s\S]*收藏[\s\S]*印迹/);
+  assert.match(markup, /已发布[\s\S]*草稿/);
+  assert.match(markup, /comment-filter-tabs[\s\S]*全部[\s\S]*公开/);
+  assert.match(markup, /comment-record__content[\s\S]*来自作品/);
+  assert.match(markup, /artwork-grid[\s\S]*artwork-card/);
+  assert.match(styles, /grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.match(markup, /class="profile-page-scroll" scroll-y[\s\S]*profile-overview[\s\S]*content-navigation[\s\S]*class="artwork-grid"/);
+  assert.match(styles, /\.profile-page\s*\{[^}]*display:\s*flex;[^}]*flex-direction:\s*column/);
+  assert.match(styles, /\.profile-page-scroll\s*\{[^}]*height:\s*0;[^}]*flex:\s*1/);
+  assert.match(styles, /\.content-navigation\s*\{[^}]*position:\s*sticky;[^}]*top:\s*0/);
+  assert.doesNotMatch(markup, /class="profile-content-scroll"/);
+});
+
 test('create page keeps a fixed capsule-safe header and compact controls responsive', () => {
   const markup = read('pages/create/index.wxml');
   const styles = read('pages/create/index.wxss');
