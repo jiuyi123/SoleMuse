@@ -238,6 +238,63 @@ test('profile page uses the redesigned identity, social stats and scrollable con
   assert.doesNotMatch(markup, /class="profile-content-scroll"/);
 });
 
+test('messages page follows the compact notification-center hierarchy', () => {
+  const markup = read('pages/messages/index.wxml');
+  const styles = read('pages/messages/index.wxss');
+  const logic = read('pages/messages/index.js');
+  const data = read('data/prototype-content.js');
+
+  assert.match(markup, /message-header[\s\S]*message-channels[\s\S]*message-list/);
+  assert.doesNotMatch(markup, /message-header__actions|message-header__search|message-header__plus/);
+  assert.match(data, /赞和收藏[\s\S]*新增关注[\s\S]*评论和@/);
+  assert.match(data, /message-reaction\.svg[\s\S]*message-follow\.svg[\s\S]*message-comment\.svg/);
+  assert.match(markup, /message-row__title[\s\S]*message-row__time[\s\S]*message-row__summary/);
+  assert.match(styles, /\.message-channels\s*\{[^}]*grid-template-columns:\s*repeat\(3/);
+  assert.match(styles, /\.message-channel__icon\s*\{[^}]*width:\s*54px;[^}]*height:\s*54px/);
+  assert.match(styles, /\.message-header__title\s*\{[^}]*font-size:\s*18px;[^}]*font-weight:\s*600/);
+  assert.match(styles, /\.message-row\s*\{[^}]*min-height:\s*78px/);
+  assert.match(logic, /getMessageChannels\(\)/);
+  assert.match(logic, /activeFilter:\s*'inbox'/);
+  assert.match(data, /type: 'direct'/);
+  assert.match(data, /type: 'follow'/);
+  assert.match(logic, /openChannel[\s\S]*ROUTES\.MESSAGE_CATEGORY/);
+  assert.match(logic, /item\.type === 'direct' \|\| item\.type === 'system' \|\| item\.type === 'status'[\s\S]*ROUTES\.CHAT/);
+});
+
+test('direct messages open a responsive chat with service-backed sending', () => {
+  const markup = read('subpackages/messages/pages/chat/index.wxml');
+  const styles = read('subpackages/messages/pages/chat/index.wxss');
+  const logic = read('subpackages/messages/pages/chat/index.js');
+  const routes = read('constants/routes.js');
+  const appConfig = read('app.json');
+
+  assert.match(routes, /CHAT:\s*'\/subpackages\/messages\/pages\/chat\/index'/);
+  assert.match(appConfig, /pages\/chat\/index/);
+  assert.match(markup, /class="chat-thread"[\s\S]*chat-message--\{\{item\.sender\}\}[\s\S]*class="chat-composer"/);
+  assert.match(markup, /item\.sender === 'self'[^>]*class="chat-avatar"[^>]*src="\{\{currentUserAvatar\}\}"/);
+  assert.match(markup, /confirm-type="send"[\s\S]*bindconfirm="sendMessage"/);
+  assert.match(styles, /\.chat-thread\s*\{[^}]*height:\s*0;[^}]*flex:\s*1/);
+  assert.match(styles, /\.chat-composer\s*\{[^}]*grid-template-columns:\s*minmax\(0, 1fr\) auto/);
+  assert.match(styles, /safe-area-inset-bottom/);
+  assert.match(logic, /getConversation\(this\.data\.conversationId\)/);
+  assert.match(logic, /sendConversationMessage\(this\.data\.conversationId, content\)/);
+});
+
+test('message categories are back-navigable subpages and artwork interactions keep their destinations', () => {
+  const markup = read('subpackages/messages/pages/category/index.wxml');
+  const styles = read('subpackages/messages/pages/category/index.wxss');
+  const logic = read('subpackages/messages/pages/category/index.js');
+  const routes = read('constants/routes.js');
+
+  assert.match(routes, /MESSAGE_CATEGORY:\s*'\/subpackages\/messages\/pages\/category\/index'/);
+  assert.match(markup, /<app-header title="\{\{title\}\}" back transparent/);
+  assert.match(logic, /reaction:\s*'收到的赞和收藏'[\s\S]*follow:\s*'新增关注'[\s\S]*comment:\s*'评论和@'/);
+  assert.match(logic, /getMessagesByCategory\(this\.data\.filter\)/);
+  assert.match(logic, /item\.artworkId[\s\S]*ROUTES\.ARTWORK_DETAIL/);
+  assert.match(logic, /item\.type === 'follow'[\s\S]*用户主页建设中/);
+  assert.match(styles, /\.category-item\s*\{[^}]*margin:\s*0 10px/);
+});
+
 test('create page keeps a fixed capsule-safe header and compact controls responsive', () => {
   const markup = read('pages/create/index.wxml');
   const styles = read('pages/create/index.wxss');

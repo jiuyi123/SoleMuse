@@ -1,0 +1,54 @@
+<view class="chat-shell">
+  <app-header title="{{participant ? participant.name : '私信'}}" back transparent />
+
+  <page-state wx:if="{{loading}}" state="loading" title="正在打开对话" description="稍等一下，消息马上就来。" />
+  <page-state wx:elif="{{loadFailed}}" state="error" title="暂时无法打开对话" description="请稍后重试。" action-text="重新加载" bind:action="loadConversation" />
+
+  <block wx:else>
+    <view class="chat-presence">
+      <view class="chat-presence__dot"></view>
+      <text>{{participant.status}}</text>
+    </view>
+
+    <scroll-view
+      class="chat-thread"
+      scroll-y
+      enhanced
+      show-scrollbar="{{false}}"
+      scroll-with-animation
+      scroll-into-view="{{scrollTarget}}"
+    >
+      <view class="chat-thread__inner">
+        <view wx:for="{{messages}}" wx:key="id" id="message-{{item.id}}">
+          <text wx:if="{{item.time}}" class="chat-time">{{item.time}}</text>
+          <view class="chat-message chat-message--{{item.sender}}">
+            <image wx:if="{{item.sender === 'other' && participant.avatarUrl}}" class="chat-avatar" src="{{participant.avatarUrl}}" mode="aspectFill" />
+            <view wx:elif="{{item.sender === 'other'}}" class="chat-avatar chat-avatar--fallback">{{participant.initial}}</view>
+            <image wx:if="{{item.sender === 'self'}}" class="chat-avatar" src="{{currentUserAvatar}}" mode="aspectFill" />
+            <view class="chat-bubble chat-bubble--{{item.sender}}">{{item.content}}</view>
+          </view>
+        </view>
+        <view class="chat-bottom-anchor"></view>
+      </view>
+    </scroll-view>
+
+    <view class="chat-composer">
+      <view class="chat-input-wrap">
+        <input
+          class="chat-input"
+          value="{{inputValue}}"
+          maxlength="500"
+          placeholder="发消息…"
+          confirm-type="send"
+          cursor-spacing="18"
+          bindinput="handleInput"
+          bindconfirm="sendMessage"
+        />
+      </view>
+      <view class="chat-send {{inputReady ? 'chat-send--ready' : ''}}" bindtap="sendMessage" aria-role="button" aria-label="发送消息">
+        {{sending ? '发送中' : '发送'}}
+      </view>
+      <text wx:if="{{sendFailed}}" class="chat-send-error">发送失败，请重试</text>
+    </view>
+  </block>
+</view>

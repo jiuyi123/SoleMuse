@@ -1,26 +1,48 @@
-.message-page { padding-top: 6px; }
-.message-hero { margin: 4px 2px clamp(16px, 3vw, 24px); }
-.message-hero__title { display: block; color: #193a57; font-family: "STKaiti", "Songti SC", serif; font-size: clamp(20px, 3.4vw, 30px); font-weight: 600; letter-spacing: 1px; overflow-wrap: anywhere; }
-.message-hero__desc { display: block; margin-top: 6px; color: #7a8ca0; font-size: clamp(13px, 1.8vw, 16px); line-height: 1.55; overflow-wrap: anywhere; }
-.message-filters { width: 100%; margin-bottom: 16px; white-space: nowrap; }
-.message-filters__inner { display: inline-flex; min-width: 100%; gap: 8px; }
-.message-filter { flex: 1 0 auto; min-width: 68px; min-height: 36px; margin: 0; padding: 0 clamp(12px, 2vw, 20px); border: 1px solid #c7d7e2; border-radius: 999px; background: rgba(255,255,255,.72); color: #526a81; font-size: clamp(12px, 1.6vw, 14px); line-height: 34px; }
-.message-filter::after { border: 0; }
-.message-filter--active { border-color: transparent; background: linear-gradient(120deg,#6ca49b,#76acd2); color: #fff; }
-.message-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(10px, 2vw, 16px); }
-.message-card { display: flex; align-items: center; width: 100%; min-width: 0; padding: clamp(12px, 2.5vw, 20px); }
-.message-card__icon { display: flex; flex: 0 0 clamp(40px, 10vw, 54px); align-items: center; justify-content: center; aspect-ratio: 1; border-radius: clamp(13px, 2.8vw, 20px); color: #fff; font-size: clamp(16px, 2.8vw, 21px); font-weight: 700; }
-.message-card__icon--rose { background: linear-gradient(145deg,#eaa1a8,#df7080); }
-.message-card__icon--cyan { background: linear-gradient(145deg,#85c5c2,#5c9dac); }
-.message-card__icon--amber { background: linear-gradient(145deg,#e8c57b,#d49b55); }
-.message-card__icon--blue { background: linear-gradient(145deg,#8eb9d6,#668fb8); }
-.message-card__body { flex: 1; min-width: 0; margin-left: clamp(10px, 2vw, 16px); }
-.message-card__heading { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 8px; }
-.message-card__title { min-width: 0; overflow: hidden; color: #183652; font-size: clamp(13px, 1.8vw, 16px); font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
-.message-card__time { flex-shrink: 0; color: #9aa6b5; font-size: clamp(10px, 1.3vw, 12px); }
-.message-card__summary { display: -webkit-box; margin-top: 6px; overflow: hidden; color: #6d7f92; font-size: clamp(12px, 1.6vw, 14px); line-height: 1.5; overflow-wrap: anywhere; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-.message-card__image { flex: 0 0 clamp(44px, 11vw, 62px); width: clamp(44px, 11vw, 62px); height: auto; margin-left: clamp(8px, 1.8vw, 14px); aspect-ratio: 1; border-radius: clamp(9px, 1.8vw, 14px); object-fit: cover; }
+page { height: 100%; overflow: hidden; background: #fff; }
 
-@media (min-width: 768px) {
-  .message-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.message-page {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  padding-top: 0;
+  padding-right: 0;
+  padding-left: 0;
+  background: #fff;
+}
+
+.message-header { flex: 0 0 auto; background: #fff; }
+.message-header__bar { position: relative; display: flex; align-items: center; justify-content: center; }
+.message-header__title { color: #222b33; font-size: 18px; font-weight: 600; line-height: 1.2; }
+
+.message-channels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding: 22px 12px 20px; }
+.message-channel { position: relative; display: flex; min-width: 0; flex-direction: column; align-items: center; }
+.message-channel__icon { display: flex; width: 54px; height: 54px; align-items: center; justify-content: center; border-radius: 17px; font-size: 27px; line-height: 1; transition: transform 160ms ease; }
+.message-channel__icon--rose { background: #fff0f1; color: #f05f69; }
+.message-channel__icon--blue { background: #edf4ff; }
+.message-channel__icon--mint { background: #eaf9f4; }
+.message-channel__image { width: 42px; height: 42px; }
+.message-channel:active .message-channel__icon { transform: scale(0.96); }
+.message-channel__title { margin-top: 9px; overflow: hidden; color: #2a3239; font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
+.message-channel__badge { position: absolute; top: -4px; right: calc(50% - 34px); min-width: 16px; height: 16px; padding: 0 4px; border-radius: 999px; background: #f04452; color: #fff; font-size: 10px; line-height: 16px; text-align: center; }
+
+.message-list { height: 0; min-height: 0; flex: 1; padding: 4px 12px 24px; }
+.message-row { display: flex; min-height: 78px; align-items: center; gap: 12px; padding: 12px 0; }
+.message-row__leading { flex: 0 0 52px; width: 52px; height: 52px; }
+.message-row__avatar, .message-row__icon { display: flex; width: 52px; height: 52px; align-items: center; justify-content: center; border-radius: 50%; object-fit: cover; }
+.message-row__icon { color: #fff; font-size: 22px; font-weight: 700; }
+.message-row__icon--rose { background: linear-gradient(145deg, #f3a0a6, #eb6370); }
+.message-row__icon--mint { background: linear-gradient(145deg, #8be0c8, #36bd96); }
+.message-row__icon--blue { background: linear-gradient(145deg, #72a9f2, #3977dc); }
+.message-row__icon--cyan { background: linear-gradient(145deg, #8bd4d1, #4e9fa7); }
+.message-row__body { flex: 1; min-width: 0; }
+.message-row__heading { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 10px; }
+.message-row__title { min-width: 0; overflow: hidden; color: #252d34; font-size: 16px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.message-row__time { flex: 0 0 auto; color: #a0a7ad; font-size: 12px; }
+.message-row__summary { display: block; margin-top: 5px; overflow: hidden; color: #9aa1a7; font-size: 13px; line-height: 1.4; text-overflow: ellipsis; white-space: nowrap; }
+.message-row__unread { flex: 0 0 8px; width: 8px; height: 8px; border-radius: 50%; background: #f04452; }
+
+@media (min-width: 700px) {
+  .message-channels { max-width: 660px; margin: 0 auto; padding-top: 30px; }
+  .message-list { width: min(760px, 100%); margin-right: auto; margin-left: auto; }
 }

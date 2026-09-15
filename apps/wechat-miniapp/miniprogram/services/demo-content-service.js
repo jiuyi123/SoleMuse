@@ -34,6 +34,40 @@ function getMessages() {
   return Promise.resolve(clone(content.messages));
 }
 
+function getMessageChannels() {
+  return Promise.resolve(clone(content.messageChannels));
+}
+
+function getMessagesByCategory(filter) {
+  const messages = content.messages.filter((item) => {
+    if (filter === 'reaction') return item.type === 'like' || item.type === 'favorite';
+    if (filter === 'follow') return item.type === 'follow';
+    if (filter === 'comment') return item.type === 'comment';
+    return false;
+  });
+  return Promise.resolve(clone(messages));
+}
+
+function getConversation(id) {
+  const conversation = content.conversations.find((item) => item.id === id);
+  if (!conversation) return Promise.resolve(null);
+  return Promise.resolve({
+    ...clone(conversation),
+    currentUser: { avatarUrl: content.profile.avatarUrl },
+  });
+}
+
+function sendConversationMessage(conversationId, messageContent) {
+  return Promise.resolve({
+    id: `chat-local-${Date.now()}`,
+    conversationId,
+    sender: 'self',
+    type: 'text',
+    content: messageContent,
+    time: '刚刚',
+  });
+}
+
 function getProfile() {
   return Promise.resolve(clone(content.profile));
 }
@@ -48,12 +82,16 @@ function getMyComments() {
 
 module.exports = {
   getArtwork,
+  getConversation,
   getHomeContent,
   getMessages,
+  getMessagesByCategory,
+  getMessageChannels,
   getMyComments,
   getMyContent,
   getProfile,
   getRanking,
   getSearchDiscovery,
   searchArtworks,
+  sendConversationMessage,
 };

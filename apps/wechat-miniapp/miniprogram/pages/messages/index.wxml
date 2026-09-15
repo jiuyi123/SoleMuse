@@ -1,30 +1,42 @@
-<app-header title="消息" transparent />
-
 <view class="page tab-page message-page">
-  <view class="message-hero">
-    <text class="message-hero__title">灵感正在回应你</text>
-    <text class="message-hero__desc">作品互动、状态更新与平台通知，都汇集在这里。</text>
+  <view class="message-header" style="padding-top: {{statusBarHeight}}px;">
+    <view class="message-header__bar" style="height: {{navigationHeight}}px;">
+      <text class="message-header__title">消息</text>
+    </view>
   </view>
 
   <page-state wx:if="{{!isAuthenticated}}" title="登录后查看消息" description="登录成功后会回到消息页。" action-text="去登录" bind:action="openLogin" />
 
-  <block wx:else>
-    <scroll-view class="message-filters" scroll-x enhanced show-scrollbar="false">
-      <view class="message-filters__inner">
-        <button wx:for="{{filters}}" wx:key="key" class="message-filter {{activeFilter === item.key ? 'message-filter--active' : ''}}" data-key="{{item.key}}" bindtap="changeFilter">{{item.label}}</button>
-      </view>
-    </scroll-view>
+  <page-state wx:elif="{{loading && !messages.length}}" state="loading" title="正在整理消息" description="新的互动与灵感正在赶来…" />
+  <page-state wx:elif="{{loadFailed && !messages.length}}" state="error" title="消息加载失败" description="请检查网络后重试。" action-text="重新加载" bind:action="loadMessages" />
 
-    <view wx:if="{{visibleMessages.length}}" class="message-list">
-      <view wx:for="{{visibleMessages}}" wx:key="id" class="message-card glass-card" data-id="{{item.id}}" bindtap="openMessage">
-        <view class="message-card__icon message-card__icon--{{item.tone}}">{{item.icon}}</view>
-        <view class="message-card__body">
-          <view class="message-card__heading"><text class="message-card__title">{{item.title}}</text><text class="message-card__time">{{item.time}}</text></view>
-          <text class="message-card__summary">{{item.summary}}</text>
+  <block wx:else>
+    <view class="message-channels">
+      <view wx:for="{{channels}}" wx:key="key" class="message-channel" data-filter="{{item.filter}}" data-title="{{item.title}}" bindtap="openChannel" aria-role="button">
+        <view class="message-channel__icon message-channel__icon--{{item.tone}}">
+          <image class="message-channel__image" src="{{item.iconAsset}}" mode="aspectFit" />
         </view>
-        <image wx:if="{{item.image}}" class="message-card__image" src="{{item.image}}" mode="aspectFill" />
+        <text class="message-channel__title">{{item.title}}</text>
+        <view wx:if="{{item.unread}}" class="message-channel__badge">{{item.unread}}</view>
       </view>
     </view>
+
+    <scroll-view wx:if="{{visibleMessages.length}}" class="message-list" scroll-y enhanced show-scrollbar="{{false}}">
+      <view wx:for="{{visibleMessages}}" wx:key="id" class="message-row" data-id="{{item.id}}" bindtap="openMessage" aria-role="button">
+        <view class="message-row__leading">
+          <image wx:if="{{item.avatarUrl || item.image}}" class="message-row__avatar" src="{{item.avatarUrl || item.image}}" mode="aspectFill" />
+          <view wx:else class="message-row__icon message-row__icon--{{item.tone}}">{{item.icon}}</view>
+        </view>
+        <view class="message-row__body">
+          <view class="message-row__heading">
+            <text class="message-row__title">{{item.title}}</text>
+            <text class="message-row__time">{{item.time}}</text>
+          </view>
+          <text class="message-row__summary">{{item.summary}}</text>
+        </view>
+        <view wx:if="{{item.unread}}" class="message-row__unread"></view>
+      </view>
+    </scroll-view>
     <page-state wx:else title="这一栏很安静" description="新的互动与通知会第一时间出现在这里。" />
   </block>
 </view>

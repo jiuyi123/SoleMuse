@@ -1,0 +1,8 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10 18.5C10 14.9 12.9 12 16.5 12H40.5C44.1 12 47 14.9 47 18.5V34.5C47 38.1 44.1 41 40.5 41H27L17.3 49C15.7 50.3 13.3 49.2 13.3 47.1V40.2C11.3 39.1 10 37 10 34.5V18.5Z" fill="url(#bubble)"/>
+  <circle cx="20" cy="27" r="2.2" fill="white"/>
+  <circle cx="28.5" cy="27" r="2.2" fill="white"/>
+  <path d="M51.7 31.2C47.1 31.2 43.8 34.7 43.8 39.4C43.8 44.4 46.9 47.7 51.2 47.7C53.1 47.7 54.8 47.1 56 46" stroke="#25B98D" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M52.1 35.3C48.9 35.3 47.5 37.7 47.5 40.3C47.5 43.1 49 44.8 51.1 44.8C52.6 44.8 53.7 43.9 54.1 42.5L55.7 36.1L54.2 42.6C53.8 44.3 54.8 45.1 56.1 45.1C57.9 45.1 59 43.3 59 40.3C59 34.2 55.6 30.3 50.6 30.3" stroke="#25B98D" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <defs><linearGradient id="bubble" x1="12" y1="14" x2="43" y2="44" gradientUnits="userSpaceOnUse"><stop stop-color="#63DDB9"/><stop offset="1" stop-color="#25B98D"/></linearGradient></defs>
+</svg>

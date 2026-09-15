@@ -11,5 +11,7 @@ module.exports = Object.freeze({
   PROFILE_EDIT: '/subpackages/user/pages/profile-edit/index',
   SETTINGS: '/subpackages/user/pages/settings/index',
   CONTENT_LIST: '/subpackages/user/pages/content-list/index',
+  CHAT: '/subpackages/messages/pages/chat/index',
+  MESSAGE_CATEGORY: '/subpackages/messages/pages/category/index',
   NOTICE_DETAIL: '/subpackages/messages/pages/notice-detail/index',
 });

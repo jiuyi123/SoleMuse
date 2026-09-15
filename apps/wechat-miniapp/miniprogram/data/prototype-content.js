@@ -115,11 +115,63 @@ const myComments = [
 ];
 
 const messages = [
-  { id: 'message-1', type: 'like', icon: '♥', tone: 'rose', title: '有人点赞了你的作品', summary: 'Busy 等 3 人赞了你的作品《云境行者》', time: '3 分钟前', artworkId: 'prototype-cloud-walker', image: artworkImages[0] },
-  { id: 'message-2', type: 'favorite', icon: '★', tone: 'cyan', title: '新的收藏', summary: 'KAI 将《流光颐绣》加入了收藏夹', time: '12 分钟前', artworkId: 'prototype-artwork-05', image: artworkImages[4] },
-  { id: 'message-3', type: 'comment', icon: '…', tone: 'amber', title: '有人评论了你的作品', summary: 'Lynn.：“这个配色太美了！好有东方的味道。”', time: '28 分钟前', artworkId: 'prototype-artwork-04', image: artworkImages[3] },
+  { id: 'message-direct-1', type: 'direct', icon: '杉', tone: 'blue', title: '杉和设计', summary: '这个系列的材质方案可以再聊聊吗？', time: '18:22', avatarUrl: artworkImages[0], unread: true },
+  { id: 'message-direct-2', type: 'direct', icon: '点', tone: 'mint', title: '点点', summary: '想交流一下可持续鞋底的设计思路', time: '昨天', unread: true },
+  { id: 'message-direct-3', type: 'direct', icon: 'N', tone: 'cyan', title: 'NeoDesign', summary: '新的鞋面结构草图已经整理好了', time: '09-14', avatarUrl: artworkImages[5] },
+  { id: 'message-1', type: 'like', icon: '♥', tone: 'rose', title: '有人点赞了你的作品', summary: 'Busy 等 3 人赞了你的作品《云境行者》', time: '3 分钟前', artworkId: 'prototype-cloud-walker', image: artworkImages[0], unread: true },
+  { id: 'message-2', type: 'favorite', icon: '★', tone: 'rose', title: '新的收藏', summary: 'KAI 将《流光颐绣》加入了收藏夹', time: '12 分钟前', artworkId: 'prototype-artwork-05', image: artworkImages[4], unread: true },
+  { id: 'message-3', type: 'comment', icon: '…', tone: 'mint', title: '有人评论了你的作品', summary: 'Lynn.：“这个配色太美了！好有东方的味道。”', time: '28 分钟前', artworkId: 'prototype-artwork-04', image: artworkImages[3], unread: true },
+  { id: 'message-6', type: 'follow', icon: '山', tone: 'blue', title: '山与海', summary: '开始关注你，期待看到你的新作品', time: '今天', avatarUrl: artworkImages[1], unread: true, userId: 'prototype-user-shanhai' },
   { id: 'message-4', type: 'status', icon: '≡', tone: 'blue', title: '作品状态更新', summary: '你的作品《山海行》已发布成功', time: '1 小时前', artworkId: 'prototype-artwork-01', image: artworkImages[2] },
-  { id: 'message-5', type: 'system', icon: '♢', tone: 'blue', title: '系统通知', summary: '平台「春日灵感计划」现已开启，快来参与吧！', time: '5 小时前', image: artworkImages[1] },
+  { id: 'message-5', type: 'system', icon: '♢', tone: 'cyan', title: '系统通知', summary: '平台「春日灵感计划」现已开启，快来参与吧！', time: '5 小时前', image: artworkImages[1] },
+];
+
+const messageChannels = [
+  { key: 'reaction', filter: 'reaction', title: '赞和收藏', iconAsset: '/assets/icons/message-reaction.svg', tone: 'rose', unread: 2 },
+  { key: 'follow', filter: 'follow', title: '新增关注', iconAsset: '/assets/icons/message-follow.svg', tone: 'blue', unread: 1 },
+  { key: 'comment', filter: 'comment', title: '评论和@', iconAsset: '/assets/icons/message-comment.svg', tone: 'mint', unread: 1 },
+];
+
+const conversations = [
+  {
+    id: 'message-direct-1',
+    participant: { name: '杉和设计', status: '刚刚在线', avatarUrl: artworkImages[0] },
+    messages: [
+      { id: 'chat-1', sender: 'other', type: 'text', content: '你好，很喜欢你最近的山海系列。', time: '今天 17:48' },
+      { id: 'chat-2', sender: 'self', type: 'text', content: '谢谢你！这组主要在尝试东方纹样和运动结构的结合。' },
+      { id: 'chat-3', sender: 'other', type: 'text', content: '这个系列的材质方案可以再聊聊吗？', time: '18:22' },
+    ],
+  },
+  {
+    id: 'message-direct-2',
+    participant: { name: '点点', status: '在线', avatarUrl: '' },
+    messages: [
+      { id: 'chat-4', sender: 'other', type: 'text', content: '看到你分享的环保材料实验了，很有启发。', time: '昨天 21:10' },
+      { id: 'chat-5', sender: 'other', type: 'text', content: '想交流一下可持续鞋底的设计思路。' },
+    ],
+  },
+  {
+    id: 'message-direct-3',
+    participant: { name: 'NeoDesign', status: '1小时前在线', avatarUrl: artworkImages[5] },
+    messages: [
+      { id: 'chat-6', sender: 'self', type: 'text', content: '上次讨论的结构方案有新进展吗？', time: '09-14 10:06' },
+      { id: 'chat-7', sender: 'other', type: 'text', content: '新的鞋面结构草图已经整理好了。' },
+    ],
+  },
+  {
+    id: 'message-4',
+    participant: { name: '作品助手', status: '平台服务', avatarUrl: '' },
+    messages: [
+      { id: 'chat-status-1', sender: 'other', type: 'text', content: '你的作品《山海行》已发布成功，现在可以在作品广场中查看。', time: '今天 17:30' },
+    ],
+  },
+  {
+    id: 'message-5',
+    participant: { name: 'SoleMuse 助手', status: '系统消息', avatarUrl: '' },
+    messages: [
+      { id: 'chat-system-1', sender: 'other', type: 'text', content: '平台「春日灵感计划」现已开启，快来分享你的鞋履创意吧！', time: '今天 13:20' },
+    ],
+  },
 ];
 
 const ranking = [
@@ -142,8 +194,10 @@ module.exports = {
   artworkImages,
   artworks,
   comments,
+  conversations,
   featuredArtwork,
   messages,
+  messageChannels,
   myComments,
   profile,
   ranking,
