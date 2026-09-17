@@ -96,6 +96,11 @@ Page({
     router.navigateBack();
   },
 
+  openAuthorProfile(event) {
+    const userId = event.currentTarget.dataset.userId;
+    if (userId) router.navigateTo(ROUTES.PUBLIC_PROFILE, { id: userId });
+  },
+
   toggleFollow() {
     if (!this.requireLogin()) return;
     this.setData({ followed: !this.data.followed });

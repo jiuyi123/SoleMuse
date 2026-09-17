@@ -24,7 +24,9 @@
     <scroll-view wx:if="{{visibleMessages.length}}" class="message-list" scroll-y enhanced show-scrollbar="{{false}}">
       <view wx:for="{{visibleMessages}}" wx:key="id" class="message-row" data-id="{{item.id}}" bindtap="openMessage" aria-role="button">
         <view class="message-row__leading">
-          <image wx:if="{{item.avatarUrl || item.image}}" class="message-row__avatar" src="{{item.avatarUrl || item.image}}" mode="aspectFill" />
+          <image wx:if="{{item.userId && (item.avatarUrl || item.image)}}" class="message-row__avatar message-row__avatar--interactive" src="{{item.avatarUrl || item.image}}" mode="aspectFill" data-user-id="{{item.userId}}" catchtap="openSenderProfile" aria-role="button" aria-label="查看用户主页" />
+          <image wx:elif="{{item.avatarUrl || item.image}}" class="message-row__avatar" src="{{item.avatarUrl || item.image}}" mode="aspectFill" />
+          <view wx:elif="{{item.userId}}" class="message-row__icon message-row__icon--{{item.tone}} message-row__avatar--interactive" data-user-id="{{item.userId}}" catchtap="openSenderProfile" aria-role="button" aria-label="查看用户主页">{{item.icon}}</view>
           <view wx:else class="message-row__icon message-row__icon--{{item.tone}}">{{item.icon}}</view>
         </view>
         <view class="message-row__body">

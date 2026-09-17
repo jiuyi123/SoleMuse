@@ -13,8 +13,12 @@
         class="creator-avatar"
         src="{{artwork.author.avatarUrl}}"
         mode="aspectFill"
+        data-user-id="{{artwork.author.id}}"
+        catchtap="openAuthorProfile"
+        aria-role="button"
+        aria-label="查看作者主页"
       />
-      <view wx:else class="creator-avatar creator-avatar--fallback">{{authorInitial}}</view>
+      <view wx:else class="creator-avatar creator-avatar--fallback" data-user-id="{{artwork.author.id}}" catchtap="openAuthorProfile" aria-role="button" aria-label="查看作者主页">{{authorInitial}}</view>
       <view class="creator-copy">
         <text class="creator-name">{{artwork.author.nickname}}</text>
         <view wx:if="{{authorBadges.length}}" class="creator-badges">
@@ -133,7 +137,7 @@
 
       <view wx:if="{{comments.length}}" class="comment-list">
         <view wx:for="{{comments}}" wx:key="id" class="comment-item">
-          <view class="comment-avatar">{{item.initial}}</view>
+          <view class="comment-avatar" data-user-id="{{item.authorId}}" catchtap="openAuthorProfile" aria-role="button" aria-label="查看评论用户主页">{{item.initial}}</view>
           <view class="comment-body">
             <view class="comment-meta">
               <view class="comment-author-copy">

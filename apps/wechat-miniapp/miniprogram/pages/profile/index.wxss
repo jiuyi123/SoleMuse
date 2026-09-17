@@ -17,7 +17,7 @@ page {
   position: relative;
   flex: 0 0 auto;
   overflow: hidden;
-  padding-bottom: 14px;
+  padding-bottom: 20px;
   border-bottom: 1px solid rgba(95, 125, 143, .2);
   background:
     radial-gradient(circle at 10% 18%, rgba(196, 218, 229, .96) 0, rgba(196, 218, 229, 0) 34%),

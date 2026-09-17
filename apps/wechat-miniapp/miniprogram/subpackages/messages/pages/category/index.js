@@ -37,7 +37,7 @@ Page({
     const item = this.data.messages.find((message) => message.id === event.currentTarget.dataset.id);
     if (!item) return;
     if (item.type === 'follow') {
-      wx.showToast({ title: '用户主页建设中', icon: 'none' });
+      router.navigateTo(ROUTES.PUBLIC_PROFILE, { id: item.userId });
       return;
     }
     if (item.artworkId) router.navigateTo(ROUTES.ARTWORK_DETAIL, { id: item.artworkId });

@@ -60,10 +60,30 @@ const profile = {
   ],
 };
 
+const publicProfiles = [
+  {
+    id: 'prototype-user-shanhai',
+    nickname: '山与海',
+    avatarUrl: artworkImages[1],
+    region: '福建 · 厦门',
+    role: '鞋履概念设计师',
+    bio: '从山海的流动轮廓里，寻找下一双鞋的生命感。',
+    specialties: ['自然灵感', '运动鞋', '材料实验'],
+    stats: [
+      { label: '关注', value: '69' },
+      { label: '粉丝', value: '2.3k' },
+      { label: '获赞与收藏', value: '8.6k' },
+    ],
+    isFollowing: false,
+    conversationId: 'message-direct-shanhai',
+    artworkIds: ['prototype-artwork-02', 'prototype-artwork-04', 'prototype-artwork-06', 'prototype-artwork-01'],
+  },
+];
+
 const comments = [
-  { id: 'comment-1', author: 'Sugar', initial: 'S', time: '5月20日 16:22', content: '太美了！传统文化和现代设计结合得好棒，想收藏一双实体版！', likes: 56 },
-  { id: 'comment-2', author: '山与海', initial: '山', time: '5月21日 09:15', content: '光影和配色太有氛围感了，提示词也很详细，学习了！', likes: 28 },
-  { id: 'comment-3', author: 'AI喵酱', initial: 'A', time: '5月21日 11:40', content: '这配色像把江南的春天穿在了脚上。', likes: 16 },
+  { id: 'comment-1', authorId: 'prototype-author-2', author: 'Sugar', initial: 'S', time: '5月20日 16:22', content: '太美了！传统文化和现代设计结合得好棒，想收藏一双实体版！', likes: 56 },
+  { id: 'comment-2', authorId: 'prototype-user-shanhai', author: '山与海', initial: '山', time: '5月21日 09:15', content: '光影和配色太有氛围感了，提示词也很详细，学习了！', likes: 28 },
+  { id: 'comment-3', authorId: 'prototype-commenter-ai', author: 'AI喵酱', initial: 'A', time: '5月21日 11:40', content: '这配色像把江南的春天穿在了脚上。', likes: 16 },
 ];
 
 const myComments = [
@@ -115,9 +135,9 @@ const myComments = [
 ];
 
 const messages = [
-  { id: 'message-direct-1', type: 'direct', icon: '杉', tone: 'blue', title: '杉和设计', summary: '这个系列的材质方案可以再聊聊吗？', time: '18:22', avatarUrl: artworkImages[0], unread: true },
-  { id: 'message-direct-2', type: 'direct', icon: '点', tone: 'mint', title: '点点', summary: '想交流一下可持续鞋底的设计思路', time: '昨天', unread: true },
-  { id: 'message-direct-3', type: 'direct', icon: 'N', tone: 'cyan', title: 'NeoDesign', summary: '新的鞋面结构草图已经整理好了', time: '09-14', avatarUrl: artworkImages[5] },
+  { id: 'message-direct-1', type: 'direct', userId: 'prototype-user-shanhe', icon: '杉', tone: 'blue', title: '杉和设计', summary: '这个系列的材质方案可以再聊聊吗？', time: '18:22', avatarUrl: artworkImages[0], artworkIds: ['prototype-artwork-01', 'prototype-artwork-03'], unread: true },
+  { id: 'message-direct-2', type: 'direct', userId: 'prototype-user-diandian', icon: '点', tone: 'mint', title: '点点', summary: '想交流一下可持续鞋底的设计思路', time: '昨天', artworkIds: ['prototype-artwork-05'], unread: true },
+  { id: 'message-direct-3', type: 'direct', userId: 'prototype-author-6', icon: 'N', tone: 'cyan', title: 'NeoDesign', summary: '新的鞋面结构草图已经整理好了', time: '09-14', avatarUrl: artworkImages[5] },
   { id: 'message-1', type: 'like', icon: '♥', tone: 'rose', title: '有人点赞了你的作品', summary: 'Busy 等 3 人赞了你的作品《云境行者》', time: '3 分钟前', artworkId: 'prototype-cloud-walker', image: artworkImages[0], unread: true },
   { id: 'message-2', type: 'favorite', icon: '★', tone: 'rose', title: '新的收藏', summary: 'KAI 将《流光颐绣》加入了收藏夹', time: '12 分钟前', artworkId: 'prototype-artwork-05', image: artworkImages[4], unread: true },
   { id: 'message-3', type: 'comment', icon: '…', tone: 'mint', title: '有人评论了你的作品', summary: 'Lynn.：“这个配色太美了！好有东方的味道。”', time: '28 分钟前', artworkId: 'prototype-artwork-04', image: artworkImages[3], unread: true },
@@ -135,7 +155,7 @@ const messageChannels = [
 const conversations = [
   {
     id: 'message-direct-1',
-    participant: { name: '杉和设计', status: '刚刚在线', avatarUrl: artworkImages[0] },
+    participant: { userId: 'prototype-user-shanhe', name: '杉和设计', status: '刚刚在线', avatarUrl: artworkImages[0] },
     messages: [
       { id: 'chat-1', sender: 'other', type: 'text', content: '你好，很喜欢你最近的山海系列。', time: '今天 17:48' },
       { id: 'chat-2', sender: 'self', type: 'text', content: '谢谢你！这组主要在尝试东方纹样和运动结构的结合。' },
@@ -144,7 +164,7 @@ const conversations = [
   },
   {
     id: 'message-direct-2',
-    participant: { name: '点点', status: '在线', avatarUrl: '' },
+    participant: { userId: 'prototype-user-diandian', name: '点点', status: '在线', avatarUrl: '' },
     messages: [
       { id: 'chat-4', sender: 'other', type: 'text', content: '看到你分享的环保材料实验了，很有启发。', time: '昨天 21:10' },
       { id: 'chat-5', sender: 'other', type: 'text', content: '想交流一下可持续鞋底的设计思路。' },
@@ -152,7 +172,7 @@ const conversations = [
   },
   {
     id: 'message-direct-3',
-    participant: { name: 'NeoDesign', status: '1小时前在线', avatarUrl: artworkImages[5] },
+    participant: { userId: 'prototype-author-6', name: 'NeoDesign', status: '1小时前在线', avatarUrl: artworkImages[5] },
     messages: [
       { id: 'chat-6', sender: 'self', type: 'text', content: '上次讨论的结构方案有新进展吗？', time: '09-14 10:06' },
       { id: 'chat-7', sender: 'other', type: 'text', content: '新的鞋面结构草图已经整理好了。' },
@@ -170,6 +190,13 @@ const conversations = [
     participant: { name: 'SoleMuse 助手', status: '系统消息', avatarUrl: '' },
     messages: [
       { id: 'chat-system-1', sender: 'other', type: 'text', content: '平台「春日灵感计划」现已开启，快来分享你的鞋履创意吧！', time: '今天 13:20' },
+    ],
+  },
+  {
+    id: 'message-direct-shanhai',
+    participant: { userId: 'prototype-user-shanhai', name: '山与海', status: '刚刚在线', avatarUrl: artworkImages[1] },
+    messages: [
+      { id: 'chat-shanhai-1', sender: 'other', type: 'text', content: '谢谢关注，很期待和你交流鞋履设计。', time: '今天 18:36' },
     ],
   },
 ];
@@ -200,6 +227,7 @@ module.exports = {
   messageChannels,
   myComments,
   profile,
+  publicProfiles,
   ranking,
   searchDiscovery,
 };

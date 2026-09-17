@@ -9,6 +9,7 @@ module.exports = Object.freeze({
   ARTWORK_DETAIL: '/subpackages/artwork/pages/detail/index',
   ARTWORK_EDITOR: '/subpackages/creator/pages/editor/index',
   PROFILE_EDIT: '/subpackages/user/pages/profile-edit/index',
+  PUBLIC_PROFILE: '/subpackages/user/pages/public-profile/index',
   SETTINGS: '/subpackages/user/pages/settings/index',
   CONTENT_LIST: '/subpackages/user/pages/content-list/index',
   CHAT: '/subpackages/messages/pages/chat/index',

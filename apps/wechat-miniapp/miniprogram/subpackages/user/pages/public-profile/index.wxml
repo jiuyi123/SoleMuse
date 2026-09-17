@@ -1,0 +1,70 @@
+<view class="public-profile-page">
+  <view class="public-header" style="padding-top: {{statusBarHeight}}px;">
+    <view class="public-header__bar" style="height: {{navigationHeight}}px; padding-right: {{headerRightInset}}px;">
+      <view class="public-back" bindtap="goBack" aria-role="button" aria-label="返回">
+        <view class="public-back__icon"></view>
+      </view>
+      <block wx:if="{{profile}}">
+        <image wx:if="{{profile.avatarUrl}}" class="public-header__avatar" src="{{profile.avatarUrl}}" mode="aspectFill" />
+        <view wx:else class="public-header__avatar public-header__avatar--fallback">{{profileInitial}}</view>
+        <view class="public-header__copy">
+          <text class="public-header__name">{{profile.nickname}}</text>
+          <text class="public-header__region">IP：{{profile.region}}</text>
+        </view>
+      </block>
+      <text wx:else class="public-header__placeholder">用户主页</text>
+    </view>
+  </view>
+
+  <page-state wx:if="{{loading}}" state="loading" title="正在加载主页" description="作品与个人信息正在整理中…" />
+  <page-state wx:elif="{{loadFailed}}" state="error" title="暂时无法查看主页" description="用户可能不存在或网络暂时不可用。" action-text="重新加载" bind:action="loadProfile" />
+
+  <scroll-view wx:elif="{{profile}}" class="public-profile-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="public-overview">
+      <view class="public-social-row">
+        <view class="public-stats">
+          <view wx:for="{{profile.stats}}" wx:key="label" class="public-stat">
+            <text class="public-stat__value">{{item.value}}</text>
+            <text class="public-stat__label">{{item.label}}</text>
+          </view>
+        </view>
+
+        <view class="public-actions">
+          <view class="follow-button {{following ? 'follow-button--active' : ''}}" bindtap="toggleFollow" aria-role="button" aria-label="{{following ? '取消关注' : '关注'}}">
+            <text class="follow-button__symbol">{{following ? '✓' : '+'}}</text>
+            <text>{{followPending ? '处理中' : (following ? '已关注' : '关注')}}</text>
+          </view>
+          <view class="message-button" bindtap="openChat" aria-role="button" aria-label="发私信">
+            <image src="/assets/icons/tab-messages-active.svg" mode="aspectFit" />
+            <text>私信</text>
+          </view>
+        </view>
+      </view>
+
+      <text class="public-role">{{profile.role}}</text>
+      <text class="public-bio">{{profile.bio}}</text>
+      <scroll-view class="public-specialties" scroll-x enhanced show-scrollbar="{{false}}">
+        <view class="public-specialties__inner">
+          <text wx:for="{{profile.specialties}}" wx:key="*this" class="public-specialty">{{item}}</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <view class="public-works">
+      <view class="public-works__heading">
+        <view class="public-works__title-wrap">
+          <text class="public-works__title">作品</text>
+          <view class="public-works__indicator"></view>
+        </view>
+        <text class="public-works__count">{{artworks.length}} 件公开作品</text>
+      </view>
+
+      <view wx:if="{{artworks.length}}" class="public-artwork-grid">
+        <view wx:for="{{artworks}}" wx:key="id" class="public-artwork-grid__item">
+          <artwork-card artwork="{{item}}" bind:select="openArtwork" />
+        </view>
+      </view>
+      <page-state wx:else title="还没有公开作品" description="发布后的鞋履灵感会展示在这里。" />
+    </view>
+  </scroll-view>
+</view>

@@ -1,6 +1,6 @@
 {
   "description": "SoleMuse 微信小程序",
-  "appid": "wx7cfbe321247866e4",
+  "appid": "wx936e3fd39def85d8",
   "projectname": "SoleMuse",
   "compileType": "miniprogram",
   "miniprogramRoot": "miniprogram/",
@@ -36,5 +36,6 @@
     "include": []
   },
   "simulatorPluginLibVersion": {},
-  "editorSetting": {}
+  "editorSetting": {},
+  "libVersion": "3.17.3"
 }

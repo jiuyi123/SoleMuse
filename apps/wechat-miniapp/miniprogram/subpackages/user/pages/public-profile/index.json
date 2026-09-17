@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "用户主页",
+  "usingComponents": {
+    "artwork-card": "/components/domain/artwork-card/index",
+    "page-state": "/components/common/page-state/index"
+  }
+}

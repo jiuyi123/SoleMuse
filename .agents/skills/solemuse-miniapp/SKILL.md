@@ -46,7 +46,16 @@ Guest browsing remains available for public works, search, and ranking. When a p
 - Preserve image order and distinguish the cover image from detail images.
 - Update the relevant API documentation or contract whenever a request, response, error code, or field meaning changes.
 
+## Build reliable responsive controls
+
+- For a full-width input with a trailing text action, prefer an explicit two-column grid such as `minmax(0, 1fr) auto` (or a fixed action column when the design requires it). Avoid combining a growing flex item with auto margins; WeChat rendering can leave unintended free space between the input and action.
+- Treat native `<button>` sizing as a compatibility risk in pixel-sensitive navigation, chips, and icon controls. When native button semantics are not required, use a `<view>` with `bindtap`, `aria-role="button"`, and `aria-label`, then define its dimensions explicitly. Otherwise reset width, margin, padding, line height, and `::after` styles locally.
+- Keep an input's clear control inside a `position: relative` field. Position the clear control absolutely with `top: 50%`, a fixed right inset, and `translateY(-50%)`; reserve at least the control width plus both insets as input right padding so text never overlaps it.
+- For content-sized history chips, use non-native clickable views with `inline-flex`, no flex growth, and a wrapping parent aligned with `justify-content: flex-start`. Verify the first item starts at the left gutter on a real WeChat viewport.
+- Separate discovery and result states in markup. After search submission, hide history and hot-search sections rather than leaving empty layout space; place filters, sorting, and the result grid directly below the search row.
+- Reuse the home artwork grid rules for search results unless the design says otherwise: two mobile columns, then add columns at the same tablet and desktop breakpoints. For filter rows that cannot fit safely, preserve button width and use horizontal scrolling instead of shrinking labels.
+- Static CSS checks are useful but do not prove native control sizing. For header/search changes, verify at least one narrow phone and one standard phone in WeChat Developer Tools, including empty input, populated input with clear control, wrapped history, and submitted-result states.
+
 ## Verify proportionally
 
 Run the configured lint and focused tests for changed logic. For routing, component registration, permissions, uploads, or native APIs, also identify the scenario that must be checked in WeChat Developer Tools. If the tool is unavailable, state the unverified check instead of claiming it passed.
-

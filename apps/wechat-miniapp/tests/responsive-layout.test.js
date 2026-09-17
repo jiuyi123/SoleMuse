@@ -238,6 +238,7 @@ test('profile page uses the redesigned identity, social stats and scrollable con
   assert.match(markup, /height: \{\{navigationHeight\}\}px; padding-right: \{\{headerRightInset\}\}px/);
   assert.match(markup, /profile-social-row[\s\S]*profile-stats[\s\S]*profile-edit/);
   assert.match(markup, /wx:if="\{\{isOwnProfile\}\}" class="profile-actions"[\s\S]*profile-edit[\s\S]*profile-settings/);
+  assert.match(styles, /\.profile-cover\s*\{[^}]*padding-bottom:\s*20px;/);
   assert.match(styles, /\.profile-settings\s*\{[^}]*width:\s*34px;[^}]*height:\s*34px/);
   assert.match(logic, /openSettings\(\) \{ router\.navigateTo\(ROUTES\.SETTINGS\); \}/);
   assert.match(markup, /class="profile-bio">\{\{profile\.bio\}\}<\/text>[\s\S]*specialty-list/);
@@ -310,8 +311,50 @@ test('message categories are back-navigable subpages and artwork interactions ke
   assert.match(logic, /reaction:\s*'收到的赞和收藏'[\s\S]*follow:\s*'新增关注'[\s\S]*comment:\s*'评论和@'/);
   assert.match(logic, /getMessagesByCategory\(this\.data\.filter\)/);
   assert.match(logic, /item\.artworkId[\s\S]*ROUTES\.ARTWORK_DETAIL/);
-  assert.match(logic, /item\.type === 'follow'[\s\S]*用户主页建设中/);
+  assert.match(logic, /item\.type === 'follow'[\s\S]*ROUTES\.PUBLIC_PROFILE/);
   assert.match(styles, /\.category-item\s*\{[^}]*margin:\s*0 10px/);
+});
+
+test('public profile keeps social actions and exposes only published artwork', () => {
+  const markup = read('subpackages/user/pages/public-profile/index.wxml');
+  const styles = read('subpackages/user/pages/public-profile/index.wxss');
+  const logic = read('subpackages/user/pages/public-profile/index.js');
+  const service = read('services/demo-content-service.js');
+  const routes = read('constants/routes.js');
+  const appConfig = read('app.json');
+
+  assert.match(routes, /PUBLIC_PROFILE:\s*'\/subpackages\/user\/pages\/public-profile\/index'/);
+  assert.match(appConfig, /pages\/public-profile\/index/);
+  assert.match(markup, /public-header[\s\S]*public-social-row[\s\S]*public-actions[\s\S]*follow-button[\s\S]*message-button/);
+  assert.match(markup, /public-bio[\s\S]*public-specialties[\s\S]*public-works[\s\S]*public-artwork-grid/);
+  assert.doesNotMatch(markup, /评论|点赞|收藏|印迹|草稿/);
+  assert.match(styles, /\.public-artwork-grid\s*\{[^}]*grid-template-columns:\s*repeat\(2/);
+  assert.match(styles, /\.public-header__bar\s*\{[^}]*grid-template-columns:\s*34px 52px minmax\(0, 1fr\);[^}]*gap:\s*4px/);
+  assert.match(styles, /@media \(min-width: 700px\)[\s\S]*\.public-artwork-grid\s*\{\s*grid-template-columns:\s*repeat\(3/);
+  assert.match(logic, /setPublicProfileFollowing[\s\S]*following:\s*result\.following/);
+  assert.match(logic, /ROUTES\.CHAT[\s\S]*conversationId/);
+  assert.match(service, /getPublicProfile\(userId\)[\s\S]*setPublicProfileFollowing\(userId, following\)/);
+});
+
+test('large user avatars open public profiles without changing artwork-card avatar behavior', () => {
+  const detailMarkup = read('subpackages/artwork/pages/detail/index.wxml');
+  const detailLogic = read('subpackages/artwork/pages/detail/index.js');
+  const messageMarkup = read('pages/messages/index.wxml');
+  const messageLogic = read('pages/messages/index.js');
+  const chatMarkup = read('subpackages/messages/pages/chat/index.wxml');
+  const chatLogic = read('subpackages/messages/pages/chat/index.js');
+  const cardMarkup = read('components/domain/artwork-card/index.wxml');
+  const service = read('services/demo-content-service.js');
+
+  assert.match(detailMarkup, /creator-avatar[\s\S]*data-user-id="\{\{artwork\.author\.id\}\}"[\s\S]*catchtap="openAuthorProfile"/);
+  assert.match(detailLogic, /openAuthorProfile[\s\S]*ROUTES\.PUBLIC_PROFILE/);
+  assert.match(detailMarkup, /comment-avatar[^>]*data-user-id="\{\{item\.authorId\}\}"[^>]*catchtap="openAuthorProfile"/);
+  assert.match(messageMarkup, /message-row__avatar--interactive[\s\S]*catchtap="openSenderProfile"/);
+  assert.match(messageLogic, /openSenderProfile[\s\S]*ROUTES\.PUBLIC_PROFILE/);
+  assert.match(chatMarkup, /chat-avatar-link[\s\S]*catchtap="openParticipantProfile"/);
+  assert.match(chatLogic, /openParticipantProfile[\s\S]*ROUTES\.PUBLIC_PROFILE/);
+  assert.doesNotMatch(cardMarkup, /PUBLIC_PROFILE|openAuthorProfile|openUserProfile/);
+  assert.match(service, /resolvePublicProfile\(userId\)[\s\S]*authoredArtworks/);
 });
 
 test('create page keeps a fixed capsule-safe header and compact controls responsive', () => {

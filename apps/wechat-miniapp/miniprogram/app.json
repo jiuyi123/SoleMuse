@@ -21,7 +21,7 @@
     },
     {
       "root": "subpackages/user",
-      "pages": ["pages/profile-edit/index", "pages/content-list/index", "pages/settings/index"]
+      "pages": ["pages/profile-edit/index", "pages/content-list/index", "pages/settings/index", "pages/public-profile/index"]
     },
     {
       "root": "subpackages/messages",

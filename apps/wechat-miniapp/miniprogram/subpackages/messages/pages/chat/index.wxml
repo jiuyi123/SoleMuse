@@ -22,7 +22,11 @@
         <view wx:for="{{messages}}" wx:key="id" id="message-{{item.id}}">
           <text wx:if="{{item.time}}" class="chat-time">{{item.time}}</text>
           <view class="chat-message chat-message--{{item.sender}}">
-            <image wx:if="{{item.sender === 'other' && participant.avatarUrl}}" class="chat-avatar" src="{{participant.avatarUrl}}" mode="aspectFill" />
+            <view wx:if="{{item.sender === 'other' && participant.userId}}" class="chat-avatar-link" data-user-id="{{participant.userId}}" catchtap="openParticipantProfile" aria-role="button" aria-label="查看用户主页">
+              <image wx:if="{{participant.avatarUrl}}" class="chat-avatar" src="{{participant.avatarUrl}}" mode="aspectFill" />
+              <view wx:else class="chat-avatar chat-avatar--fallback">{{participant.initial}}</view>
+            </view>
+            <image wx:elif="{{item.sender === 'other' && participant.avatarUrl}}" class="chat-avatar" src="{{participant.avatarUrl}}" mode="aspectFill" />
             <view wx:elif="{{item.sender === 'other'}}" class="chat-avatar chat-avatar--fallback">{{participant.initial}}</view>
             <image wx:if="{{item.sender === 'self'}}" class="chat-avatar" src="{{currentUserAvatar}}" mode="aspectFill" />
             <view class="chat-bubble chat-bubble--{{item.sender}}">{{item.content}}</view>

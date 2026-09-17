@@ -61,4 +61,8 @@ Page({
     if (item.artworkId) router.navigateTo(ROUTES.ARTWORK_DETAIL, { id: item.artworkId });
     else router.navigateTo(ROUTES.NOTICE_DETAIL, { id: item.id });
   },
+  openSenderProfile(event) {
+    const userId = event.currentTarget.dataset.userId;
+    if (userId) router.navigateTo(ROUTES.PUBLIC_PROFILE, { id: userId });
+  },
 });

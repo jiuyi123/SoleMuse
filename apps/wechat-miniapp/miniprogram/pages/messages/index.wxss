@@ -30,6 +30,7 @@ page { height: 100%; overflow: hidden; background: #fff; }
 .message-row { display: flex; min-height: 78px; align-items: center; gap: 12px; padding: 12px 0; }
 .message-row__leading { flex: 0 0 52px; width: 52px; height: 52px; }
 .message-row__avatar, .message-row__icon { display: flex; width: 52px; height: 52px; align-items: center; justify-content: center; border-radius: 50%; object-fit: cover; }
+.message-row__avatar--interactive:active { opacity: .76; transform: scale(.96); }
 .message-row__icon { color: #fff; font-size: 22px; font-weight: 700; }
 .message-row__icon--rose { background: linear-gradient(145deg, #f3a0a6, #eb6370); }
 .message-row__icon--mint { background: linear-gradient(145deg, #8be0c8, #36bd96); }

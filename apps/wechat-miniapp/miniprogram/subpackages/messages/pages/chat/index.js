@@ -1,3 +1,5 @@
+const ROUTES = require('../../../../constants/routes');
+const router = require('../../../../core/navigation/router');
 const demoContentService = require('../../../../services/demo-content-service');
 
 Page({
@@ -46,6 +48,12 @@ Page({
   handleInput(event) {
     const inputValue = event.detail.value;
     this.setData({ inputValue, inputReady: Boolean(inputValue.trim()), sendFailed: false });
+  },
+
+  openParticipantProfile(event) {
+    const userId = event.currentTarget.dataset.userId;
+    if (!userId) return;
+    router.navigateTo(ROUTES.PUBLIC_PROFILE, { id: userId });
   },
 
   async sendMessage() {
