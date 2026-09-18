@@ -1,0 +1,15 @@
+{
+  "name": "solemuse-local-api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SoleMuse local development API",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22.5"
+  }
+}
