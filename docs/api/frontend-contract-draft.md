@@ -28,3 +28,14 @@
 作品包含 `id`、`title`、`description`、`prompt`、`coverUrl`、有序 `images`、`author`、`aiSource`、`status`、`tags`、`metrics` 与 `publishedAt`。`metrics` 包含独立的 `likes`、`favorites`、`comments` 和 `shares` 计数。枚举值以客户端 `constants/enums.js` 为当前草案基线。
 
 待确认：上传协议、登录换取会话协议、互动接口、评论结构、热度榜规则、消息已读协议及分页上限。
+
+## 登录与账号信息（前端草案）
+
+登录页提供两种客户端入口：
+
+- 微信一键登录：客户端调用 `wx.login` 获取临时 `code`，服务端换取并签发正式会话。
+- 手机号直接获取：客户端通过原生 `getPhoneNumber` 获取临时授权 `code`，服务端使用该 code 换取手机号并签发正式会话。客户端不得保存手机号明文或微信授权密钥。
+
+建议 service 方法：`loginWithWechat()`、`loginWithPhone(detail)`、`getAccountInfo()`。
+
+会话至少包含 `accessToken`、`userId`、`loginMethod`（`wechat` 或 `phone`）、`accountId`、`nickname`、`avatarUrl`、`phoneNumber`（可为空）和 `wechatBound`。设置页只展示脱敏后的手机号与账号摘要。
