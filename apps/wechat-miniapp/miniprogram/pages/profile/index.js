@@ -29,6 +29,7 @@ Page({
     activeContent: 'artworks',
     activeStatus: 'published',
     allItems: [],
+    contentByType: {},
     visibleItems: [],
     myComments: [],
     visibleComments: [],
@@ -53,15 +54,18 @@ Page({
   async loadProfile() {
     this.setData({ loading: true, loadFailed: false });
     try {
-      const [profile, allItems, myComments] = await Promise.all([
+      const [profile, allItems, favorites, likes, myComments] = await Promise.all([
         demoContentService.getProfile(),
-        demoContentService.getMyContent(),
+        demoContentService.getMyContent('artworks'),
+        demoContentService.getMyContent('favorites'),
+        demoContentService.getMyContent('likes'),
         demoContentService.getMyComments(),
       ]);
       this.setData({
         profile,
         isOwnProfile: true,
         allItems,
+        contentByType: { artworks: allItems, favorites, likes, footprints: allItems },
         myComments,
         visibleComments: myComments,
         publicCommentCount: myComments.filter((item) => item.visibility === 'public').length,
@@ -82,7 +86,7 @@ Page({
       activeStatus: 'published',
       commentFilter: 'all',
       visibleComments: this.data.myComments,
-      visibleItems: activeContent === 'comments' ? [] : selectContent(this.data.allItems, activeContent),
+      visibleItems: activeContent === 'comments' ? [] : selectContent(this.data.contentByType[activeContent] || this.data.allItems, activeContent),
     });
   },
   changeStatus(event) {

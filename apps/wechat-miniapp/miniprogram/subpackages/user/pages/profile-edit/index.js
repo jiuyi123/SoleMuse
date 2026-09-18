@@ -16,8 +16,21 @@ Page({
     this.setData({ [`profile.${field}`]: event.detail.value });
   },
 
-  saveProfile() {
+  async saveProfile() {
     if (this.data.submitting) return;
-    wx.showToast({ title: '开发预览：资料已保存', icon: 'none' });
+    this.setData({ submitting: true });
+    try {
+      await demoContentService.updateProfile({
+        nickname: this.data.profile.nickname.trim(),
+        region: this.data.profile.region.trim(),
+        role: this.data.profile.role.trim(),
+        bio: this.data.profile.bio || '',
+        specialties: this.data.profile.specialties.split('、').map((item) => item.trim()).filter(Boolean),
+      });
+      wx.showToast({ title: '资料已保存', icon: 'success' });
+    } catch (error) {
+      wx.showToast({ title: '保存失败，请重试', icon: 'none' });
+    }
+    this.setData({ submitting: false });
   },
 });

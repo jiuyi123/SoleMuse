@@ -22,3 +22,13 @@ test('mapArtwork supplies stable defaults for optional transport fields', () => 
   assert.equal(artwork.aiSource.name, '来源未标注');
   assert.deepEqual(artwork.metrics, { likes: 0, favorites: 0, comments: 0, shares: 0 });
 });
+
+test('mapArtwork preserves interaction and editor fields from the API DTO', () => {
+  const artwork = mapArtwork({ id: 'work-1', liked: true, favorited: true, followed: false, categoryId: 'category-1', workType: 'ai_generated' });
+
+  assert.equal(artwork.liked, true);
+  assert.equal(artwork.favorited, true);
+  assert.equal(artwork.followed, false);
+  assert.equal(artwork.categoryId, 'category-1');
+  assert.equal(artwork.workType, 'ai_generated');
+});

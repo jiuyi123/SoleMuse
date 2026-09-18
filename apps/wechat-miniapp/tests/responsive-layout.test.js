@@ -336,6 +336,25 @@ test('public profile keeps social actions and exposes only published artwork', (
   assert.match(service, /getPublicProfile\(userId\)[\s\S]*setPublicProfileFollowing\(userId, following\)/);
 });
 
+test('login page offers WeChat and native phone authorization paths', () => {
+  const markup = read('subpackages/account/pages/login/index.wxml');
+  const styles = read('subpackages/account/pages/login/index.wxss');
+  const logic = read('subpackages/account/pages/login/index.js');
+  const service = read('services/auth-service.js');
+  const settingsMarkup = read('subpackages/user/pages/settings/index.wxml');
+  const settingsLogic = read('subpackages/user/pages/settings/index.js');
+
+  assert.match(markup, /bindtap="handleWechatLogin"/);
+  assert.match(markup, /open-type="getPhoneNumber"[\s\S]*bindgetphonenumber="handlePhoneLogin"/);
+  assert.match(markup, /loginError/);
+  assert.match(styles, /\.login-method--wechat[\s\S]*background:\s*#1aad19/);
+  assert.match(logic, /authService\.loginWithWechat\(\)[\s\S]*finishLogin/);
+  assert.match(logic, /authService\.loginWithPhone\(event\.detail/);
+  assert.match(service, /getWechatLoginCode\(\)[\s\S]*loginWithPhone/);
+  assert.match(settingsMarkup, /account\.loginMethodLabel[\s\S]*account\.phoneDisplay/);
+  assert.match(settingsLogic, /authService\.getAccountInfo\(\)/);
+});
+
 test('large user avatars open public profiles without changing artwork-card avatar behavior', () => {
   const detailMarkup = read('subpackages/artwork/pages/detail/index.wxml');
   const detailLogic = read('subpackages/artwork/pages/detail/index.js');

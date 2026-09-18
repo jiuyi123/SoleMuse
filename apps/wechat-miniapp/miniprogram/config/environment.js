@@ -1,7 +1,8 @@
 const ENVIRONMENTS = Object.freeze({
-  develop: Object.freeze({ apiBaseUrl: '', enableDebugLog: true, enableDemoSession: true }),
-  trial: Object.freeze({ apiBaseUrl: '', enableDebugLog: false, enableDemoSession: false }),
-  release: Object.freeze({ apiBaseUrl: '', enableDebugLog: false, enableDemoSession: false }),
+  // 微信开发者工具可直接访问本机；真机联调时替换为电脑局域网 IP。
+  develop: Object.freeze({ apiBaseUrl: 'http://127.0.0.1:3000/api/v1', enableDebugLog: true, enableDemoSession: false, useDemoData: false }),
+  trial: Object.freeze({ apiBaseUrl: '', enableDebugLog: false, enableDemoSession: true, useDemoData: true }),
+  release: Object.freeze({ apiBaseUrl: '', enableDebugLog: false, enableDemoSession: false, useDemoData: false }),
 });
 
 function getEnvironmentVersion() {

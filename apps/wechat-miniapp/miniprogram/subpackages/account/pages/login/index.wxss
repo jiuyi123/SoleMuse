@@ -9,5 +9,24 @@
 .login-note { display: flex; flex-direction: column; margin-top: 16px; padding: clamp(18px, 3vw, 28px); color: #61788d; font-size: clamp(13px, 1.7vw, 15px); line-height: 1.7; }
 .login-note__title { margin-bottom: 7px; color: #173a56; font-size: clamp(16px, 2.2vw, 20px); font-weight: 700; }
 .login-note__dev { margin-top: 8px; color: #8b98a5; font-size: clamp(11px, 1.5vw, 13px); }
-.primary-button { margin-top: 20px; }
+.login-method {
+  display: flex;
+  width: 100%;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 48px;
+}
+.login-method::after { border: 0; }
+.login-method + .login-method { margin-top: 10px; }
+.login-method--wechat { margin-top: 20px; background: #1aad19; color: #fff; }
+.login-method--phone { border: 1px solid #c5d5dd; background: rgba(255, 255, 255, .86); color: #315873; }
+.login-method__icon { display: flex; width: 22px; height: 22px; align-items: center; justify-content: center; border: 1px solid currentColor; border-radius: 50%; font-size: 12px; line-height: 1; }
+.login-error { display: block; margin-top: 12px; color: #c75860; font-size: 12px; line-height: 1.5; text-align: center; }
 .login-agreement { display: block; margin: 14px clamp(8px, 3vw, 28px); color: #9aa5b1; font-size: clamp(10px, 1.4vw, 12px); line-height: 1.5; text-align: center; overflow-wrap: anywhere; }

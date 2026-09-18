@@ -1,5 +1,8 @@
 const imageMedia = require('../../core/media/image');
 const draftStorage = require('../../core/storage/draft-storage');
+const mediaService = require('../../services/media-service');
+const demoContent = require('../../services/demo-content-service');
+const { isApiEnabled } = require('../../services/api-mode');
 const router = require('../../core/navigation/router');
 const getNavigationLayout = require('../../utils/navigation-layout');
 const syncTabBar = require('../../utils/sync-tab-bar');
@@ -201,13 +204,44 @@ Page({
     this.setData({ descriptionExpanded: !this.data.descriptionExpanded });
   },
 
-  saveDraft() {
+  async saveDraft() {
     if (this.data.submitting) return;
+    if (isApiEnabled()) {
+      this.setData({ submitting: true });
+      try {
+        const uploaded = await mediaService.uploadImages(this.data.images);
+        await demoContent.saveArtwork(this.buildArtworkPayload(uploaded, 'draft'));
+        this.setData({ submitting: false });
+        wx.showToast({ title: '草稿已保存', icon: 'success' });
+      } catch (error) {
+        this.setData({ submitting: false });
+        wx.showToast({ title: '草稿保存失败，请重试', icon: 'none' });
+      }
+      return;
+    }
     draftStorage.saveDraft({ images: this.data.images, form: this.data.form, savedAt: Date.now() });
     wx.showToast({ title: '草稿已保存', icon: 'success' });
   },
 
-  publishArtwork() {
+  buildArtworkPayload(uploaded, status) {
+    const uploadedResults = Array.isArray(uploaded) ? uploaded : [];
+    const assetIds = uploaded.assetIds || uploadedResults.map((item) => item.assetId).filter(Boolean);
+    const urls = uploaded.urls || uploadedResults.map((item) => item.url).filter(Boolean);
+    return {
+      title: this.data.form.title.trim(),
+      prompt: this.data.form.prompt.trim(),
+      description: this.data.form.description.trim(),
+      workType: 'ai_generated',
+      categoryId: this.data.form.category,
+      tags: this.data.form.tags,
+      imageAssetIds: assetIds,
+      images: urls,
+      aiSource: { type: 'ai', name: this.data.form.sourceName, version: '' },
+      status,
+    };
+  },
+
+  async publishArtwork() {
     if (this.data.submitting) return;
     const form = this.data.form;
     if (!this.data.images.length || !form.title.trim() || !form.prompt.trim() || !form.sourceName || !form.category || !form.tags.length) {
@@ -215,6 +249,22 @@ Page({
       return;
     }
     this.setData({ submitting: true });
+    if (isApiEnabled()) {
+      try {
+        const uploadedResults = await mediaService.uploadImages(this.data.images);
+        await demoContent.saveArtwork(this.buildArtworkPayload({
+          assetIds: uploadedResults.map((item) => item.assetId).filter(Boolean),
+          urls: uploadedResults.map((item) => item.url).filter(Boolean),
+        }, 'published'));
+        draftStorage.clearDraft();
+        this.setData({ submitting: false });
+        wx.showToast({ title: '作品发布成功', icon: 'success' });
+      } catch (error) {
+        this.setData({ submitting: false });
+        wx.showToast({ title: '作品发布失败，请重试', icon: 'none' });
+      }
+      return;
+    }
     setTimeout(() => {
       draftStorage.clearDraft();
       this.setData({ submitting: false });

@@ -11,35 +11,46 @@ const TABS = [
 
 Page({
   data: { activeType: 'artworks', tabs: TABS, items: [], profile: null, loading: true },
+
   onLoad(options) {
     const activeType = TABS.some((item) => item.key === options.type) ? options.type : 'artworks';
     this.setData({ activeType });
     this.loadContent();
   },
+
   async loadContent() {
     this.setData({ loading: true });
-    const [profile, allItems] = await Promise.all([demoContentService.getProfile(), demoContentService.getMyContent()]);
+    const [profile, allItems] = await Promise.all([demoContentService.getProfile(), demoContentService.getMyContent(this.data.activeType)]);
     this.setData({ profile, items: this.selectItems(allItems, this.data.activeType), loading: false });
   },
+
   selectItems(items, type) {
-    if (type === 'favorites') return items.slice(1, 6);
-    if (type === 'likes') return items.slice().reverse();
     if (type === 'comments') return items.slice(0, 3);
     return items;
   },
+
   async changeTab(event) {
     const activeType = event.currentTarget.dataset.type;
-    const allItems = await demoContentService.getMyContent();
+    const allItems = await demoContentService.getMyContent(activeType);
     this.setData({ activeType, items: this.selectItems(allItems, activeType) });
   },
+
   openArtwork(event) { router.navigateTo(ROUTES.ARTWORK_DETAIL, { id: event.detail.artworkId }); },
+
   openMenu(event) {
     const artworkId = event.detail.artworkId;
     wx.showActionSheet({
       itemList: ['编辑作品', '下架作品'],
-      success: (result) => {
+      success: async (result) => {
         if (result.tapIndex === 0) router.navigateTo(ROUTES.ARTWORK_EDITOR, { id: artworkId });
-        if (result.tapIndex === 1) wx.showToast({ title: '开发预览：已下架', icon: 'none' });
+        if (result.tapIndex !== 1) return;
+        try {
+          await demoContentService.offShelfArtwork(artworkId, '作者主动下架');
+          wx.showToast({ title: '作品已下架', icon: 'success' });
+          this.loadContent();
+        } catch (error) {
+          wx.showToast({ title: '下架失败，请重试', icon: 'none' });
+        }
       },
     });
   },

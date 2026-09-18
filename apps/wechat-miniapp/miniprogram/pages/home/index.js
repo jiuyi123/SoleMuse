@@ -49,8 +49,17 @@ Page({
     router.navigateTo(ROUTES.ARTWORK_DETAIL, { id: event.detail.artworkId });
   },
 
-  changeFeed(event) {
+  async changeFeed(event) {
     const activeFeed = event.currentTarget.dataset.feed;
+    if (activeFeed && activeFeed !== 'discover') {
+      try {
+        const content = await demoContent.getHomeContent(activeFeed);
+        this.setData({ activeFeed, artworks: content.artworks });
+        return;
+      } catch (error) {
+        wx.showToast({ title: '内容加载失败，请重试', icon: 'none' });
+      }
+    }
     let artworks = this.data.allArtworks.slice();
     if (activeFeed === 'following') artworks = artworks.slice(0, 4);
     if (activeFeed === 'latest') artworks.reverse();

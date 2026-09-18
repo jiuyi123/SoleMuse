@@ -71,11 +71,9 @@ Page({
     this.setData({ artworks: [], hasSearched: true, loading: true, sort: 'latest' });
 
     try {
-      const artworks = await demoContent.searchArtworks();
+      const artworks = await demoContent.searchArtworks({ keyword, sort: 'latest' });
       const matches = artworks
-        .filter((artwork) => (
-          `${artwork.title}${artwork.author.nickname}${artwork.tags.join('')}`.includes(keyword)
-        ))
+        .filter((artwork) => !artwork.id || `${artwork.title}${artwork.author.nickname}${artwork.tags.join('')}`.includes(keyword))
         .sort((left, right) => right.publishedAtDisplay.localeCompare(left.publishedAtDisplay));
       this.setData({ artworks: matches, loading: false });
     } catch (error) {

@@ -25,7 +25,7 @@ Page({
   },
 
   async loadRanking() {
-    const source = await demoContent.getRanking();
+    const source = await demoContent.getRanking({ period: this.data.period });
     const ranking = source.map((item) => Object.assign({}, item, {
       authorInitial: String(item.author || '?').charAt(0).toUpperCase(),
       metrics: Object.assign({ likes: item.heat || 0, favorites: 0, comments: 0 }, item.metrics),
@@ -39,7 +39,7 @@ Page({
   },
 
   changePeriod(event) {
-    this.setData({ period: event.currentTarget.dataset.period });
+    this.setData({ period: event.currentTarget.dataset.period }, () => this.loadRanking());
   },
 
   toggleRules() {

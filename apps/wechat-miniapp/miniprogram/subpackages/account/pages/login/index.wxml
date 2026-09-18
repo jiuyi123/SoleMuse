@@ -8,10 +8,18 @@
     <text class="login-art__copy">步履所至，皆是灵感</text>
   </view>
   <view class="login-note glass-card">
-    <text class="login-note__title">微信快捷登录</text>
+    <text class="login-note__title">登录 SoleMuse</text>
     <text>登录后可以发布作品、点赞、收藏、评论，并管理你的创作档案。</text>
-    <text class="login-note__dev">当前为前端开发模式，将创建本地演示会话，不会上传微信个人数据。</text>
+    <text class="login-note__dev">微信登录使用微信授权；手机号登录只提交微信返回的临时授权码。</text>
   </view>
-  <button class="primary-button" loading="{{submitting}}" disabled="{{submitting}}" bindtap="handleLogin">进入 SoleMuse</button>
+  <button class="login-method login-method--wechat" loading="{{submitting}}" disabled="{{submitting}}" bindtap="handleWechatLogin">
+    <text class="login-method__icon">微</text>
+    <text>微信一键登录</text>
+  </button>
+  <button class="login-method login-method--phone" open-type="getPhoneNumber" loading="{{submitting}}" disabled="{{submitting}}" bindgetphonenumber="handlePhoneLogin">
+    <text class="login-method__icon">⌕</text>
+    <text>手机号直接获取</text>
+  </button>
+  <text wx:if="{{loginError}}" class="login-error">{{loginError}}</text>
   <text class="login-agreement">继续即表示你知悉后续正式版本将提供隐私政策与用户协议。</text>
 </view>

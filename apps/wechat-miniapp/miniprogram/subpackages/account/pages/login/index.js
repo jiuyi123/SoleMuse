@@ -1,6 +1,6 @@
 const ROUTES = require('../../../../constants/routes');
 const router = require('../../../../core/navigation/router');
-const sessionStore = require('../../../../state/session-store');
+const authService = require('../../../../services/auth-service');
 
 Page({
   data: {
@@ -8,6 +8,7 @@ Page({
     redirectType: '',
     redirectId: '',
     submitting: false,
+    loginError: '',
   },
 
   onLoad(options) {
@@ -18,13 +19,32 @@ Page({
     });
   },
 
-  async handleLogin() {
+  async handleWechatLogin() {
     if (this.data.submitting) return;
-    this.setData({ submitting: true });
+    this.setData({ submitting: true, loginError: '' });
 
-    // 骨架阶段使用本地演示会话；接入后端时改为微信 code 换取服务端会话。
-    sessionStore.setSnapshot({ mode: 'local', userId: 'local-user' });
-    wx.showToast({ title: '已进入本地演示状态', icon: 'none' });
+    try {
+      await authService.loginWithWechat();
+      this.finishLogin('微信登录成功');
+    } catch (error) {
+      this.setData({ submitting: false, loginError: error.message || '登录失败，请重试' });
+    }
+  },
+
+  async handlePhoneLogin(event) {
+    if (this.data.submitting) return;
+    this.setData({ submitting: true, loginError: '' });
+
+    try {
+      await authService.loginWithPhone(event.detail || {});
+      this.finishLogin('手机号登录成功');
+    } catch (error) {
+      this.setData({ submitting: false, loginError: error.message || '手机号登录失败，请重试' });
+    }
+  },
+
+  finishLogin(message) {
+    wx.showToast({ title: message, icon: 'none' });
 
     const redirect = this.data.redirect;
     if (redirect && Object.values(ROUTES).indexOf(redirect) >= 0) {

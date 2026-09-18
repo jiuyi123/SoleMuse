@@ -21,3 +21,11 @@
 .settings-row__description { margin-top: 5px; color: #8796a3; font-size: 12px; line-height: 1.4; }
 .settings-row__value { color: #8796a3; font-size: 13px; }
 .settings-row__arrow { color: #9ba9b6; font-size: 26px; }
+.account-card { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; gap: 12px; align-items: center; min-height: 82px; border-bottom: 1px solid #e9eff2; }
+.account-card--guest { grid-template-columns: 48px minmax(0, 1fr) auto; }
+.account-card__avatar { width: 48px; height: 48px; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 4px 12px rgba(37, 76, 106, .14); object-fit: cover; }
+.account-card__avatar--fallback { display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, #75bdb0, #5b8fbb); color: #fff; font-size: 18px; font-weight: 700; }
+.account-card__status { align-self: start; margin-top: 18px; color: #55a690; font-size: 11px; }
+.account-details { padding: 8px 0 10px; border-bottom: 1px solid #e9eff2; }
+.account-detail { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 12px; padding: 7px 0; color: #8796a3; font-size: 12px; }
+.account-detail text:last-child { color: #526c7d; text-align: right; }

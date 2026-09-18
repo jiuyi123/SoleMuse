@@ -62,9 +62,14 @@ Page({
     }
   },
 
-  openChat() {
-    if (!this.data.profile || !this.data.profile.conversationId) return;
-    router.navigateTo(ROUTES.CHAT, { id: this.data.profile.conversationId });
+  async openChat() {
+    if (!this.data.profile) return;
+    try {
+      const conversation = await demoContentService.startConversation(this.data.userId);
+      if (conversation && conversation.id) router.navigateTo(ROUTES.CHAT, { conversationId: conversation.id, id: conversation.id });
+    } catch (error) {
+      wx.showToast({ title: '暂时无法发起私信', icon: 'none' });
+    }
   },
 
   openArtwork(event) {
